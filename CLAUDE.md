@@ -8,7 +8,7 @@ Personal website for Kurt Lekanger. pnpm + Turborepo monorepo:
 
 - `apps/frontend` — TanStack Start (SSR React 19 + Vite + Nitro) site that renders content from Sanity.
 - `apps/studio` — Sanity Studio (v6) CMS, project `ajget05d`, dataset `production`. Schema field titles/descriptions are in Norwegian.
-- `packages/shared` — `@repo/shared`, a build-less workspace package that exports TypeScript source directly (`.` → `src/index.ts`, `./types` → `src/types/index.ts`). It holds the generated Sanity types and is a dependency of both apps. Import as `import type { Blog } from "@repo/shared/types"`.
+- `packages/shared` — `@repo/shared`, a build-less workspace package that exports TypeScript source directly. It holds the generated Sanity types and is a dependency of both apps. Its `exports` map is `"."` → `src/index.ts` and `"./types/*"` → `src/types/*.ts` — there is **no** bare `./types` subpath (and no `src/types/index.ts`), so `@repo/shared/types` does not resolve. Import as `import type { Blog } from "@repo/shared"` (the root re-exports `./types/sanity.types`), or `@repo/shared/types/sanity.types` for the explicit path.
 
 ## Commands
 
@@ -33,11 +33,10 @@ pnpm generate-routes     # tsr generate — regenerate src/routeTree.gen.ts
 
 # studio
 pnpm dev                 # sanity dev
-pnpm generate-types      # sanity schema extract && sanity typegen generate
 pnpm deploy              # sanity deploy
 ```
 
-Turbo filter gotcha: the root package and `apps/frontend` are **both** named `lekanger-personal-website`. Prefer `--filter=./apps/frontend` (path filter) over the name. Studio is `lekanger-tekst-og-kode`.
+Package names for `--filter`: `frontend` (`apps/frontend`), `lekanger-tekst-og-kode` (`apps/studio`), `@repo/shared` (`packages/shared`). The root package is `lekanger-personal-website`; it is deliberately **not** named after any app, because `pnpm --filter <name>` matches the root too when the names collide — which would silently run the root's `turbo run build` (a full-workspace build) alongside the app's own build. Turbo is unaffected either way: the root is not part of its package graph.
 
 No `check-types` script is defined in either app, so root `pnpm check-types` is a no-op. For typechecking run `pnpm exec tsc --noEmit` inside the app.
 
@@ -55,17 +54,34 @@ Because `enabled: true`, types regenerate automatically during `sanity dev` (wat
 
 `overloadClientMethods: true` makes the generated file emit a `declare module "@sanity/client"` augmentation, so `client.fetch(SOME_QUERY)` is typed with no manual type import. That augmentation is why `@repo/shared` itself depends on `@sanity/client` — TypeScript resolves the module relative to the generated file, not to the app importing it.
 
-### Frontend data layer (three files per resource)
+### Frontend data layer
 
-Data fetching is split by convention; follow it when adding a new content type:
+Sanity fetching goes through two shared generic helpers in `src/lib/sanity/` — there is no per-resource loader or `queryOptions` factory:
 
-1. `src/sanity/queries/<name>Query.ts` — exports the raw GROQ string (`groq` tag) **and** a `queryOptions(...)` factory keyed by `[type, slug, perspective]`. Stega/`resultSourceMap` are enabled via `client.withConfig()` here for visual editing.
-2. `src/loaders/<name>Loader.ts` — a route loader that calls `context.queryClient.ensureQueryData(...)` and returns `{ data, query, params }` (query + params are returned for live/visual-editing support).
-3. `src/pages/<Name>/<Name>.tsx` — the component, which reads `Route.useLoaderData()` by importing `Route` from the route file.
+- `queryOptions.ts` — `sanityQueryOptions({ query, params, perspective })` builds the TanStack Query options: key `["sanity", query, params, perspective]`, `queryFn` calling `client.withConfig({ perspective }).fetch(query, params)`.
+- `loader.ts` — `loadSanityQuery(context, query, params)` calls `context.queryClient.ensureQueryData(...)` and returns `{ data, query, params }` (query + params are returned for live/visual-editing support).
 
-Route files in `src/routes/` stay thin: `createFileRoute` wiring `component` + `loader` only.
+Both are generic over `const TQuery extends keyof SanityQueries`, **not** `string`. This is load-bearing: TypeGen types results by matching the literal query string against the `SanityQueries` module augmentation, so widening the parameter to `string` makes `ClientReturn` fall back to `Any` and every route silently loses its types. The `keyof SanityQueries` constraint also turns a not-yet-generated query into a compile error instead of silent `any`.
 
-`src/sanity/projectDetails.ts` resolves project/dataset/apiVersion for both environments — `process.env.*` on the server, `import.meta.env.VITE_*` in the browser, with hardcoded fallbacks. Import config from there, not from `import.meta.env` directly.
+Adding a content type is therefore two files:
+
+1. `src/lib/sanity/queries/<name>Query.ts` — exports only the GROQ string via `defineQuery`. Nothing else.
+2. `src/pages/<Name>/<Name>.tsx` — the component, which reads `Route.useLoaderData()` by importing `Route` from the route file.
+
+Route files in `src/routes/` stay thin — `component` plus a one-line loader that maps route params to GROQ params:
+
+```ts
+loader: ({ context, params }) =>
+    loadSanityQuery(context, BLOGS_BY_SLUG_QUERY, { slug: params.slug }),
+```
+
+Use a concise arrow body (or an explicit `return`). A block body without `return` makes the loader resolve to `undefined`, and `Route.useLoaderData()` then throws in the component, not in the loader.
+
+Shared query defaults (`staleTime` 5 min, `gcTime` 10 min) live in the `QueryClient` in `src/integrations/tanstack-query/root-provider.tsx`, not per query.
+
+Stega / `resultSourceMap` are currently **off**: draft mode is not wired up, and enabling stega unconditionally injects invisible characters into every production string (breaking `===`, object keys, and anything rendered into `<head>`). When adding preview, gate them on the draft path inside `sanityQueryOptions` — that helper is also where a server-only token fetch belongs.
+
+`src/lib/sanity/projectDetails.ts` resolves project/dataset/apiVersion for both environments — `process.env.*` on the server, `import.meta.env.VITE_*` in the browser, with hardcoded fallbacks (`ajget05d` / `production`). Import config from there, not from `import.meta.env` directly. Note that `apps/frontend/.env.local` sets `VITE_SANITY_DATASET="development"`, so local dev reads the **development** dataset — its content differs from `production`, which looks like missing data if you test with a `production` slug.
 
 `SANITY_READ_TOKEN` / `SANITY_PREVIEW_SECRET` are server-only (draft/preview). Published content needs no token; never send a token from the client.
 
