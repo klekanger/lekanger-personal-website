@@ -6,6 +6,12 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!**/node_modules", "!**/.turbo"]
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/.turbo",
+			"!apps/studio/schema.json",
+			"!packages/shared/src/types/sanity.types.ts"
+		]
 	}
 }
