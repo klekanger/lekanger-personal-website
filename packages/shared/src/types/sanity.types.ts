@@ -252,7 +252,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
-// Source: ../frontend/src/sanity/queries/blogPageQuery.ts
+// Source: ../frontend/src/lib/sanity/queries/blogPageQuery.ts
 // Variable: BLOGS_BY_SLUG_QUERY
 // Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    mainImage,    title,    overview,    body,    "slug": slug.current  }
 export type BLOGS_BY_SLUG_QUERY_RESULT = {

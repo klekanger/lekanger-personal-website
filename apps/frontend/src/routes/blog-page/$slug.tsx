@@ -1,13 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { blogLoader } from "#/loaders/blog-page";
+import { loadSanityQuery } from "#/lib/sanity/loader";
+import { BLOGS_BY_SLUG_QUERY } from "#/lib/sanity/queries/blogPageQuery";
+import { BlogPage } from "@/pages/BlogPage/BlogPage";
 
 export const Route = createFileRoute("/blog-page/$slug")({
-	component: RouteComponent,
-	loader: blogLoader,
+	component: BlogPage,
+	loader: ({ context, params }) =>
+		loadSanityQuery(context, BLOGS_BY_SLUG_QUERY, { slug: params.slug }),
 });
-
-function RouteComponent() {
-	console.log();
-
-	return <div>Hello "/blog-page/$slug"!</div>;
-}
