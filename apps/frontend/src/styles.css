@@ -1,7 +1,7 @@
 /* ============================================================
    Kurt Lekanger — Commodore 64 theme.
    Single mode: there is no dark mode and no light mode.
-   Layer 1  --c64-*   raw Colodore palette, reference only, never in markup.
+   Layer 1  --c64-*   every hex literal in the project lives here.
    Layer 2  @theme    semantic tokens -> Tailwind utilities. Use these.
    ============================================================ */
 
@@ -16,8 +16,10 @@
    classes permanently inert. Do not delete. */
 @custom-variant dark (&:is(.dark *));
 
-/* ---- Layer 1: raw Colodore. Several fail text contrast — never use directly. */
 :root {
+	/* ---- Layer 1a: the 16 authentic Colodore hues. Reference only — on
+	   --c64-blue half of them fall under 4.5:1 as text, so never reach for one
+	   directly in markup. Go through a Layer 2 token instead. */
 	--c64-black: #000000;
 	--c64-white: #ffffff;
 	--c64-red: #813338;
@@ -34,55 +36,80 @@
 	--c64-lightgreen: #a9ff9f;
 	--c64-lightblue: #706deb;
 	--c64-lightgray: #b2b2b2;
+
+	/* ---- Layer 1b: steps the 16 cannot supply. Mixed toward black for
+	   recessed surfaces (`ink`, `deep`) and toward white for legibility on blue
+	   (`soft`, `pale`); `lift` is the one hover step. Ordered dark -> light per
+	   hue. Not authentic C64 colours, hence named after the parent hue. */
+	--c64-blue-ink: #12114a;
+	--c64-blue-deep: #242279;
+	--c64-blue-lift: #4a42b4;
+	--c64-lightblue-soft: #a2a0f2;
+	--c64-lightblue-pale: #b8b7f5;
+	--c64-red-pale: #d6989c;
+	--c64-purple-pale: #ce94d4;
+	--c64-orange-pale: #d79b75;
+	--c64-green-pale: #6cba64;
+	--c64-gray-pale: #a8a8a8;
 }
 
-/* ---- Layer 2: semantic tokens. Ratios are vs --color-background unless noted. */
+/* ---- Layer 2: semantic tokens. No hex here — every value is a Layer 1 name.
+   Ratios are vs --color-background (#2e2c9b), the lightest surface and so the
+   worst case; on `card` and `ink` everything scores higher. */
 @theme {
 	/* One palette only. Drops Tailwind's 288 defaults so `bg-blue-500` cannot
 	   creep in. transparent/current are keywords and survive; white and black
 	   are re-declared because shadcn uses text-white and bg-black/50. */
 	--color-*: initial;
-	--color-white: #ffffff;
-	--color-black: #000000;
+	--color-white: var(--c64-white);
+	--color-black: var(--c64-black);
 
 	/* Interim face. The C64 display/mono typeface is a separate task. */
 	--font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
-  --color-background: var(--c64-blue);
-	--color-screen: var(--c64-blue);
-	--color-ink: #12114a;
-	--color-card: #2e2c9b;
-	--color-popover: #12114a;
-	--color-muted: #2e2c9b;
+	/* Surfaces, light -> dark. The page is the authentic blue; cards and code
+	   recess below it rather than lifting above, so the screen hue stays the
+	   dominant one. */
+	--color-background: var(--c64-blue);
+	--color-card: var(--c64-blue-deep);
+	--color-muted: var(--c64-blue-deep);
+	--color-secondary: var(--c64-blue-deep);
+	--color-ink: var(--c64-blue-ink);
+	--color-popover: var(--c64-blue-ink);
 
-	--color-foreground: #b8b7f5; 
-	--color-foreground-strong: #ffffff; 
-	--color-muted-foreground: #a2a0f2; 
-	--color-card-foreground: #b8b7f5;
-	--color-popover-foreground: #b8b7f5;
+	--color-foreground: var(--c64-lightblue-pale); /*  5.71 */
+	--color-foreground-strong: var(--c64-white); /* 10.77 */
+	--color-muted-foreground: var(--c64-lightblue-soft); /*  4.54 */
+	--color-card-foreground: var(--c64-lightblue-pale);
+	--color-popover-foreground: var(--c64-lightblue-pale);
+	--color-secondary-foreground: var(--c64-lightblue-pale);
 
-	--color-primary: #b8b7f5;
-	--color-primary-foreground: #12114a; 
-	--color-secondary: #2e2c9b;
-	--color-secondary-foreground: #b8b7f5;
-	--color-accent: #4a42b4; /* hover / active lift */
-	--color-accent-foreground: #ffffff; 
-	--color-destructive: #813338; 
+	--color-primary: var(--c64-lightblue-pale);
+	--color-primary-foreground: var(--c64-blue-ink); /*  9.24 on primary */
+	--color-accent: var(--c64-blue-lift); /* hover / active lift */
+	--color-accent-foreground: var(--c64-white); /*  7.69 on accent */
+	--color-destructive: var(--c64-red); /*  8.52 vs text-white */
 
-	--color-border: #706deb; 
-	--color-input: #706deb;
-	--color-ring: #a2a0f2; 
-	--color-frame: #706deb; /* decorative outer band */
+	/* `border` is decorative (card and table rules) at 2.60, under the 3:1
+	   non-text floor. `input` and `ring` bound real controls, so they take the
+	   one step lighter that clears it. */
+	--color-border: var(--c64-lightblue); /*  2.60 */
+	--color-frame: var(--c64-lightblue); /* decorative outer band */
+	--color-input: var(--c64-lightblue-soft); /*  4.54 */
+	--color-ring: var(--c64-lightblue-soft); /*  4.54 */
 
-	/* Emphasis hues for badges and inline accents. All >= 4.5 on every surface. */
-	--color-cyan: #75cec8;
-	--color-yellow: #edf171;
-	--color-lime: #a9ff9f;
-	--color-red: #d6989c;
-	--color-purple: #ce94d4;
-	--color-orange: #d79b75;
-	--color-green: #6cba64;
-	--color-dim: #a8a8a8;
+	/* Emphasis hues for badges and inline accents. All >= 4.5 on every surface,
+	   which is why the warm ones are the `-pale` steps and not the raw hue —
+	   --c64-lightred is only 2.94 here. Text-weight counterparts to the solid
+	   fills above: `text-red` is pale, `bg-destructive` is the authentic red. */
+	--color-cyan: var(--c64-cyan); /*  5.86 */
+	--color-yellow: var(--c64-yellow); /*  8.94 */
+	--color-lime: var(--c64-lightgreen); /*  8.97 */
+	--color-red: var(--c64-red-pale); /*  4.53 */
+	--color-purple: var(--c64-purple-pale); /*  4.52 */
+	--color-orange: var(--c64-orange-pale); /*  4.53 */
+	--color-green: var(--c64-green-pale); /*  4.54 */
+	--color-dim: var(--c64-gray-pale); /*  4.53 */
 
 	/* The C64 has no rounded corners. One knob — raise it to soften globally.
 	   All 8 keys: shadcn also uses rounded-xs, and Tailwind's scale runs to 4xl. */
@@ -101,7 +128,7 @@
    CSS, not utilities. Only the light half of the palette is usable — treat this
    as an 8-colour scheme, not 16. */
 :root {
-	--syn-bg: var(--color-screen);
+	--syn-bg: var(--color-ink);
 	--syn-plain: var(--color-foreground);
 	--syn-comment: var(--color-dim);
 	--syn-keyword: var(--color-red);

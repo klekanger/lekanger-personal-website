@@ -53,7 +53,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="wrap-anywhere selection:bg-foreground">
+			<body className="wrap-anywhere selection:bg-foreground selection:text-background">
 				<Header />
 				{children}
 				<Footer />
