@@ -94,10 +94,9 @@ Stega / `resultSourceMap` are currently **off**: draft mode is not wired up, and
 
 ### Conventions
 
-- Import aliases in `apps/frontend`: both `#/*` and `@/*` map to `./src/*`. `#/*` is the real Node subpath import (declared in `package.json` `imports`); `@/*` is tsconfig-only. Existing code mixes them — prefer `#/` for new code, since shadcn's `components.json` aliases also use `#/`.
+- Import aliases in `apps/frontend`: both `#/*` and `@/*` map to `./src/*`. `#/*` is the real Node subpath import (declared in `package.json` `imports`); `@/*` is tsconfig-only. Existing code mixes them — prefer `@/` for new code.
 - Tooling is **Biome**, not ESLint/Prettier (except Prettier for Markdown, and the studio's `@sanity/eslint-config-studio`). Tabs, double quotes.
 - Styling is Tailwind CSS v4 (config-less, via `@tailwindcss/vite`; theme lives in `src/styles.css`). shadcn/ui is set up with the `new-york` style and `zinc` base — add components with `pnpm dlx shadcn@latest add <component>`.
-- The frontend `README.md` and root `README.md` are still the unmodified TanStack Start / Turborepo starter READMEs; don't trust them as documentation of this project.
 - `src/routes/index.tsx` and `about.tsx` are still starter-template placeholder content.
 
 ## Skill loading (from apps/frontend/AGENTS.md)
