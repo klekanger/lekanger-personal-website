@@ -36,7 +36,7 @@ pnpm dev                 # sanity dev
 pnpm deploy              # sanity deploy
 ```
 
-Package names for `--filter`: `frontend` (`apps/frontend`), `lekanger-tekst-og-kode` (`apps/studio`), `@repo/shared` (`packages/shared`). The root package is `lekanger-personal-website`; it is deliberately **not** named after any app, because `pnpm --filter <name>` matches the root too when the names collide — which would silently run the root's `turbo run build` (a full-workspace build) alongside the app's own build. Turbo is unaffected either way: the root is not part of its package graph.
+Package names for `--filter`: `frontend` (`apps/frontend`), `studio` (`apps/studio`), `@repo/shared` (`packages/shared`). The root package is `lekanger-personal-website`; it is deliberately **not** named after any app, because `pnpm --filter <name>` matches the root too when the names collide — which would silently run the root's `turbo run build` (a full-workspace build) alongside the app's own build. Turbo is unaffected either way: the root is not part of its package graph.
 
 No `check-types` script is defined in either app, so root `pnpm check-types` is a no-op. For typechecking run `pnpm exec tsc --noEmit` inside the app.
 
