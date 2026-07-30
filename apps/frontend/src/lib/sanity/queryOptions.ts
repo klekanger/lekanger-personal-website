@@ -4,7 +4,7 @@ import type {
 	SanityQueries,
 } from "@sanity/client";
 import { queryOptions } from "@tanstack/react-query";
-import { client } from "#/lib/sanity/client";
+import { client } from "@/lib/sanity/client";
 
 export function sanityQueryOptions<const TQuery extends keyof SanityQueries>({
 	query,
