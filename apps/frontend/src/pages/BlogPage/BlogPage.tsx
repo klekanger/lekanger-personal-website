@@ -1,3 +1,4 @@
+import { CustomPortableText } from "@/components/PortableText/PortableText";
 import { Route } from "@/routes/blog-page/$slug";
 
 export function BlogPage() {
@@ -5,11 +6,12 @@ export function BlogPage() {
 
 	if (!data) return <h1>404</h1>;
 
-	const { title } = data;
+	const { title, body } = data;
 
 	return (
 		<section>
 			<h1>{title}</h1>
+			<CustomPortableText value={body} />
 		</section>
 	);
 }
