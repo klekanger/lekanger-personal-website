@@ -9,9 +9,9 @@ export function BlogPage() {
 	const { title, body } = data;
 
 	return (
-		<section>
+		<article className="prose">
 			<h1>{title}</h1>
 			<CustomPortableText value={body} />
-		</section>
+		</article>
 	);
 }
