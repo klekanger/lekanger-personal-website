@@ -47,7 +47,14 @@ export type PortableTextValue = InferValue<SanityQueries[keyof SanityQueries]>;
  * is derived from this rather than from `PortableTextValue`.
  */
 export type StoredPortableTextValue = Array<
-	WithStoredTypeName<PortableTextValue[number]>
+	| WithStoredTypeName<PortableTextValue[number]>
+	// `blog.body` registers the `code` type twice — as `code` and as `htmlEmbed`.
+	// Both inline to the same `_type: "code"` member (see `StoredTypeNames`), so
+	// the rename has to be re-added here rather than mapped in `StoredTypeNames`,
+	// which is 1:1.
+	| (Omit<Extract<PortableTextValue[number], { _type: "code" }>, "_type"> & {
+			_type: "htmlEmbed";
+	  })
 >;
 
 /**

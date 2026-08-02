@@ -1,10 +1,10 @@
 import type { PortableTextTypeComponentProps } from "@portabletext/react";
 import { urlForImage } from "@/lib/sanity/imageUtils";
-import type { PortableTextImageValue } from "../../componentTypes";
+import type { PortableTextValueOfType } from "../../componentTypes";
 
 export const ArticleImageSerializer = ({
 	value,
-}: PortableTextTypeComponentProps<PortableTextImageValue>) => {
+}: PortableTextTypeComponentProps<PortableTextValueOfType<"image">>) => {
 	const { asset } = value;
 
 	if (!asset) {
