@@ -4,7 +4,9 @@ import type { PortableTextValueOfType } from "../../componentTypes";
 
 export const ArticleImageSerializer = ({
 	value,
-}: PortableTextTypeComponentProps<PortableTextValueOfType<"image">>) => {
+}: PortableTextTypeComponentProps<
+	PortableTextValueOfType<"image" | "figure">
+>) => {
 	const { asset } = value;
 
 	if (!asset) {

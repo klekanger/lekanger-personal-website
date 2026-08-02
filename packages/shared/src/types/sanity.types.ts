@@ -15,6 +15,131 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type Author = {
+  _id: string;
+  _type: "author";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  bio?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type Category = {
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+};
+
+export type Figure = {
+  _type: "figure";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  caption?: string;
+  alt?: string;
+};
+
+export type ProjectPortableText = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & Figure)
+  | ({
+      _key: string;
+    } & Code)
+  | ({
+      _key: string;
+    } & Youtube)
+  | ({
+      _key: string;
+    } & Twitter)
+>;
+
+export type SimplePortableText = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
 export type Youtube = {
   _type: "youtube";
   url?: string;
@@ -26,11 +151,62 @@ export type Twitter = {
   twitterTitle?: string;
 };
 
-export type SanityImageAssetReference = {
+export type AuthorReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type CategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "category";
+};
+
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
+export type Project = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  publishedAt?: string;
+  pinned?: boolean;
+  excerpt?: SimplePortableText;
+  author?: Array<
+    {
+      _key: string;
+    } & AuthorReference
+  >;
+  mainImage?: Figure;
+  categories?: Array<
+    {
+      _key: string;
+    } & CategoryReference
+  >;
+  body?: ProjectPortableText;
+  relatedProjects?: Array<
+    {
+      _key: string;
+    } & ProjectReference
+  >;
+  keywords?: Array<string>;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type Blog = {
@@ -105,28 +281,6 @@ export type Blog = {
         _key: string;
       } & Code)
   >;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type Code = {
@@ -235,13 +389,22 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-  | Youtube
-  | Twitter
   | SanityImageAssetReference
-  | Blog
+  | Author
   | SanityImageCrop
   | SanityImageHotspot
+  | Category
+  | Figure
+  | ProjectPortableText
+  | SimplePortableText
+  | Youtube
+  | Twitter
+  | AuthorReference
+  | CategoryReference
+  | ProjectReference
+  | Project
   | Slug
+  | Blog
   | Code
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -324,10 +487,25 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
   slug: string | null;
 } | null;
 
+// Source: ../frontend/src/lib/sanity/queries/projectPageQuery.ts
+// Variable: PROJECTS_BY_SLUG_QUERY
+// Query: *[_type == "project" && slug.current == $slug][0] {    mainImage,      excerpt,    slug,    title,    _createdAt,    _updatedAt,    _id,    body,  }
+export type PROJECTS_BY_SLUG_QUERY_RESULT = {
+  mainImage: Figure | null;
+  excerpt: SimplePortableText | null;
+  slug: Slug | null;
+  title: string | null;
+  _createdAt: string;
+  _updatedAt: string;
+  _id: string;
+  body: ProjectPortableText | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
   }
 }

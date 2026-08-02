@@ -7,6 +7,7 @@ import { YouTubeSerializer } from "./YouTubeSerializer/YouTubeSerializer";
 
 export const types = {
 	image: ArticleImageSerializer,
+	figure: ArticleImageSerializer,
 	YouTube: YouTubeSerializer,
 	Twitter: TwitterSerializer,
 	code: CodeSerializer,

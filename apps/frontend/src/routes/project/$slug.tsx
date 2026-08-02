@@ -1,24 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-
-const helloFromServer = createServerFn().handler(async () => {
-	return "Hello from the server";
-});
+import { loadSanityQuery } from "@/lib/sanity/loader";
+import { PROJECTS_BY_SLUG_QUERY } from "@/lib/sanity/queries/projectPageQuery";
+import { ProjectPage } from "@/pages/ProjectPage/ProjectPage";
 
 export const Route = createFileRoute("/project/$slug")({
-	loader: async ({ params }) => {
-		const helloMsg = await helloFromServer();
-		return { helloMsg, slug: params.slug };
-	},
-	component: RouteComponent,
+	component: ProjectPage,
+	loader: async ({ context, params }) =>
+		loadSanityQuery(context, PROJECTS_BY_SLUG_QUERY, { slug: params.slug }),
 });
-
-function RouteComponent() {
-	const { helloMsg } = Route.useLoaderData();
-
-	return (
-		<div>
-			<div>Message: {helloMsg}</div>
-		</div>
-	);
-}
