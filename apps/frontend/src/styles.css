@@ -5,7 +5,17 @@
    Layer 2  @theme    semantic tokens -> Tailwind utilities. Use these.
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+/* Sixtyfour — BLED axis only (3.6 KB latin). Swap to
+   '@fontsource-variable/sixtyfour/full.css' if you also want SCAN. */
+@import '@fontsource-variable/sixtyfour';
+ 
+/* IBM Plex Mono — body + code. 400 and 700 only; skip italics,
+   you will not use them and each is another 14 KB. */
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-700.css';
+ 
+	 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @import "tw-animate-css";
@@ -17,6 +27,12 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+
+	--font-chrome: 'Sixtyfour Variable', 'Courier New', monospace;
+  --font-body:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  --font-term:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  --font-code:   var(--font-body);
+
 	/* ---- Layer 1a: the 16 authentic Colodore hues. Reference only — on
 	   --c64-blue half of them fall under 4.5:1 as text, so never reach for one
 	   directly in markup. Go through a Layer 2 token instead. */
@@ -124,22 +140,6 @@
 	--radius-4xl: var(--radius);
 }
 
-/* Syntax highlighting. Plain vars, not @theme: a highlighter consumes these via
-   CSS, not utilities. Only the light half of the palette is usable — treat this
-   as an 8-colour scheme, not 16. */
-:root {
-	--syn-bg: var(--color-ink);
-	--syn-plain: var(--color-foreground);
-	--syn-comment: var(--color-dim);
-	--syn-keyword: var(--color-red);
-	--syn-string: var(--color-lime);
-	--syn-number: var(--color-yellow);
-	--syn-function: var(--color-cyan);
-	--syn-type: var(--color-purple);
-	--syn-operator: var(--color-foreground-strong);
-	--syn-variable: var(--color-foreground-strong);
-}
-
 @layer base {
 	/* Preflight sets border-color: currentColor on *; shadcn expects the theme
 	   border colour. This is the rule that was lost in f97363b. */
@@ -164,7 +164,7 @@
 		min-height: 100svh;
 		background-color: var(--color-background);
 		color: var(--color-foreground);
-		font-family: var(--font-sans);
+		font-family: var(--font-body);
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}
@@ -175,6 +175,14 @@
 		outline: 2px solid var(--color-ring);
 		outline-offset: 2px;
 	}
+
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-chrome);
+	
+	}
+
+
 }
 
 /* The typography plugin hardcodes greys into --tw-prose-* and rounds `pre`/`kbd`,

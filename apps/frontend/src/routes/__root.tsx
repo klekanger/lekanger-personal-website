@@ -1,3 +1,4 @@
+import sixtyfourUrl from "@fontsource-variable/sixtyfour/files/sixtyfour-latin-bled-normal.woff2?url";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
@@ -34,6 +35,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				rel: "stylesheet",
 				href: appCss,
 			},
+			{
+				rel: "preload",
+				as: "font",
+				type: "font/woff2",
+				href: sixtyfourUrl,
+				crossOrigin: "anonymous",
+			},
 		],
 	}),
 	component: RootComponent,
@@ -53,9 +61,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="wrap-anywhere selection:bg-foreground selection:text-background">
+			<body className="wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto">
 				<Header />
-				{children}
+				<div>{children}</div>
 				<Footer />
 				<TanStackDevtools
 					config={{
