@@ -1,8 +1,13 @@
 export default function Header() {
 	return (
 		<header>
-			<nav className="flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
-				<h2>Header</h2>
+			<nav className="flex flex-wrap justify-between">
+				<div>{`<lekanger.no />`}</div>
+				<div className="flex gap-4">
+					<div>Prosjekter</div>
+					<div>Blogg</div>
+					<div>Om meg</div>
+				</div>
 			</nav>
 		</header>
 	);
