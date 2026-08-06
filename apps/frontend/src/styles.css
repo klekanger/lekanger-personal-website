@@ -27,12 +27,6 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-
-	--font-chrome: 'Sixtyfour Variable', 'Courier New', monospace;
-  --font-body:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
-  --font-term:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
-  --font-code:   var(--font-body);
-
 	/* ---- Layer 1a: the 16 authentic Colodore hues. Reference only — on
 	   --c64-blue half of them fall under 4.5:1 as text, so never reach for one
 	   directly in markup. Go through a Layer 2 token instead. */
@@ -80,12 +74,16 @@
 	--color-white: var(--c64-white);
 	--color-black: var(--c64-black);
 
-	/* Interim face. The C64 display/mono typeface is a separate task. */
-	--font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+	/* Fonts */
+	--font-heading: 'Sixtyfour Variable', 'Courier New', monospace;
+  --font-body:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  --font-term:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  --font-code:   var(--font-body);
+
 
 	/* Surfaces, light -> dark. The page is the authentic blue; cards and code
-	   recess below it rather than lifting above, so the screen hue stays the
-	   dominant one. */
+		recess below it rather than lifting above, so the screen hue stays the
+	  dominant one. */
 	--color-background: var(--c64-blue);
 	--color-card: var(--c64-blue-deep);
 	--color-muted: var(--c64-blue-deep);
@@ -174,12 +172,13 @@
 	:focus-visible {
 		outline: 2px solid var(--color-ring);
 		outline-offset: 2px;
+		color: var(--c64-lightblue-pale);
 	}
 
 
 	h1, h2, h3, h4, h5, h6 {
-		font-family: var(--font-chrome);
-	
+		font-family: var(--font-heading);
+		font-weight: 400;			
 	}
 
 
@@ -193,7 +192,7 @@
    Trade-off: this also outranks `prose-invert`, which we do not use. */
 .prose {
 	--tw-prose-body: var(--color-foreground);
-	--tw-prose-headings: var(--color-foreground-strong);
+	--tw-prose-headings: var(--color-foreground);
 	--tw-prose-lead: var(--color-muted-foreground);
 	--tw-prose-links: var(--color-cyan);
 	--tw-prose-bold: var(--color-foreground-strong);
@@ -215,4 +214,8 @@
 /* The plugin hardcodes 6px on `pre` and 5px on `kbd`; --radius cannot reach them. */
 .prose :is(pre, kbd, img, table) {
 	border-radius: 0;
+}
+
+.prose :is(h1, h2, h3, h4) {
+	font-weight: 400;
 }

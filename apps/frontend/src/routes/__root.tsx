@@ -61,9 +61,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto">
+			<body className="wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto min-h-dvh flex flex-col px-4">
 				<Header />
-				<div>{children}</div>
+				<div className="grow">{children}</div>
 				<Footer />
 				<TanStackDevtools
 					config={{
