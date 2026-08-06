@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({ component: App });
@@ -6,23 +7,44 @@ export const Route = createFileRoute("/")({ component: App });
 function App() {
 	return (
 		<main className="w-full">
-			<section className="border border-foreground/50 p-4">
+			<section className="border border-foreground/50 p-4 mt-8">
 				<div className="pb-4 text-center font-heading text-sm leading-8">
 					<div>**** LEKANGER 64 BASIC V2 ****</div>
-					<div>64K RAM SYSTEM · 38911 BASIC BYTES FREE</div>
+					<div>
+						64K RAM SYSTEM<span className="mx-2"> </span> 38911 BASIC BYTES FREE
+					</div>
 				</div>
 				<hr />
 				<div className="flex flex-col lg:flex-row gap-16 md:gap-4 pt-8">
 					<div className="prose flex-1">
-						<h1>UTVIKLER MED SKRIVEKLØE</h1>
+						<h1 className="text-white">UTVIKLER MED SKRIVEKLØE</h1>
 						<p>
 							Senior fullstack-utvikler.Bygger raske, skalerbare og
 							brukervennlige løsninger, med fokus på ytelse, tilgjengelighet og
 							vedlikeholdbar kode.{" "}
 						</p>
+
+						<div className="flex gap-2 py-4 font-heading">
+							<Badge variant={"outline"} className="py-4 text-white">
+								TYPESCRIPT
+							</Badge>
+							<Badge variant={"outline"} className="py-4 text-white">
+								REACT
+							</Badge>
+							<Badge variant={"outline"} className="py-4 text-white">
+								NEXT.JS
+							</Badge>
+							<Badge variant={"outline"} className="py-4 text-white">
+								VUE
+							</Badge>
+							<Badge variant={"outline"} className="py-4 text-white">
+								SANITY
+							</Badge>
+						</div>
+
 						<div className="flex gap-2">
-							<Button>RUN "PROSJEKTER"</Button>
-							<Button>KONTAKT</Button>
+							<Button className="bg-white">RUN "PROSJEKTER"</Button>
+							<Button className="bg-white">KONTAKT</Button>
 						</div>
 					</div>
 
@@ -39,6 +61,7 @@ function App() {
 						<p className="text-white">PRINT BAKGRUNN$</p>
 						<p>TIDLIGERE TEKNOLOGIJOURNALIST OG REDAKTØR</p>
 						<p>READY.</p>
+						<div className="w-4 h-6 bg-primary animate-c64blink"></div>
 					</div>
 				</div>
 			</section>
