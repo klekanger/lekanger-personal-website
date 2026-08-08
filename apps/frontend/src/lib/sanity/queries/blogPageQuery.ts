@@ -9,6 +9,7 @@ export const BLOGS_BY_SLUG_QUERY = defineQuery(`
     title,
     overview,
     body,
+    bodyText,
     "slug": slug.current
   }
 `);

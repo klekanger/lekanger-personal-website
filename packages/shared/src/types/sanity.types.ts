@@ -417,7 +417,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../frontend/src/lib/sanity/queries/blogPageQuery.ts
 // Variable: BLOGS_BY_SLUG_QUERY
-// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    mainImage,    title,    overview,    body,    "slug": slug.current  }
+// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    mainImage,    title,    overview,    body,    bodyText,    "slug": slug.current  }
 export type BLOGS_BY_SLUG_QUERY_RESULT = {
   _id: string;
   _createdAt: string;
@@ -484,6 +484,7 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
         _key: string;
       }
   > | null;
+  bodyText: null;
   slug: string | null;
 } | null;
 
@@ -505,7 +506,7 @@ export type PROJECTS_BY_SLUG_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
   }
 }
