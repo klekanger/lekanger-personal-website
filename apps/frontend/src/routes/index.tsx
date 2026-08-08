@@ -48,7 +48,7 @@ function App() {
 						</div>
 					</div>
 
-					<div className="font-heading text-sm mt-0 prose flex-1">
+					<div className="font-heading text-sm mt-0 prose flex-1 pt-8 lg:pt-0">
 						<p>READY.</p>
 						<p className="text-white">LOAD "WHOAMI",8,1</p>
 						<p>SEARCHING FOR WHOAMI</p>
