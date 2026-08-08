@@ -9,10 +9,10 @@ minimumReleaseAgeExclude:
   - uuid@11.1.1
   - adm-zip@0.6.0
   - brace-expansion@5.0.8
-  - '@sanity/diff@6.7.0 || 6.8.0'
-  - '@sanity/mutator@6.7.0 || 6.8.0'
-  - '@sanity/schema@6.7.0 || 6.8.0'
-  - '@sanity/types@6.7.0 || 6.8.0'
-  - '@sanity/util@6.7.0 || 6.8.0'
-  - '@sanity/vision@6.7.0 || 6.8.0'
-  - sanity@6.7.0 || 6.8.0
+  - '@sanity/diff@6.7.0 || 6.8.0 || 6.9.1'
+  - '@sanity/mutator@6.7.0 || 6.8.0 || 6.9.1'
+  - '@sanity/schema@6.7.0 || 6.8.0 || 6.9.1'
+  - '@sanity/types@6.7.0 || 6.8.0 || 6.9.1'
+  - '@sanity/util@6.7.0 || 6.8.0 || 6.9.1'
+  - '@sanity/vision@6.7.0 || 6.8.0 || 6.9.1'
+  - sanity@6.7.0 || 6.8.0 || 6.9.1
