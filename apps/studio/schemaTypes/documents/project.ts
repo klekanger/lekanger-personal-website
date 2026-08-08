@@ -6,6 +6,10 @@ export default defineType({
 	title: "LEGACY Artikler",
 	type: "document",
 	icon: DocumentIcon,
+	deprecated: {
+		reason:
+			"Artikler/prosjekter fra gammel webside. Beholdt for at innholdet skal være tilgjengelig fortsatt på web, men innholdet skal ikke lenger frontes på ny nettside.",
+	},
 	fields: [
 		{
 			name: "title",

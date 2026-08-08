@@ -2,6 +2,7 @@ export default {
 	name: "author",
 	title: "LEGACY Forfattere",
 	type: "document",
+	deprecated: true,
 
 	fields: [
 		{

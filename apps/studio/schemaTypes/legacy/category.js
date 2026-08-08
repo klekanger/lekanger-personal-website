@@ -2,6 +2,7 @@ export default {
 	name: "category",
 	type: "document",
 	title: "LEGACY Artikler - kategorier",
+	deprecated: true,
 
 	fields: [
 		{
