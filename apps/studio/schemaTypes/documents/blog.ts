@@ -61,6 +61,11 @@ export default defineType({
 			options: {
 				hotspot: true,
 			},
+			deprecated: {
+				reason:
+					"Dette bildefeltet ble brukt i gamle artikler. Nå brukes en bildetype som kan gjenbrukes flere steder i stedet. ",
+			},
+			hidden: ({ value }) => !value,
 			fields: [
 				defineField({
 					name: "alt",
@@ -72,9 +77,20 @@ export default defineType({
 			],
 		}),
 		defineField({
+			name: "topImage",
+			type: "articleImage",
+			title: "Hovedbilde",
+			description: "Bildet som vises øverst på siden",
+		}),
+		defineField({
 			type: "array",
 			name: "body",
 			title: "Brødtekst",
+			deprecated: {
+				reason:
+					"Dette tekstfeltet ble brukt i gamle artikler. Nå brukes en sentralisert portableText-felttype i stedet.",
+			},
+			hidden: ({ value }) => !value,
 			description:
 				"Her skriver du inn hovedteksten som skal vises i artikkelen.",
 			of: [
@@ -173,6 +189,12 @@ export default defineType({
 					},
 				}),
 			],
+		}),
+		defineField({
+			type: "portableText",
+			name: "bodyText",
+			title: "Brødtekst",
+			description: "Hovedteksten som skal vises i artikkelen",
 		}),
 	],
 	preview: {

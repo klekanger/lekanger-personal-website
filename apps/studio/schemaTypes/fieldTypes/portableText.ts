@@ -1,5 +1,6 @@
 import { ImageIcon } from "@sanity/icons/Image";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { ArticleImage } from "../../customInputComponents/articleImage";
 
 export const portableText = defineType({
 	name: "portableText",
@@ -50,6 +51,9 @@ export const portableText = defineType({
 			type: "articleImage",
 			name: "articleImage",
 			title: "Bilde",
+			components: {
+				block: ArticleImage,
+			},
 		}),
 		defineField({
 			type: "youtube",

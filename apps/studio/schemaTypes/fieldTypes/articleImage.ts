@@ -1,5 +1,5 @@
 import { ImageIcon } from "@sanity/icons/Image";
-import { defineField, defineType } from "sanity";
+import { defineField, defineType, PreviewValue } from "sanity";
 
 export const articleImage = defineType({
 	name: "articleImage",
@@ -36,4 +36,19 @@ export const articleImage = defineType({
 			title: "Bildekreditering (fotograf)",
 		}),
 	],
+	preview: {
+		select: {
+			title: "caption",
+			subtitle: "alt",
+			media: "image",
+		},
+		prepare(selection): PreviewValue {
+			const { title, subtitle, media } = selection;
+			return {
+				title: `Bildetekst: ${title}`,
+				subtitle: `Alt: ${subtitle}`,
+				media,
+			};
+		},
+	},
 });
