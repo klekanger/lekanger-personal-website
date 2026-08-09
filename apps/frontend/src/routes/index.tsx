@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -60,8 +61,8 @@ function App() {
 						<p>READY.</p>
 						<p className="text-white">PRINT BAKGRUNN$</p>
 						<p>TIDLIGERE TEKNOLOGIJOURNALIST OG REDAKTØR</p>
-						<p>READY.</p>
-						<div className="w-4 h-6 bg-primary animate-c64blink"></div>
+						<p className="mb-0">READY.</p>
+						<BlinkingCursor />
 					</div>
 				</div>
 			</section>

@@ -1,3 +1,4 @@
+import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { CustomPortableText } from "@/components/PortableText/PortableText";
 import { Route } from "@/routes/blog-page/$slug";
 
@@ -12,6 +13,7 @@ export function BlogPage() {
 		<article className="prose py-16">
 			<h1>{title}</h1>
 			<CustomPortableText value={body} />
+			<BlinkingCursor />
 		</article>
 	);
 }

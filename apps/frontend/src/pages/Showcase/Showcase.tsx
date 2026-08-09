@@ -1,3 +1,4 @@
+import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { CustomPortableText } from "@/components/PortableText/PortableText";
 import { Route } from "@/routes/showcase/$slug";
 
@@ -21,6 +22,7 @@ export function Showcase() {
 		<article className="prose py-16">
 			<h1>{title}</h1>
 			<CustomPortableText value={bodyText} />
+			<BlinkingCursor />
 		</article>
 	);
 }
