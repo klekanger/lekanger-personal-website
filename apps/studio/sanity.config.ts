@@ -13,12 +13,10 @@ export default defineConfig({
 	projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "",
 
 	plugins: [
-		structureTool(
-			{
-				title: "Innhold",
-				structure,
-			},
-		),
+		structureTool({
+			title: "Innhold",
+			structure,
+		}),
 		visionTool(),
 		codeInput(),
 	],

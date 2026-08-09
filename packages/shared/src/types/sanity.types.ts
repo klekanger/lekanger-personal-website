@@ -22,6 +22,60 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
+export type Settings = {
+  _id: string;
+  _type: "settings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  companyName?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  companyDescription?: string;
+  phone?: string;
+  email?: string;
+  organisationNumber?: string;
+  gitHubAccount?: string;
+  twitterAccount?: string;
+  linkedInAccount?: string;
+  otherSocialAccount?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  metaOgImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type HeroText = {
+  _id: string;
+  _type: "heroText";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  heroTitle?: string;
+};
+
 export type Author = {
   _id: string;
   _type: "author";
@@ -54,22 +108,6 @@ export type Author = {
     _type: "block";
     _key: string;
   }>;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
 };
 
 export type Category = {
@@ -325,6 +363,8 @@ export type Blog = {
     _type: "image";
   };
   topImage?: ArticleImage;
+  isExternalBlog?: boolean;
+  externalBlogUrl?: string;
   body?: Array<
     | {
         children?: Array<{
@@ -477,9 +517,11 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
-  | Author
+  | Settings
   | SanityImageCrop
   | SanityImageHotspot
+  | HeroText
+  | Author
   | Category
   | Figure
   | ProjectPortableText
@@ -507,7 +549,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../frontend/src/lib/sanity/queries/blogPageQuery.ts
 // Variable: BLOGS_BY_SLUG_QUERY
-// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    mainImage,    title,    overview,    body,    bodyText,    "slug": slug.current  }
+// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    mainImage,    title,    overview,    body,    bodyText,    isExternalBlog,    externalBlogUrl,    "slug": slug.current  }
 export type BLOGS_BY_SLUG_QUERY_RESULT = {
   _id: string;
   _createdAt: string;
@@ -575,6 +617,8 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
       }
   > | null;
   bodyText: PortableText | null;
+  isExternalBlog: boolean | null;
+  externalBlogUrl: string | null;
   slug: string | null;
 } | null;
 
@@ -632,7 +676,7 @@ export type SHOWCASE_BY_SLUG_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
   }
