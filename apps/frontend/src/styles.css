@@ -27,30 +27,25 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	/* ---- Layer 1a: the 16 authentic Colodore hues. Reference only — on
-	   --c64-blue half of them fall under 4.5:1 as text, so never reach for one
-	   directly in markup. Go through a Layer 2 token instead. */
+
 	--c64-black: #000000;
 	--c64-white: #ffffff;
-	--c64-red: #813338;
-	--c64-cyan: #75cec8;
-	--c64-purple: #8e3c97;
-	--c64-green: #56ac4d;
-	--c64-blue: #2e2c9b;
-	--c64-yellow: #edf171;
-	--c64-orange: #8e5029;
-	--c64-brown: #553800;
-	--c64-lightred: #c46c71;
-	--c64-darkgray: #4a4a4a;
-	--c64-gray: #7b7b7b;
-	--c64-lightgreen: #a9ff9f;
-	--c64-lightblue: #706deb;
-	--c64-lightgray: #b2b2b2;
+	--c64-red: #924A40;
+	--c64-cyan: #84C5CC;
+	--c64-purple: #9351B6;
+	--c64-green: #72B14B;
+	--c64-blue: #483AAA;
+	--c64-yellow: #D5DF7C;
+	--c64-orange: #99692D;
+	--c64-brown: #675200;
+	--c64-lightred: #C18178;
+	--c64-darkgray: #606060;
+	--c64-gray: #8A8A8A;
+	--c64-lightgreen: #B3EC91;
+	--c64-lightblue: #867ADE;
+	--c64-lightgray: ##B3B3B3;
 
-	/* ---- Layer 1b: steps the 16 cannot supply. Mixed toward black for
-	   recessed surfaces (`ink`, `deep`) and toward white for legibility on blue
-	   (`soft`, `pale`); `lift` is the one hover step. Ordered dark -> light per
-	   hue. Not authentic C64 colours, hence named after the parent hue. */
+
 	--c64-blue-ink: #12114a;
 	--c64-blue-deep: #242279;
 	--c64-blue-lift: #4a42b4;
@@ -63,13 +58,9 @@
 	--c64-gray-pale: #a8a8a8;
 }
 
-/* ---- Layer 2: semantic tokens. No hex here — every value is a Layer 1 name.
-   Ratios are vs --color-background (#2e2c9b), the lightest surface and so the
-   worst case; on `card` and `ink` everything scores higher. */
+
 @theme {
-	/* One palette only. Drops Tailwind's 288 defaults so `bg-blue-500` cannot
-	   creep in. transparent/current are keywords and survive; white and black
-	   are re-declared because shadcn uses text-white and bg-black/50. */
+
 	--color-*: initial;
 	--color-white: var(--c64-white);
 	--color-black: var(--c64-black);
@@ -80,10 +71,6 @@
   --font-term:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
   --font-code:   var(--font-body);
 
-
-	/* Surfaces, light -> dark. The page is the authentic blue; cards and code
-		recess below it rather than lifting above, so the screen hue stays the
-	  dominant one. */
 	--color-background: var(--c64-blue);
 	--color-card: var(--c64-blue-deep);
 	--color-muted: var(--c64-blue-deep);
@@ -91,39 +78,33 @@
 	--color-ink: var(--c64-blue-ink);
 	--color-popover: var(--c64-blue-ink);
 
-	--color-foreground: var(--c64-lightblue-pale); /*  5.71 */
-	--color-foreground-strong: var(--c64-white); /* 10.77 */
-	--color-muted-foreground: var(--c64-lightblue-soft); /*  4.54 */
+	--color-foreground: var(--c64-lightblue-pale); 
+	--color-border: var(--c64-lightblue); 
+	--color-foreground-strong: var(--c64-white); 
+	--color-muted-foreground: var(--c64-lightblue-soft); 
 	--color-card-foreground: var(--c64-lightblue-pale);
 	--color-popover-foreground: var(--c64-lightblue-pale);
 	--color-secondary-foreground: var(--c64-lightblue-pale);
 
 	--color-primary: var(--c64-lightblue-pale);
-	--color-primary-foreground: var(--c64-blue-ink); /*  9.24 on primary */
-	--color-accent: var(--c64-blue-lift); /* hover / active lift */
-	--color-accent-foreground: var(--c64-white); /*  7.69 on accent */
-	--color-destructive: var(--c64-red); /*  8.52 vs text-white */
+	--color-primary-foreground: var(--c64-blue-ink);
+	--color-accent: var(--c64-blue-lift); 
+	--color-accent-foreground: var(--c64-white); 
+	--color-destructive: var(--c64-red); 
 
-	/* `border` is decorative (card and table rules) at 2.60, under the 3:1
-	   non-text floor. `input` and `ring` bound real controls, so they take the
-	   one step lighter that clears it. */
-	--color-border: var(--c64-lightblue); /*  2.60 */
-	--color-frame: var(--c64-lightblue); /* decorative outer band */
-	--color-input: var(--c64-lightblue-soft); /*  4.54 */
-	--color-ring: var(--c64-lightblue-soft); /*  4.54 */
+	--color-border: var(--c64-lightblue); 
+	--color-frame: var(--c64-lightblue); 
+	--color-input: var(--c64-lightblue-soft); 
+	--color-ring: var(--c64-lightblue-soft); 
 
-	/* Emphasis hues for badges and inline accents. All >= 4.5 on every surface,
-	   which is why the warm ones are the `-pale` steps and not the raw hue —
-	   --c64-lightred is only 2.94 here. Text-weight counterparts to the solid
-	   fills above: `text-red` is pale, `bg-destructive` is the authentic red. */
-	--color-cyan: var(--c64-cyan); /*  5.86 */
-	--color-yellow: var(--c64-yellow); /*  8.94 */
-	--color-lime: var(--c64-lightgreen); /*  8.97 */
-	--color-red: var(--c64-red-pale); /*  4.53 */
-	--color-purple: var(--c64-purple-pale); /*  4.52 */
-	--color-orange: var(--c64-orange-pale); /*  4.53 */
-	--color-green: var(--c64-green-pale); /*  4.54 */
-	--color-dim: var(--c64-gray-pale); /*  4.53 */
+	--color-cyan: var(--c64-cyan); 
+	--color-yellow: var(--c64-yellow); 
+	--color-lime: var(--c64-lightgreen); 
+	--color-red: var(--c64-red-pale); 
+	--color-purple: var(--c64-purple-pale); 
+	--color-orange: var(--c64-orange-pale); 
+	--color-green: var(--c64-green-pale); 
+	--color-dim: var(--c64-gray-pale); 
 
 	/* The C64 has no rounded corners. One knob — raise it to soften globally.
 	   All 8 keys: shadcn also uses rounded-xs, and Tailwind's scale runs to 4xl. */
