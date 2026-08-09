@@ -1,5 +1,3 @@
-import { BlinkingCursor } from "./ui/BlinkingCursor";
-
 export default function Footer() {
 	const year = new Date().getFullYear();
 
@@ -10,7 +8,6 @@ export default function Footer() {
 				<div className="text-white">{`<KURT LEKANGER />`}</div>
 				<div className="text-white not-prose mt-0! pt-0!">
 					&copy; {year} READY.
-					<span className="inline-block ml-2 w-4 h-4 bg-primary animate-c64blink"></span>
 				</div>
 			</div>
 		</footer>
