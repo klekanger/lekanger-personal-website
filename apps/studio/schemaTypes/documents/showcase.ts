@@ -1,13 +1,11 @@
-import { DocumentIcon } from "@sanity/icons/Document";
-import { ImageIcon } from "@sanity/icons/Image";
-
+import { ProjectsIcon } from "@sanity/icons/Projects";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export default defineType({
 	type: "document",
 	name: "showcase",
 	title: "Showcase (prosjekt)",
-	icon: DocumentIcon,
+	icon: ProjectsIcon,
 	fields: [
 		defineField({
 			type: "string",
@@ -76,6 +74,20 @@ export default defineType({
 			name: "bodyText",
 			title: "Brødtekst",
 			description: "Hovedteksten som skal vises i artikkelen",
+		}),
+		defineField({
+			type: "url",
+			name: "github",
+			title: "GitHub-lenke",
+			description: "URL til Github-repo",
+			placeholder: "https://github.com/{user}/{repoName}",
+		}),
+		defineField({
+			type: "url",
+			name: "projectUrl",
+			title: "Lenke til prosjekt",
+			description: "URL til prosjektet",
+			placeholder: "https://www.lekanger.no",
 		}),
 	],
 	preview: {
