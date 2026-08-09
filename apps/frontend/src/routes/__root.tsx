@@ -61,10 +61,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto min-h-dvh flex flex-col px-4">
-				<Header />
-				<div className="grow">{children}</div>
-				<Footer />
+			<body className="bg-border py-8">
+				<div className="bg-background wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto min-h-dvh flex flex-col px-4">
+					<Header />
+					<div className="grow">{children}</div>
+					<Footer />
+				</div>
 				<TanStackDevtools
 					config={{
 						position: "bottom-right",
