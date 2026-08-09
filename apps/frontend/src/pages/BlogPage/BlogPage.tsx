@@ -9,7 +9,7 @@ export function BlogPage() {
 	const { title, body } = data;
 
 	return (
-		<article className="prose pt-16">
+		<article className="prose py-16">
 			<h1>{title}</h1>
 			<CustomPortableText value={body} />
 		</article>
