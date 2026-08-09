@@ -140,6 +140,56 @@ export type SimplePortableText = Array<{
   _key: string;
 }>;
 
+export type ArticleImage = {
+  _type: "articleImage";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  caption?: string;
+  alt?: string;
+  credits?: string;
+};
+
+export type PortableText = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & ArticleImage)
+  | ({
+      _key: string;
+    } & Youtube)
+  | ({
+      _key: string;
+    } & Twitter)
+  | ({
+      _key: string;
+    } & Code)
+  | ({
+      _key: string;
+    } & Code)
+>;
+
 export type Youtube = {
   _type: "youtube";
   url?: string;
@@ -209,6 +259,41 @@ export type Slug = {
   source?: string;
 };
 
+export type Showcase = {
+  _id: string;
+  _type: "showcase";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  bodyText?: PortableText;
+  github?: string;
+  projectUrl?: string;
+};
+
 export type Blog = {
   _id: string;
   _type: "blog";
@@ -239,6 +324,7 @@ export type Blog = {
     alt?: string;
     _type: "image";
   };
+  topImage?: ArticleImage;
   body?: Array<
     | {
         children?: Array<{
@@ -281,6 +367,7 @@ export type Blog = {
         _key: string;
       } & Code)
   >;
+  bodyText?: PortableText;
 };
 
 export type Code = {
@@ -397,6 +484,8 @@ export type AllSanitySchemaTypes =
   | Figure
   | ProjectPortableText
   | SimplePortableText
+  | ArticleImage
+  | PortableText
   | Youtube
   | Twitter
   | AuthorReference
@@ -404,6 +493,7 @@ export type AllSanitySchemaTypes =
   | ProjectReference
   | Project
   | Slug
+  | Showcase
   | Blog
   | Code
   | SanityImagePaletteSwatch
@@ -484,7 +574,7 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
         _key: string;
       }
   > | null;
-  bodyText: null;
+  bodyText: PortableText | null;
   slug: string | null;
 } | null;
 
@@ -502,11 +592,48 @@ export type PROJECTS_BY_SLUG_QUERY_RESULT = {
   body: ProjectPortableText | null;
 } | null;
 
+// Source: ../frontend/src/lib/sanity/queries/showcaseQuery.ts
+// Variable: SHOWCASE_BY_SLUG_QUERY
+// Query: *[_type=="showcase" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    mainImage,    title,    overview,    bodyText,    github,    projectUrl,    "slug": slug.current    }
+export type SHOWCASE_BY_SLUG_QUERY_RESULT = {
+  _id: string;
+  _createdAt: string;
+  _updatedAt: string;
+  mainImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  title: string | null;
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  bodyText: PortableText | null;
+  github: string | null;
+  projectUrl: string | null;
+  slug: string | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
+    '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
   }
 }

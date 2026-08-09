@@ -5,16 +5,19 @@ import type { PortableTextValueOfType } from "../../componentTypes";
 export const ArticleImageSerializer = ({
 	value,
 }: PortableTextTypeComponentProps<
-	PortableTextValueOfType<"image" | "figure">
+	PortableTextValueOfType<"image" | "figure" | "articleImage">
 >) => {
-	const { asset } = value;
+	// `articleImage` nests the image under `image`; `figure` carries it flat.
+	// `figure`is kept for legacy reasons (articles from old website)
+	const source = value._type === "articleImage" ? value.image : value;
+	const asset = source?.asset;
 
 	if (!asset) {
 		return null;
 	}
 
 	// Pass the whole object rather than just the asset, so hotspot/crop apply.
-	const builder = urlForImage({ ...value, asset });
+	const builder = urlForImage({ ...source, asset });
 	const small = builder.width(400).url();
 	const medium = builder.width(800).url();
 	const large = builder.width(1200).url();
