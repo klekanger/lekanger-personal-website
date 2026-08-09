@@ -10,6 +10,8 @@ import category from "./legacy/category";
 import figure from "./legacy/figure";
 import projectPortableText from "./legacy/projectPortableText";
 import simplePortableText from "./legacy/simplePortableText";
+import heroText from "./singletons/heroText";
+import siteSettings from "./singletons/siteSettings";
 
 export const schemaTypes = [
 	blog,
@@ -24,4 +26,8 @@ export const schemaTypes = [
 	figure,
 	category,
 	author,
+
+	// Singletons
+	heroText,
+	siteSettings,
 ];

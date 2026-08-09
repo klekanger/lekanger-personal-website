@@ -1,4 +1,4 @@
-import { DocumentIcon } from "@sanity/icons/Document";
+import { ComposeIcon } from "@sanity/icons/Compose";
 import { ImageIcon } from "@sanity/icons/Image";
 
 import { defineArrayMember, defineField, defineType } from "sanity";
@@ -7,7 +7,15 @@ export default defineType({
 	type: "document",
 	name: "blog",
 	title: "Blogg-artikkel",
-	icon: DocumentIcon,
+	icon: ComposeIcon,
+
+	fieldsets: [
+		{
+			name: "externalBlogInfo",
+			title: "Eksterne blogginnlegg",
+		},
+	],
+
 	fields: [
 		defineField({
 			type: "string",
@@ -82,6 +90,21 @@ export default defineType({
 			title: "Hovedbilde",
 			description: "Bildet som vises øverst på siden",
 		}),
+		defineField({
+			name: "isExternalBlog",
+			type: "boolean",
+			title: "Blogginnlegget ligger på ekstern nettside",
+			initialValue: false,
+			fieldset: "externalBlogInfo",
+		}),
+		defineField({
+			name: "externalBlogUrl",
+			type: "url",
+			placeholder: "https://blog.novacare.no/slik-holder-du-ai-en-i-orene/",
+			hidden: ({ parent }) => parent?.isExternalBlog === false,
+			fieldset: "externalBlogInfo",
+		}),
+
 		defineField({
 			type: "array",
 			name: "body",
@@ -195,6 +218,7 @@ export default defineType({
 			name: "bodyText",
 			title: "Brødtekst",
 			description: "Hovedteksten som skal vises i artikkelen",
+			hidden: ({ parent }) => parent?.isExternalBlog === true,
 		}),
 	],
 	preview: {
