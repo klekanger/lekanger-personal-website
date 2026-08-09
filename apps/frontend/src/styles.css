@@ -173,12 +173,6 @@
 
 }
 
-/* The typography plugin hardcodes greys into --tw-prose-* and rounds `pre`/`kbd`,
-   both illegible/wrong on a C64 surface. This block is deliberately NOT inside
-   `@layer` — the plugin emits its `.prose` rules into `@layer utilities`, and
-   layer precedence beats both source order and specificity, so a `components`
-   layer override silently loses. Unlayered declarations outrank every layer.
-   Trade-off: this also outranks `prose-invert`, which we do not use. */
 .prose {
 	--tw-prose-body: var(--color-foreground);
 	--tw-prose-headings: var(--color-foreground);
@@ -198,6 +192,8 @@
 	--tw-prose-pre-bg: var(--syn-bg);
 	--tw-prose-th-borders: var(--color-border);
 	--tw-prose-td-borders: var(--color-border);
+
+	max-width: 90%;
 }
 
 /* The plugin hardcodes 6px on `pre` and 5px on `kbd`; --radius cannot reach them. */
@@ -208,3 +204,7 @@
 .prose :is(h1, h2, h3, h4) {
 	font-weight: 400;
 }
+
+
+
+
