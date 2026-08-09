@@ -26,7 +26,7 @@ export function CustomPortableText({
 	value: PortableTextValue | null | undefined;
 }) {
 	return (
-		<div className="prose">
+		<div className="prose lg:prose-xl">
 			<PortableText components={components} value={value} />
 		</div>
 	);
