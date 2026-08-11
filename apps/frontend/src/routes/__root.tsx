@@ -1,4 +1,3 @@
-import sixtyfourUrl from "@fontsource-variable/sixtyfour/files/sixtyfour-latin-bled-normal.woff2?url";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
@@ -34,13 +33,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{
 				rel: "stylesheet",
 				href: appCss,
-			},
-			{
-				rel: "preload",
-				as: "font",
-				type: "font/woff2",
-				href: sixtyfourUrl,
-				crossOrigin: "anonymous",
 			},
 		],
 	}),

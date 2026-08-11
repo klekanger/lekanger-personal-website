@@ -8,7 +8,7 @@
 
 /* Sixtyfour — BLED axis only (3.6 KB latin). Swap to
    '@fontsource-variable/sixtyfour/full.css' if you also want SCAN. */
-@import '@fontsource-variable/sixtyfour';
+@import '@fontsource-variable/sixtyfour/bled.css';
  
 /* IBM Plex Mono — body + code. 400 and 700 only; skip italics,
    you will not use them and each is another 14 KB. */
@@ -66,7 +66,7 @@
 	--color-black: var(--c64-black);
 
 	/* Fonts */
-	--font-heading: 'Sixtyfour Variable', 'Courier New', monospace;
+	--font-heading: 'Sixtyfour Variable', monospace;
   --font-body:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
   --font-term:   'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
   --font-code:   var(--font-body);
