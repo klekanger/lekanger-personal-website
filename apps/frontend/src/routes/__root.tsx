@@ -1,3 +1,5 @@
+import plex400 from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url";
+import plex700 from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff2?url";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
@@ -31,9 +33,20 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		],
 		links: [
 			{
-				rel: "stylesheet",
-				href: appCss,
+				rel: "preload",
+				as: "font",
+				type: "font/woff2",
+				href: plex400,
+				crossOrigin: "anonymous",
 			},
+			{
+				rel: "preload",
+				as: "font",
+				type: "font/woff2",
+				href: plex700,
+				crossOrigin: "anonymous",
+			},
+			{ rel: "stylesheet", href: appCss },
 		],
 	}),
 	component: RootComponent,
