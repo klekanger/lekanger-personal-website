@@ -21,6 +21,8 @@ export function Showcase() {
 	return (
 		<article className="prose py-16">
 			<h1>{title}</h1>
+			<CustomPortableText value={overview} isPreamble />
+			<br />
 			<CustomPortableText value={bodyText} />
 			<BlinkingCursor />
 		</article>

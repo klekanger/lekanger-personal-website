@@ -1,4 +1,5 @@
 import { PortableText } from "@portabletext/react";
+import { cn } from "#/lib/utils";
 import { block } from "./block";
 import type {
 	DecoratorComponents,
@@ -22,11 +23,18 @@ const components = {
 
 export function CustomPortableText({
 	value,
+	isPreamble = false,
 }: {
 	value: PortableTextValue | null | undefined;
+	isPreamble?: boolean;
 }) {
 	return (
-		<div className="prose lg:prose-xl">
+		// <div className="prose lg:prose-xl">
+		<div
+			className={cn("prose lg:prose-xl font-mono", {
+				"font-bold": isPreamble,
+			})}
+		>
 			<PortableText components={components} value={value} />
 		</div>
 	);
