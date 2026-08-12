@@ -5,6 +5,8 @@ import { SHOWCASE_BY_SLUG_QUERY } from "@/lib/sanity/queries/showcaseQuery";
 
 export const Route = createFileRoute("/showcase/$slug")({
 	component: Showcase,
-	loader: ({ context, params }) =>
-		loadSanityQuery(context, SHOWCASE_BY_SLUG_QUERY, { slug: params.slug }),
+	loader: async ({ context, params }) =>
+		await loadSanityQuery(context, SHOWCASE_BY_SLUG_QUERY, {
+			slug: params.slug,
+		}),
 });

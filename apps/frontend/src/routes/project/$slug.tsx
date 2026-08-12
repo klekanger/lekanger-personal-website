@@ -6,5 +6,7 @@ import { ProjectPage } from "@/pages/ProjectPage/ProjectPage";
 export const Route = createFileRoute("/project/$slug")({
 	component: ProjectPage,
 	loader: async ({ context, params }) =>
-		loadSanityQuery(context, PROJECTS_BY_SLUG_QUERY, { slug: params.slug }),
+		await loadSanityQuery(context, PROJECTS_BY_SLUG_QUERY, {
+			slug: params.slug,
+		}),
 });
