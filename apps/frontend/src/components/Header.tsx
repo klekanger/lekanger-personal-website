@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 export default function Header() {
 	return (
 		<header>
@@ -6,9 +8,9 @@ export default function Header() {
 					<a href="/">{`<KURT LEKANGER />`}</a>
 				</div>
 				<div className="flex gap-8 text-white">
-					<div>PROSJEKTER</div>
+					<Link to="/showcase">PROSJEKTER</Link>
 
-					<div>BLOGG</div>
+					<Link to="/blog-page">BLOGG</Link>
 
 					<div>OM MEG</div>
 				</div>
