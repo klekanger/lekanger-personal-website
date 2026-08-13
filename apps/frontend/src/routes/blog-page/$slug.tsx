@@ -1,5 +1,4 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { loadSanityQuery } from "@/lib/sanity/loader";
 import { BLOGS_BY_SLUG_QUERY } from "@/lib/sanity/queries/blogPageQuery";
 import { BlogPage } from "@/pages/BlogPage/BlogPage";
@@ -22,11 +21,4 @@ export const Route = createFileRoute("/blog-page/$slug")({
 
 		return { data, ...rest };
 	},
-
-	notFoundComponent: () => (
-		<>
-			<h1>404 - bloggposten ble ikke funnet</h1>
-			<BlinkingCursor />
-		</>
-	),
 });
