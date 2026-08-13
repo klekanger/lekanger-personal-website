@@ -77,6 +77,14 @@
 	--color-*: initial;
 	--color-white: var(--c64-white);
 	--color-black: var(--c64-black);
+	--color-yellow: var(--c64-yellow);
+	--color-red: var(--c64-red);
+	--color-green: var(--c64-green);
+	--color-blue: var(--c64-blue);
+	--color-purple: var(--c64-purple);
+	--color-orange: var(--c64-orange);
+	--color-cyan: var(--c64-cyan);
+	--color-brown: var(--c64-brown);
 
 	--font-heading: 'Sixtyfour Variable', monospace;
 	--font-body: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Menlo',
