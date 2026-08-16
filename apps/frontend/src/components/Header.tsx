@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-export default function Header() {
+export function Header() {
   return (
     <header>
       <nav className="flex flex-wrap justify-between font-heading h-16 py-4">
