@@ -141,7 +141,14 @@ For bulk imports, generate one valid JSON document per line. Every document need
 Use `_sanityAsset` where an asset reference would normally go:
 
 ```json
-{"_id":"post-123","_type":"post","mainImage":{"_type":"image","_sanityAsset":"image@https://example.com/original.jpg"}}
+{
+  "_id": "post-123",
+  "_type": "post",
+  "mainImage": {
+    "_type": "image",
+    "_sanityAsset": "image@https://example.com/original.jpg"
+  }
+}
 ```
 
 Rules:

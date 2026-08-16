@@ -3,11 +3,11 @@ import { Tweet } from "react-tweet";
 import type { PortableTextValueOfType } from "../../componentTypes";
 
 export const TwitterSerializer = ({
-	value,
+  value,
 }: PortableTextTypeComponentProps<PortableTextValueOfType<"Twitter">>) => {
-	if (!value?.tweetId) {
-		return null;
-	}
+  if (!value?.tweetId) {
+    return null;
+  }
 
-	return <Tweet id={value.tweetId} />;
+  return <Tweet id={value.tweetId} />;
 };

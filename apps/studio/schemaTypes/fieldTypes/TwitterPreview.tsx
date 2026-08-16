@@ -2,21 +2,21 @@ import { TwitterTweetEmbed } from "react-twitter-embed";
 import type { PreviewProps } from "sanity";
 
 export function TwitterPreview(props: PreviewProps & { tweetId: string }) {
-	const { tweetId, renderDefault } = props || {};
+  const { tweetId, renderDefault } = props || {};
 
-	if (!tweetId) {
-		return (
-			<div>
-				{renderDefault({ ...props, title: "Twitter Embed" })}
-				Tweet-ID mangler
-			</div>
-		);
-	}
+  if (!tweetId) {
+    return (
+      <div>
+        {renderDefault({ ...props, title: "Twitter Embed" })}
+        Tweet-ID mangler
+      </div>
+    );
+  }
 
-	return (
-		<div>
-			{renderDefault({ ...props, title: "Twitter Embed" })}
-			<TwitterTweetEmbed tweetId={tweetId} />
-		</div>
-	);
+  return (
+    <div>
+      {renderDefault({ ...props, title: "Twitter Embed" })}
+      <TwitterTweetEmbed tweetId={tweetId} />
+    </div>
+  );
 }

@@ -6,22 +6,22 @@ import { schemaTypes } from "./schemaTypes";
 import { structure } from "./structure";
 
 export default defineConfig({
-	name: "default",
-	title: "Lekanger tekst og kode",
+  name: "default",
+  title: "Lekanger tekst og kode",
 
-	dataset: process.env.SANITY_STUDIO_DATASET ?? "",
-	projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "",
+  dataset: process.env.SANITY_STUDIO_DATASET ?? "",
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "",
 
-	plugins: [
-		structureTool({
-			title: "Innhold",
-			structure,
-		}),
-		visionTool(),
-		codeInput(),
-	],
+  plugins: [
+    structureTool({
+      title: "Innhold",
+      structure,
+    }),
+    visionTool(),
+    codeInput(),
+  ],
 
-	schema: {
-		types: schemaTypes,
-	},
+  schema: {
+    types: schemaTypes,
+  },
 });

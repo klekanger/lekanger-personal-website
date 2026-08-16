@@ -1,8 +1,8 @@
 import type {
-	DefaultPortableTextMark,
-	InferStrictComponents,
-	InferValue,
-	PortableTextMarkComponent,
+  DefaultPortableTextMark,
+  InferStrictComponents,
+  InferValue,
+  PortableTextMarkComponent,
 } from "@portabletext/react";
 import type { SanityQueries } from "@sanity/client";
 
@@ -20,16 +20,16 @@ import type { SanityQueries } from "@sanity/client";
  * Remove an entry here once TypeGen preserves the array member name.
  */
 type StoredTypeNames = {
-	youtube: "YouTube";
-	twitter: "Twitter";
+  youtube: "YouTube";
+  twitter: "Twitter";
 };
 
 /** Re-stamps `_type` on the members TypeGen misnames — see `StoredTypeNames`. */
 type WithStoredTypeName<TValue> = TValue extends {
-	_type: infer TType extends keyof StoredTypeNames;
+  _type: infer TType extends keyof StoredTypeNames;
 }
-	? Omit<TValue, "_type"> & { _type: StoredTypeNames[TType] }
-	: TValue;
+  ? Omit<TValue, "_type"> & { _type: StoredTypeNames[TType] }
+  : TValue;
 
 /**
  * Array value type for every Portable Text item shape across all registered
@@ -47,14 +47,14 @@ export type PortableTextValue = InferValue<SanityQueries[keyof SanityQueries]>;
  * is derived from this rather than from `PortableTextValue`.
  */
 export type StoredPortableTextValue = Array<
-	| WithStoredTypeName<PortableTextValue[number]>
-	// `blog.body` registers the `code` type twice — as `code` and as `htmlEmbed`.
-	// Both inline to the same `_type: "code"` member (see `StoredTypeNames`), so
-	// the rename has to be re-added here rather than mapped in `StoredTypeNames`,
-	// which is 1:1.
-	| (Omit<Extract<PortableTextValue[number], { _type: "code" }>, "_type"> & {
-			_type: "htmlEmbed";
-	  })
+  | WithStoredTypeName<PortableTextValue[number]>
+  // `blog.body` registers the `code` type twice — as `code` and as `htmlEmbed`.
+  // Both inline to the same `_type: "code"` member (see `StoredTypeNames`), so
+  // the rename has to be re-added here rather than mapped in `StoredTypeNames`,
+  // which is 1:1.
+  | (Omit<Extract<PortableTextValue[number], { _type: "code" }>, "_type"> & {
+      _type: "htmlEmbed";
+    })
 >;
 
 /**
@@ -76,7 +76,7 @@ export type StrictComponents = InferStrictComponents<StoredPortableTextValue>;
  * `StrictComponents` already types from its `markDefs` shape.
  */
 export type DecoratorComponents = Partial<
-	Record<Exclude<DefaultPortableTextMark, "link">, PortableTextMarkComponent>
+  Record<Exclude<DefaultPortableTextMark, "link">, PortableTextMarkComponent>
 >;
 
 /**
@@ -86,5 +86,5 @@ export type DecoratorComponents = Partial<
  * `Youtube` / `Twitter` carry the wrong `_type` (see `StoredTypeNames`).
  */
 export type PortableTextValueOfType<
-	TType extends StoredPortableTextValue[number]["_type"],
+  TType extends StoredPortableTextValue[number]["_type"],
 > = Extract<StoredPortableTextValue[number], { _type: TType }>;

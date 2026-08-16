@@ -17,33 +17,33 @@ import yaml from "shiki/langs/yaml.mjs";
 import githubdark from "shiki/themes/github-dark.mjs";
 
 const highlighter = createHighlighterCoreSync({
-	engine: createJavaScriptRegexEngine(),
-	themes: [githubdark],
+  engine: createJavaScriptRegexEngine(),
+  themes: [githubdark],
 
-	langs: [
-		css,
-		html,
-		javascript,
-		json,
-		jsx,
-		markdown,
-		python,
-		scss,
-		shellscript,
-		sql,
-		tsx,
-		typescript,
-		xml,
-		yaml,
-	],
+  langs: [
+    css,
+    html,
+    javascript,
+    json,
+    jsx,
+    markdown,
+    python,
+    scss,
+    shellscript,
+    sql,
+    tsx,
+    typescript,
+    xml,
+    yaml,
+  ],
 });
 
 const loadedLanguages = new Set(highlighter.getLoadedLanguages());
 
 /** Language ids Sanity stores under a name Shiki does not know. */
 const LANGUAGE_ALIASES: Record<string, string> = {
-	mysql: "sql",
-	sass: "scss",
+  mysql: "sql",
+  sass: "scss",
 };
 
 /**
@@ -54,29 +54,29 @@ const LANGUAGE_ALIASES: Record<string, string> = {
 const PLAIN_TEXT = "text";
 
 function resolveLanguage(language: string | undefined): string {
-	if (!language) {
-		return PLAIN_TEXT;
-	}
+  if (!language) {
+    return PLAIN_TEXT;
+  }
 
-	const resolved = LANGUAGE_ALIASES[language] ?? language;
+  const resolved = LANGUAGE_ALIASES[language] ?? language;
 
-	if (loadedLanguages.has(resolved)) {
-		return resolved;
-	}
+  if (loadedLanguages.has(resolved)) {
+    return resolved;
+  }
 
-	if (import.meta.env.DEV && resolved !== PLAIN_TEXT) {
-		console.warn(
-			`[shiki] No grammar registered for "${language}" — rendering it as plain text. Add it to \`langs\` in src/lib/shiki.ts.`,
-		);
-	}
+  if (import.meta.env.DEV && resolved !== PLAIN_TEXT) {
+    console.warn(
+      `[shiki] No grammar registered for "${language}" — rendering it as plain text. Add it to \`langs\` in src/lib/shiki.ts.`,
+    );
+  }
 
-	return PLAIN_TEXT;
+  return PLAIN_TEXT;
 }
 
 /** Highlights `code` to Shiki's `<pre>` markup. Safe to call during render. */
 export function highlightCode(code: string, language: string | undefined) {
-	return highlighter.codeToHtml(code, {
-		lang: resolveLanguage(language),
-		themes: { light: "github-dark", dark: "github-dark" },
-	});
+  return highlighter.codeToHtml(code, {
+    lang: resolveLanguage(language),
+    themes: { light: "github-dark", dark: "github-dark" },
+  });
 }

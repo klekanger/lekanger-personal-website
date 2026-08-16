@@ -1,23 +1,23 @@
 {
-	"name": "lekanger-personal-website",
-	"private": true,
-	"scripts": {
-		"build": "turbo run build",
-		"dev": "turbo run dev",
-		"lint": "turbo run lint",
-		"format": "biome format --write && pnpm format:prose",
-		"format:prose": "prettier --write \"**/*.md\"",
-		"check": "biome check",
-		"check-types": "turbo run check-types"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.4.5",
-		"prettier": "^3.9.6",
-		"turbo": "^2.10.7",
-		"typescript": "5.9.2"
-	},
-	"packageManager": "pnpm@11.17.0",
-	"engines": {
-		"node": ">=18"
-	}
+  "name": "lekanger-personal-website",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "biome format --write && pnpm format:prose",
+    "format:prose": "prettier --write \"**/*.md\"",
+    "check": "biome check",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.5",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.7",
+    "typescript": "5.9.2"
+  },
+  "packageManager": "pnpm@11.17.0",
+  "engines": {
+    "node": ">=18"
+  }
 }

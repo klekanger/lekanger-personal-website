@@ -95,7 +95,7 @@ Stega / `resultSourceMap` are currently **off**: draft mode is not wired up, and
 ### Conventions
 
 - Import aliases in `apps/frontend`: both `#/*` and `@/*` map to `./src/*`. `#/*` is the real Node subpath import (declared in `package.json` `imports`); `@/*` is tsconfig-only. Existing code mixes them — prefer `@/` for new code.
-- Tooling is **Biome**, not ESLint/Prettier (except Prettier for Markdown, and the studio's `@sanity/eslint-config-studio`). Tabs, double quotes.
+- Tooling is **Biome**, not ESLint/Prettier (except Prettier for Markdown, and the studio's `@sanity/eslint-config-studio`). Indentation is **2 spaces** (set explicitly in the root `biome.json` `formatter` block — Biome's own default is tabs), double quotes.
 - Styling is Tailwind CSS v4 (config-less, via `@tailwindcss/vite`; theme lives in `src/styles.css`). shadcn/ui is set up with the `new-york` style and `zinc` base — add components with `pnpm dlx shadcn@latest add <component>`.
 - `src/routes/index.tsx` and `about.tsx` are still starter-template placeholder content.
 

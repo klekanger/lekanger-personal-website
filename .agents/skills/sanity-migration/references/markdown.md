@@ -21,9 +21,9 @@ npm install @portabletext/markdown
 ```
 
 ```ts
-import {markdownToPortableText} from '@portabletext/markdown'
+import { markdownToPortableText } from "@portabletext/markdown";
 
-const body = markdownToPortableText(markdown)
+const body = markdownToPortableText(markdown);
 ```
 
 Do not call Markdown -> HTML -> `htmlToBlocks` "direct conversion." That is an HTML fallback path. Use it only when the Markdown pipeline cannot handle source-specific syntax that is easier to normalize as HTML.
@@ -37,11 +37,11 @@ npm install @portabletext/markdown @portabletext/sanity-bridge
 ```
 
 ```ts
-import {markdownToPortableText} from '@portabletext/markdown'
-import {sanitySchemaToPortableTextSchema} from '@portabletext/sanity-bridge'
+import { markdownToPortableText } from "@portabletext/markdown";
+import { sanitySchemaToPortableTextSchema } from "@portabletext/sanity-bridge";
 
-const schema = sanitySchemaToPortableTextSchema(sanityBlockArraySchema)
-const body = markdownToPortableText(markdown, {schema})
+const schema = sanitySchemaToPortableTextSchema(sanityBlockArraySchema);
+const body = markdownToPortableText(markdown, { schema });
 ```
 
 Use custom matchers when Markdown syntax must become specific Sanity objects:
@@ -50,14 +50,14 @@ Use custom matchers when Markdown syntax must become specific Sanity objects:
 const body = markdownToPortableText(markdown, {
   schema,
   types: {
-    table: ({context, value}) => ({
-      _type: 'table',
+    table: ({ context, value }) => ({
+      _type: "table",
       _key: context.keyGenerator(),
       rows: value.rows,
       headerRows: value.headerRows,
     }),
   },
-})
+});
 ```
 
 Only emit custom types that exist in the target schema.
@@ -106,7 +106,22 @@ Use stable IDs:
 For bulk imports, prefer NDJSON:
 
 ```json
-{"_id":"post-example","_type":"post","title":"Example","body":[{"_type":"block","_key":"a","style":"normal","children":[{"_type":"span","_key":"b","text":"Hello","marks":[]}],"markDefs":[]}]}
+{
+  "_id": "post-example",
+  "_type": "post",
+  "title": "Example",
+  "body": [
+    {
+      "_type": "block",
+      "_key": "a",
+      "style": "normal",
+      "children": [
+        { "_type": "span", "_key": "b", "text": "Hello", "marks": [] }
+      ],
+      "markDefs": []
+    }
+  ]
+}
 ```
 
 Then import with:

@@ -1,36 +1,36 @@
 {
-	"name": "studio",
-	"private": true,
-	"version": "1.0.0",
-	"main": "package.json",
-	"license": "UNLICENSED",
-	"scripts": {
-		"build": "sanity build",
-		"deploy": "sanity deploy",
-		"deploy-graphql": "sanity graphql deploy",
-		"dev": "sanity dev",
-		"start": "sanity start"
-	},
-	"keywords": [
-		"sanity"
-	],
-	"dependencies": {
-		"@repo/shared": "workspace:*",
-		"@sanity/code-input": "^7.3.3",
-		"@sanity/icons": "^5.2.1",
-		"@sanity/ui": "^3.4.5",
-		"@sanity/vision": "^6.9.2",
-		"react": "^19.2.8",
-		"react-dom": "^19.2.8",
-		"react-player": "^3.4.0",
-		"react-twitter-embed": "^4.0.4",
-		"sanity": "^6.9.2",
-		"styled-components": "^6.4.4"
-	},
-	"devDependencies": {
-		"@sanity/eslint-config-studio": "^6.0.0",
-		"@types/react": "^19.2.17",
-		"eslint": "^9.39.5",
-		"typescript": "^5.9.2"
-	}
+  "name": "studio",
+  "private": true,
+  "version": "1.0.0",
+  "main": "package.json",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "dev": "sanity dev",
+    "start": "sanity start"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@repo/shared": "workspace:*",
+    "@sanity/code-input": "^7.3.3",
+    "@sanity/icons": "^5.2.1",
+    "@sanity/ui": "^3.4.5",
+    "@sanity/vision": "^6.9.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-player": "^3.4.0",
+    "react-twitter-embed": "^4.0.4",
+    "sanity": "^6.9.2",
+    "styled-components": "^6.4.4"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^6.0.0",
+    "@types/react": "^19.2.17",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.2"
+  }
 }

@@ -2,72 +2,72 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { loadSanityQuery } from "#/lib/sanity/loader";
 import { BlogListingPage } from "#/pages/BlogPage/BlogListingPage";
 import {
-	Pagination,
-	PaginationContent,
-	PaginationEllipsis,
-	PaginationItem,
-	PaginationNext,
-	PaginationPrevious,
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { ALL_BLOGS_QUERY } from "@/lib/sanity/queries/blogPagesQuery";
 
 const POSTS_PER_PAGE = 3;
 
 export const Route = createFileRoute("/blog-page/")({
-	validateSearch: (search) => ({
-		page: Math.max(1, Number(search.page) || 1),
-	}),
-	loaderDeps: ({ search: { page } }) => ({ page }),
-	loader: async ({ context, deps: { page } }) => {
-		const start = (page - 1) * POSTS_PER_PAGE;
-		const data = await loadSanityQuery(context, ALL_BLOGS_QUERY, {
-			start,
-			end: start + POSTS_PER_PAGE,
-		});
-		if (!data?.data?.items.length || start >= data?.data?.total)
-			throw notFound();
+  validateSearch: (search) => ({
+    page: Math.max(1, Number(search.page) || 1),
+  }),
+  loaderDeps: ({ search: { page } }) => ({ page }),
+  loader: async ({ context, deps: { page } }) => {
+    const start = (page - 1) * POSTS_PER_PAGE;
+    const data = await loadSanityQuery(context, ALL_BLOGS_QUERY, {
+      start,
+      end: start + POSTS_PER_PAGE,
+    });
+    if (!data?.data?.items.length || start >= data?.data?.total)
+      throw notFound();
 
-		return data;
-	},
-	component: RouteComponent,
+    return data;
+  },
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { data } = Route.useLoaderData();
-	const { page } = Route.useSearch();
-	const { items, total } = data;
+  const { data } = Route.useLoaderData();
+  const { page } = Route.useSearch();
+  const { items, total } = data;
 
-	const isLastPage = page >= Math.ceil(Number(total) / POSTS_PER_PAGE);
+  const isLastPage = page >= Math.ceil(Number(total) / POSTS_PER_PAGE);
 
-	return (
-		<>
-			<BlogListingPage items={items} page={page} />
+  return (
+    <>
+      <BlogListingPage items={items} page={page} />
 
-			<Pagination className="pt-8">
-				<PaginationContent>
-					{page !== 1 ? (
-						<PaginationItem className="font-heading text-2xl">
-							<PaginationPrevious
-								to="."
-								search={{ page: page - 1 }}
-								text="Forrige"
-								className="font-heading text-2xl hover:bg-foreground hover:text-background"
-							/>
-						</PaginationItem>
-					) : null}
-					{!isLastPage && page !== 1 ? <PaginationEllipsis /> : null}
-					{!isLastPage ? (
-						<PaginationItem>
-							<PaginationNext
-								to="."
-								search={{ page: page + 1 }}
-								text="Neste"
-								className="font-heading text-2xl hover:bg-foreground hover:text-background"
-							/>
-						</PaginationItem>
-					) : null}
-				</PaginationContent>
-			</Pagination>
-		</>
-	);
+      <Pagination className="pt-8">
+        <PaginationContent>
+          {page !== 1 ? (
+            <PaginationItem className="font-heading text-2xl">
+              <PaginationPrevious
+                to="."
+                search={{ page: page - 1 }}
+                text="Forrige"
+                className="font-heading text-2xl hover:bg-foreground hover:text-background"
+              />
+            </PaginationItem>
+          ) : null}
+          {!isLastPage && page !== 1 ? <PaginationEllipsis /> : null}
+          {!isLastPage ? (
+            <PaginationItem>
+              <PaginationNext
+                to="."
+                search={{ page: page + 1 }}
+                text="Neste"
+                className="font-heading text-2xl hover:bg-foreground hover:text-background"
+              />
+            </PaginationItem>
+          ) : null}
+        </PaginationContent>
+      </Pagination>
+    </>
+  );
 }

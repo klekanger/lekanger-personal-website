@@ -16,13 +16,13 @@ Before writing migration code, determine:
 
 Access changes extraction completeness more than downstream complexity:
 
-| Access | Best use | Main risk |
-| --- | --- | --- |
-| Repository | Prove schemas, components, dynamic zones | Does not contain content values |
-| Public REST | Fast published-content extraction | Omits drafts/private fields and cannot prove completeness |
-| Admin/authenticated API | Drafts, unpublished entries, private fields | Requires approved credentials |
-| GraphQL | Typed extraction when enabled | Introspection may be disabled |
-| Database | Completeness checks, hidden data | Requires manual joins through relation/morph tables |
+| Access                  | Best use                                    | Main risk                                                 |
+| ----------------------- | ------------------------------------------- | --------------------------------------------------------- |
+| Repository              | Prove schemas, components, dynamic zones    | Does not contain content values                           |
+| Public REST             | Fast published-content extraction           | Omits drafts/private fields and cannot prove completeness |
+| Admin/authenticated API | Drafts, unpublished entries, private fields | Requires approved credentials                             |
+| GraphQL                 | Typed extraction when enabled               | Introspection may be disabled                             |
+| Database                | Completeness checks, hidden data            | Requires manual joins through relation/morph tables       |
 
 REST with `populate` is often better than raw database extraction because Strapi returns joined relationships and components.
 

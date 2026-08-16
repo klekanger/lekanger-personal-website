@@ -10,6 +10,7 @@ Principles and patterns for running effective content experiments to improve con
 ## When to Apply
 
 Reference these guidelines when:
+
 - Setting up A/B or multivariate testing infrastructure
 - Designing experiments for content changes
 - Analyzing and interpreting test results
@@ -19,20 +20,25 @@ Reference these guidelines when:
 ## Core Concepts
 
 ### A/B Testing
+
 Comparing two variants (A vs B) to determine which performs better.
 
 ### Multivariate Testing
+
 Testing multiple variables simultaneously to find optimal combinations.
 
 ### Statistical Significance
+
 The confidence level that results aren't due to random chance.
 
 ### Experimentation Culture
+
 Making decisions based on data rather than opinions (HiPPO avoidance).
 
 ## References
 
 Start with the reference that matches the current problem, such as design, statistics, CMS integration, or pitfalls. See `references/` for detailed guidance:
+
 - `references/experiment-design.md` — Hypothesis framework, metrics, sample size, and what to test
 - `references/statistical-foundations.md` — p-values, confidence intervals, power analysis, Bayesian methods
 - `references/cms-integration.md` — CMS-managed variants, field-level variants, external platforms

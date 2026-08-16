@@ -96,28 +96,29 @@ Use page templates and custom post types as signals for content trapped in prese
 When parsing WXR/XML, always unwrap parser output before writing Sanity documents. Prefer `fast-xml-parser` so CDATA is captured consistently:
 
 ```ts
-import {XMLParser} from 'fast-xml-parser'
-import {readFile} from 'node:fs/promises'
+import { XMLParser } from "fast-xml-parser";
+import { readFile } from "node:fs/promises";
 
 const parser = new XMLParser({
   ignoreAttributes: false,
-  attributeNamePrefix: '',
-  cdataPropName: '_cdata',
-  textNodeName: '_text',
-})
+  attributeNamePrefix: "",
+  cdataPropName: "_cdata",
+  textNodeName: "_text",
+});
 
-const xml = await readFile('wordpress-export.xml', 'utf8')
-const parsed = parser.parse(xml)
+const xml = await readFile("wordpress-export.xml", "utf8");
+const parsed = parser.parse(xml);
 
 function text(value: unknown): string {
-  if (value == null) return ''
-  if (typeof value === 'string' || typeof value === 'number') return String(value)
-  if (Array.isArray(value)) return text(value[0])
-  if (typeof value === 'object') {
-    const record = value as Record<string, unknown>
-    return text(record._cdata ?? record._text)
+  if (value == null) return "";
+  if (typeof value === "string" || typeof value === "number")
+    return String(value);
+  if (Array.isArray(value)) return text(value[0]);
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    return text(record._cdata ?? record._text);
   }
-  return ''
+  return "";
 }
 ```
 
@@ -139,11 +140,11 @@ Key WXR fields:
 Build a flat postmeta map:
 
 ```ts
-const meta: Record<string, string> = {}
-for (const item of post['wp:postmeta'] || []) {
-  const key = text(item['wp:meta_key'])
-  const value = text(item['wp:meta_value'])
-  if (key) meta[key] = value
+const meta: Record<string, string> = {};
+for (const item of post["wp:postmeta"] || []) {
+  const key = text(item["wp:meta_key"]);
+  const value = text(item["wp:meta_value"]);
+  if (key) meta[key] = value;
 }
 ```
 

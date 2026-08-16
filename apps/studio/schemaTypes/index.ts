@@ -14,20 +14,20 @@ import heroText from "./singletons/heroText";
 import siteSettings from "./singletons/siteSettings";
 
 export const schemaTypes = [
-	blog,
-	showcase,
-	project,
-	twitter,
-	youtube,
-	portableText,
-	articleImage,
-	simplePortableText,
-	projectPortableText,
-	figure,
-	category,
-	author,
+  blog,
+  showcase,
+  project,
+  twitter,
+  youtube,
+  portableText,
+  articleImage,
+  simplePortableText,
+  projectPortableText,
+  figure,
+  category,
+  author,
 
-	// Singletons
-	heroText,
-	siteSettings,
+  // Singletons
+  heroText,
+  siteSettings,
 ];

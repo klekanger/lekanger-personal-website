@@ -44,36 +44,36 @@ JSON export preserves nested structures, rich text, relationship references, and
 Initialize Payload in a script:
 
 ```ts
-import {getPayload} from 'payload'
-import config from '@payload-config'
+import { getPayload } from "payload";
+import config from "@payload-config";
 
-const payload = await getPayload({config})
+const payload = await getPayload({ config });
 ```
 
 Extract a collection:
 
 ```ts
 const result = await payload.find({
-  collection: 'pages',
+  collection: "pages",
   depth: 0,
   page: 1,
   limit: 100,
-  locale: 'en',
+  locale: "en",
   fallbackLocale: false,
   showHiddenFields: true,
-})
+});
 ```
 
 Extract a global:
 
 ```ts
 const header = await payload.findGlobal({
-  slug: 'header',
+  slug: "header",
   depth: 0,
-  locale: 'en',
+  locale: "en",
   fallbackLocale: false,
   showHiddenFields: true,
-})
+});
 ```
 
 Use `depth: 0` when building deterministic Sanity references from relationship fields; populated relationship objects are useful for inspection but can hide the source ID shape and create circular/large payloads.

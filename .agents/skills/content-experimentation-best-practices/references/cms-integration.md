@@ -5,6 +5,7 @@ Integrating experimentation with your CMS enables content teams to run tests wit
 ## Architecture Options
 
 ### 1. CMS-Managed Variants
+
 Store experiment variants as content in the CMS.
 
 **Pros:** Content team autonomy, version controlled
@@ -13,32 +14,43 @@ Store experiment variants as content in the CMS.
 ```typescript
 // Experiment document
 defineType({
-  name: 'experiment',
-  type: 'document',
+  name: "experiment",
+  type: "document",
   fields: [
-    defineField({ name: 'name', type: 'string' }),
-    defineField({ name: 'status', type: 'string', options: { 
-      list: ['draft', 'running', 'paused', 'concluded'] 
-    }}),
-    defineField({ 
-      name: 'variants', 
-      type: 'array',
-      of: [{
-        type: 'object',
-        fields: [
-          defineField({ name: 'name', type: 'string' }),
-          defineField({ name: 'weight', type: 'number' }),
-          defineField({ name: 'content', type: 'reference', to: [{ type: 'page' }] }),
-        ]
-      }]
+    defineField({ name: "name", type: "string" }),
+    defineField({
+      name: "status",
+      type: "string",
+      options: {
+        list: ["draft", "running", "paused", "concluded"],
+      },
     }),
-    defineField({ name: 'startDate', type: 'datetime' }),
-    defineField({ name: 'endDate', type: 'datetime' }),
-  ]
-})
+    defineField({
+      name: "variants",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "name", type: "string" }),
+            defineField({ name: "weight", type: "number" }),
+            defineField({
+              name: "content",
+              type: "reference",
+              to: [{ type: "page" }],
+            }),
+          ],
+        },
+      ],
+    }),
+    defineField({ name: "startDate", type: "datetime" }),
+    defineField({ name: "endDate", type: "datetime" }),
+  ],
+});
 ```
 
 ### 2. Field-Level Variants
+
 Store variants as fields on the content document.
 
 **Pros:** Simpler queries, content stays together
@@ -46,20 +58,21 @@ Store variants as fields on the content document.
 
 ```typescript
 defineType({
-  name: 'landingPage',
+  name: "landingPage",
   fields: [
-    defineField({ name: 'headline', type: 'string' }),
-    defineField({ 
-      name: 'headlineVariantB', 
-      type: 'string',
-      description: 'A/B test variant (leave empty if not testing)'
+    defineField({ name: "headline", type: "string" }),
+    defineField({
+      name: "headlineVariantB",
+      type: "string",
+      description: "A/B test variant (leave empty if not testing)",
     }),
-    defineField({ name: 'activeExperiment', type: 'string' }),
-  ]
-})
+    defineField({ name: "activeExperiment", type: "string" }),
+  ],
+});
 ```
 
 ### 3. External Experimentation Platform
+
 Use dedicated tools (Optimizely, LaunchDarkly, VWO) with CMS content.
 
 **Pros:** Robust analytics, proven platforms
@@ -68,10 +81,10 @@ Use dedicated tools (Optimizely, LaunchDarkly, VWO) with CMS content.
 ```typescript
 // CMS stores experiment IDs, platform handles assignment
 defineField({
-  name: 'experimentId',
-  type: 'string',
-  description: 'Optimizely experiment ID'
-})
+  name: "experimentId",
+  type: "string",
+  description: "Optimizely experiment ID",
+});
 ```
 
 ## Implementation Pattern (CMS-Managed)
@@ -80,35 +93,45 @@ defineField({
 
 ```typescript
 defineType({
-  name: 'experiment',
-  type: 'document',
+  name: "experiment",
+  type: "document",
   fields: [
-    defineField({ name: 'name', type: 'string', validation: r => r.required() }),
-    defineField({ name: 'hypothesis', type: 'text' }),
-    defineField({ 
-      name: 'status', 
-      type: 'string', 
-      options: { list: ['draft', 'running', 'concluded'] },
-      initialValue: 'draft'
+    defineField({
+      name: "name",
+      type: "string",
+      validation: (r) => r.required(),
+    }),
+    defineField({ name: "hypothesis", type: "text" }),
+    defineField({
+      name: "status",
+      type: "string",
+      options: { list: ["draft", "running", "concluded"] },
+      initialValue: "draft",
     }),
     defineField({
-      name: 'variants',
-      type: 'array',
-      of: [{
-        type: 'object',
-        name: 'variant',
-        fields: [
-          defineField({ name: 'id', type: 'string' }),
-          defineField({ name: 'name', type: 'string' }),
-          defineField({ name: 'weight', type: 'number', initialValue: 50 }),
-        ]
-      }],
-      validation: r => r.min(2).error('Need at least 2 variants')
+      name: "variants",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "variant",
+          fields: [
+            defineField({ name: "id", type: "string" }),
+            defineField({ name: "name", type: "string" }),
+            defineField({ name: "weight", type: "number", initialValue: 50 }),
+          ],
+        },
+      ],
+      validation: (r) => r.min(2).error("Need at least 2 variants"),
     }),
-    defineField({ name: 'targetPage', type: 'reference', to: [{ type: 'page' }] }),
-    defineField({ name: 'targetField', type: 'string' }),
-  ]
-})
+    defineField({
+      name: "targetPage",
+      type: "reference",
+      to: [{ type: "page" }],
+    }),
+    defineField({ name: "targetField", type: "string" }),
+  ],
+});
 ```
 
 ### 2. Variant Content
@@ -116,18 +139,24 @@ defineType({
 ```typescript
 // On the page being tested
 defineField({
-  name: 'experimentVariants',
-  type: 'array',
-  of: [{
-    type: 'object',
-    fields: [
-      defineField({ name: 'experimentId', type: 'reference', to: [{ type: 'experiment' }] }),
-      defineField({ name: 'variantId', type: 'string' }),
-      defineField({ name: 'headline', type: 'string' }),
-      // Other variant-specific fields
-    ]
-  }]
-})
+  name: "experimentVariants",
+  type: "array",
+  of: [
+    {
+      type: "object",
+      fields: [
+        defineField({
+          name: "experimentId",
+          type: "reference",
+          to: [{ type: "experiment" }],
+        }),
+        defineField({ name: "variantId", type: "string" }),
+        defineField({ name: "headline", type: "string" }),
+        // Other variant-specific fields
+      ],
+    },
+  ],
+});
 ```
 
 ### 3. Frontend Assignment
@@ -135,39 +164,42 @@ defineField({
 ```typescript
 // Middleware or server-side. Returns the assigned variant id, or null when the
 // experiment has no variants to assign.
-function assignVariant(experimentId: string, variants: Variant[]): string | null {
-  if (variants.length === 0) return null
+function assignVariant(
+  experimentId: string,
+  variants: Variant[],
+): string | null {
+  if (variants.length === 0) return null;
 
   // Reuse an existing assignment, but only if it's still a valid variant.
   // After variants are renamed or removed, drop the stale cookie and reassign,
   // otherwise users stay bucketed to IDs that no longer exist.
-  const cookieKey = `exp_${experimentId}`
-  const existing = getCookie(cookieKey)
-  if (existing && variants.some(v => v.id === existing)) return existing
+  const cookieKey = `exp_${experimentId}`;
+  const existing = getCookie(cookieKey);
+  if (existing && variants.some((v) => v.id === existing)) return existing;
 
   // Random assignment based on weights. Normalize against the total weight so
   // splits work even when weights don't sum to 100 (otherwise draws above the
   // sum skew to the fallback).
-  const totalWeight = variants.reduce((sum, v) => sum + v.weight, 0)
+  const totalWeight = variants.reduce((sum, v) => sum + v.weight, 0);
   if (totalWeight <= 0) {
-    const fallback = variants[0]
-    setCookie(cookieKey, fallback.id, { maxAge: 30 * 24 * 60 * 60 })
-    return fallback.id
+    const fallback = variants[0];
+    setCookie(cookieKey, fallback.id, { maxAge: 30 * 24 * 60 * 60 });
+    return fallback.id;
   }
-  const rand = Math.random() * totalWeight
-  let cumulative = 0
+  const rand = Math.random() * totalWeight;
+  let cumulative = 0;
   for (const variant of variants) {
-    cumulative += variant.weight
+    cumulative += variant.weight;
     if (rand < cumulative) {
-      setCookie(cookieKey, variant.id, { maxAge: 30 * 24 * 60 * 60 })
-      return variant.id
+      setCookie(cookieKey, variant.id, { maxAge: 30 * 24 * 60 * 60 });
+      return variant.id;
     }
   }
   // Fall back to the last variant to absorb any floating-point remainder, and
   // persist it like any other assignment so the visitor stays bucketed.
-  const fallback = variants[variants.length - 1]
-  setCookie(cookieKey, fallback.id, { maxAge: 30 * 24 * 60 * 60 })
-  return fallback.id
+  const fallback = variants[variants.length - 1];
+  setCookie(cookieKey, fallback.id, { maxAge: 30 * 24 * 60 * 60 });
+  return fallback.id;
 }
 ```
 
@@ -201,21 +233,25 @@ running several experiments, resolve each one separately and merge the results.
 ```typescript
 // Track experiment exposure
 function trackExposure(experimentId: string, variantId: string) {
-  analytics.track('Experiment Viewed', {
+  analytics.track("Experiment Viewed", {
     experimentId,
     variantId,
-    timestamp: new Date().toISOString()
-  })
+    timestamp: new Date().toISOString(),
+  });
 }
 
 // Track conversion
-function trackConversion(experimentId: string, variantId: string, metric: string) {
-  analytics.track('Experiment Conversion', {
+function trackConversion(
+  experimentId: string,
+  variantId: string,
+  metric: string,
+) {
+  analytics.track("Experiment Conversion", {
     experimentId,
     variantId,
     metric,
-    timestamp: new Date().toISOString()
-  })
+    timestamp: new Date().toISOString(),
+  });
 }
 ```
 
@@ -224,15 +260,16 @@ function trackConversion(experimentId: string, variantId: string, metric: string
 ```typescript
 // Push to data layer for analytics tools
 window.dataLayer.push({
-  event: 'experiment_assignment',
+  event: "experiment_assignment",
   experiment_id: experimentId,
-  variant_id: variantId
-})
+  variant_id: variantId,
+});
 ```
 
 ## Best Practices
 
 ### Content Team Workflow
+
 1. Create experiment document with hypothesis
 2. Create variant content
 3. Set status to "running"
@@ -240,11 +277,13 @@ window.dataLayer.push({
 5. Set status to "concluded" and record winner
 
 ### Avoid Flicker
+
 - Assign variants server-side when possible
 - Use CSS to hide content until variant determined
 - Pre-render both variants, show based on assignment
 
 ### Clean Up
+
 - Archive concluded experiments
 - Remove losing variant content
 - Implement winner as default

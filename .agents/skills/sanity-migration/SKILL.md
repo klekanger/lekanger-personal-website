@@ -83,6 +83,7 @@ Stop before coding when any of these are unclear:
 Use `references/general.md` for shared migration principles and the platform references for source-specific extraction routes, modeling traps, and validation checks.
 
 For source systems not explicitly covered, apply `references/general.md` and adapt the closest platform pattern:
+
 - API-first CMSes: start from Contentful, Strapi, or Payload.
 - Monolithic/page-builder systems: start from WordPress, Drupal, Webflow, or AEM.
 - HTML-heavy exports: start from the WordPress and Webflow rich-text guidance.
