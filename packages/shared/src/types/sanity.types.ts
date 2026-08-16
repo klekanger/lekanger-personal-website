@@ -624,30 +624,33 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/blogPagesQuery.ts
 // Variable: ALL_BLOGS_QUERY
-// Query: *[_type=="blog" && _id > $lastId] | order(_id) [0...$itemsPerPage]{    _id,    _createdAt,    _updatedAt,    title,    overview,    isExternalBlog,    externalBlogUrl,    slug  }
-export type ALL_BLOGS_QUERY_RESULT = Array<{
-  _id: string;
-  _createdAt: string;
-  _updatedAt: string;
-  title: string | null;
-  overview: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
+// Query: { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start..$end]{    _id,    _createdAt,    _updatedAt,    title,    overview,    isExternalBlog,    externalBlogUrl,    slug  },"total": count(*[_type=="blog"])}
+export type ALL_BLOGS_QUERY_RESULT = {
+  items: Array<{
+    _id: string;
+    _createdAt: string;
+    _updatedAt: string;
+    title: string | null;
+    overview: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: never;
+      markDefs?: null;
+      level?: number;
+      _type: "block";
       _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: null;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  isExternalBlog: boolean | null;
-  externalBlogUrl: string | null;
-  slug: Slug | null;
-}>;
+    }> | null;
+    isExternalBlog: boolean | null;
+    externalBlogUrl: string | null;
+    slug: Slug | null;
+  }>;
+  total: number;
+};
 
 // Source: ../frontend/src/lib/sanity/queries/projectPageQuery.ts
 // Variable: PROJECTS_BY_SLUG_QUERY
@@ -704,7 +707,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type=="blog" && _id > $lastId] | order(_id) [0...$itemsPerPage]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  }\n': ALL_BLOGS_QUERY_RESULT;
+    '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start..$end]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
   }
