@@ -10,28 +10,34 @@
 @import "tw-animate-css";
 
 @font-face {
-	font-family: 'Sixtyfour Variable';
-	font-style: normal;
-	font-weight: 400;
-	font-display: block;
-	src: url('@fontsource-variable/sixtyfour/files/sixtyfour-latin-bled-normal.woff2') format('woff2-variations');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  font-family: "Sixtyfour Variable";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("@fontsource-variable/sixtyfour/files/sixtyfour-latin-bled-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-	font-family: 'IBM Plex Mono';
-	font-style: normal;
-	font-weight: 400;
-	font-display: optional;
-	src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2")
+    format("woff2");
 }
 
 @font-face {
-	font-family: 'IBM Plex Mono';
-	font-style: normal;
-	font-weight: 700;
-	font-display: optional;
-	src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff2') format('woff2');
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: optional;
+  src: url("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff2")
+    format("woff2");
 }
 
 /* shadcn components ship `dark:` classes. Tailwind's built-in `dark` variant is
@@ -41,191 +47,214 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --c64-black: #000000;
+  --c64-white: #ffffff;
+  --c64-red: #924a40;
+  --c64-cyan: #84c5cc;
+  --c64-purple: #9351b6;
+  --c64-green: #72b14b;
+  --c64-blue: #483aaa;
+  --c64-yellow: #d5df7c;
+  --c64-orange: #99692d;
+  --c64-brown: #675200;
+  --c64-lightred: #c18178;
+  --c64-darkgray: #606060;
+  --c64-gray: #8a8a8a;
+  --c64-lightgreen: #b3ec91;
+  --c64-lightblue: #867ade;
+  --c64-lightgray: #b3b3b3;
 
-	--c64-black: #000000;
-	--c64-white: #ffffff;
-	--c64-red: #924A40;
-	--c64-cyan: #84C5CC;
-	--c64-purple: #9351B6;
-	--c64-green: #72B14B;
-	--c64-blue: #483AAA;
-	--c64-yellow: #D5DF7C;
-	--c64-orange: #99692D;
-	--c64-brown: #675200;
-	--c64-lightred: #C18178;
-	--c64-darkgray: #606060;
-	--c64-gray: #8A8A8A;
-	--c64-lightgreen: #B3EC91;
-	--c64-lightblue: #867ADE;
-	--c64-lightgray: #B3B3B3;
-
-
-	--c64-blue-ink: #12114a;
-	--c64-blue-deep: #242279;
-	--c64-blue-lift: #4a42b4;
-	--c64-lightblue-soft: #a2a0f2;
-	--c64-lightblue-pale: #b8b7f5;
-	--c64-red-pale: #d6989c;
-	--c64-purple-pale: #ce94d4;
-	--c64-orange-pale: #d79b75;
-	--c64-green-pale: #6cba64;
-	--c64-gray-pale: #a8a8a8;
+  --c64-blue-ink: #12114a;
+  --c64-blue-deep: #242279;
+  --c64-blue-lift: #4a42b4;
+  --c64-lightblue-soft: #a2a0f2;
+  --c64-lightblue-pale: #b8b7f5;
+  --c64-red-pale: #d6989c;
+  --c64-purple-pale: #ce94d4;
+  --c64-orange-pale: #d79b75;
+  --c64-green-pale: #6cba64;
+  --c64-gray-pale: #a8a8a8;
 }
 
 @theme {
+  --color-*: initial;
+  --color-white: var(--c64-white);
+  --color-black: var(--c64-black);
+  --color-yellow: var(--c64-yellow);
+  --color-red: var(--c64-red);
+  --color-green: var(--c64-green);
+  --color-blue: var(--c64-blue);
+  --color-purple: var(--c64-purple);
+  --color-orange: var(--c64-orange);
+  --color-cyan: var(--c64-cyan);
+  --color-brown: var(--c64-brown);
 
-	--color-*: initial;
-	--color-white: var(--c64-white);
-	--color-black: var(--c64-black);
-	--color-yellow: var(--c64-yellow);
-	--color-red: var(--c64-red);
-	--color-green: var(--c64-green);
-	--color-blue: var(--c64-blue);
-	--color-purple: var(--c64-purple);
-	--color-orange: var(--c64-orange);
-	--color-cyan: var(--c64-cyan);
-	--color-brown: var(--c64-brown);
+  --font-heading: "Sixtyfour Variable", monospace;
+  --font-body:
+    "IBM Plex Mono", ui-monospace, "SFMono-Regular", "Menlo", "Cascadia Mono",
+    "Consolas", "DejaVu Sans Mono", monospace;
+  --font-term: var(--font-body);
+  --font-code: var(--font-body);
 
-	--font-heading: 'Sixtyfour Variable', monospace;
-	--font-body: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Menlo',
-		'Cascadia Mono', 'Consolas', 'DejaVu Sans Mono', monospace;
-	--font-term: var(--font-body);
-	--font-code: var(--font-body);
+  --color-background: var(--c64-blue);
+  --color-card: var(--c64-blue-deep);
+  --color-muted: var(--c64-blue-deep);
+  --color-secondary: var(--c64-blue-deep);
+  --color-ink: var(--c64-blue-ink);
+  --color-popover: var(--c64-blue-ink);
 
-	--color-background: var(--c64-blue);
-	--color-card: var(--c64-blue-deep);
-	--color-muted: var(--c64-blue-deep);
-	--color-secondary: var(--c64-blue-deep);
-	--color-ink: var(--c64-blue-ink);
-	--color-popover: var(--c64-blue-ink);
+  --color-foreground: var(--c64-lightblue-pale);
+  --color-border: var(--c64-lightblue);
+  --color-foreground-strong: var(--c64-white);
+  --color-muted-foreground: var(--c64-lightblue-soft);
+  --color-card-foreground: var(--c64-lightblue-pale);
+  --color-popover-foreground: var(--c64-lightblue-pale);
+  --color-secondary-foreground: var(--c64-lightblue-pale);
 
-	--color-foreground: var(--c64-lightblue-pale); 
-	--color-border: var(--c64-lightblue); 
-	--color-foreground-strong: var(--c64-white); 
-	--color-muted-foreground: var(--c64-lightblue-soft); 
-	--color-card-foreground: var(--c64-lightblue-pale);
-	--color-popover-foreground: var(--c64-lightblue-pale);
-	--color-secondary-foreground: var(--c64-lightblue-pale);
+  --color-primary: var(--c64-lightblue-pale);
+  --color-primary-foreground: var(--c64-blue-ink);
+  --color-accent: var(--c64-blue-lift);
+  --color-accent-foreground: var(--c64-white);
+  --color-destructive: var(--c64-red);
 
-	--color-primary: var(--c64-lightblue-pale);
-	--color-primary-foreground: var(--c64-blue-ink);
-	--color-accent: var(--c64-blue-lift); 
-	--color-accent-foreground: var(--c64-white); 
-	--color-destructive: var(--c64-red); 
+  --color-border: var(--c64-lightblue);
+  --color-frame: var(--c64-lightblue);
+  --color-input: var(--c64-lightblue-soft);
+  --color-ring: var(--c64-lightblue-soft);
 
-	--color-border: var(--c64-lightblue); 
-	--color-frame: var(--c64-lightblue); 
-	--color-input: var(--c64-lightblue-soft); 
-	--color-ring: var(--c64-lightblue-soft); 
+  --color-cyan: var(--c64-cyan);
+  --color-yellow: var(--c64-yellow);
+  --color-lime: var(--c64-lightgreen);
+  --color-red: var(--c64-red-pale);
+  --color-purple: var(--c64-purple-pale);
+  --color-orange: var(--c64-orange-pale);
+  --color-green: var(--c64-green-pale);
+  --color-dim: var(--c64-gray-pale);
 
-	--color-cyan: var(--c64-cyan); 
-	--color-yellow: var(--c64-yellow); 
-	--color-lime: var(--c64-lightgreen); 
-	--color-red: var(--c64-red-pale); 
-	--color-purple: var(--c64-purple-pale); 
-	--color-orange: var(--c64-orange-pale); 
-	--color-green: var(--c64-green-pale); 
-	--color-dim: var(--c64-gray-pale); 
-
-	/* The C64 has no rounded corners. One knob — raise it to soften globally.
+  /* The C64 has no rounded corners. One knob — raise it to soften globally.
 	   All 8 keys: shadcn also uses rounded-xs, and Tailwind's scale runs to 4xl. */
-	--radius: 0px;
-	--radius-xs: var(--radius);
-	--radius-sm: var(--radius);
-	--radius-md: var(--radius);
-	--radius-lg: var(--radius);
-	--radius-xl: var(--radius);
-	--radius-2xl: var(--radius);
-	--radius-3xl: var(--radius);
-	--radius-4xl: var(--radius);
+  --radius: 0px;
+  --radius-xs: var(--radius);
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+  --radius-3xl: var(--radius);
+  --radius-4xl: var(--radius);
 
-	/* Animations */
-	--animate-c64blink: c64blink 1.2s step-end 0s infinite normal none running;
+  /* Animations */
+  --animate-c64blink: c64blink 1.2s step-end 0s infinite normal none running;
 
-	@keyframes c64blink {
-			0%, 50%, 100% { opacity: 1; }
-			25%, 75% { opacity: 0; }
-	}
+  @keyframes c64blink {
+    0%,
+    50%,
+    100% {
+      opacity: 1;
+    }
+    25%,
+    75% {
+      opacity: 0;
+    }
+  }
 }
 
 @layer base {
-	/* Preflight sets border-color: currentColor on *; shadcn expects the theme
+  /* Preflight sets border-color: currentColor on *; shadcn expects the theme
 	   border colour. This is the rule that was lost in f97363b. */
-	*,
-	::after,
-	::before,
-	::backdrop,
-	::file-selector-button {
-		border-color: var(--color-border);
-	}
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
 
-	html {
-		/* Permanently dark UI: native scrollbars, form controls and autofill
+  html {
+    /* Permanently dark UI: native scrollbars, form controls and autofill
 		   render dark instead of light-on-blue. */
-		color-scheme: dark;
-		/* `clip`, not `overflow-x: hidden` — hidden makes this a scroll
+    color-scheme: dark;
+    /* `clip`, not `overflow-x: hidden` — hidden makes this a scroll
 		   container and silently breaks `position: sticky` headers. */
-		overflow-x: clip;
-	}
+    overflow-x: clip;
+  }
 
-	body {
-		min-height: 100svh;
-		background-color: var(--color-background);
-		color: var(--color-foreground);
-		font-family: var(--font-body);
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
+  body {
+    min-height: 100svh;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-	/* Blocky, always-visible focus, so bare links and custom elements are
+  /* Blocky, always-visible focus, so bare links and custom elements are
 	   keyboard-navigable without relying on shadcn's per-component ring. */
-	:focus-visible {
-		outline: 2px solid var(--color-ring);
-		outline-offset: 2px;
-		color: var(--c64-lightblue-pale);
-	}
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    color: var(--c64-lightblue-pale);
+  }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+  }
 
-	h1, h2, h3, h4, h5, h6 {
-		font-family: var(--font-heading);
-		font-weight: 400;			
-	}
-
-
+  .fill-pattern {
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.25) 0px,
+        rgba(0, 0, 0, 0.25) 1px,
+        transparent 1px,
+        transparent 3px
+      ),
+      repeating-linear-gradient(
+        to right,
+        var(--color-foreground) 0px,
+        var(--color-foreground) 16px,
+        transparent 16px,
+        transparent 32px
+      );
+  }
 }
 
 .prose {
-	--tw-prose-body: var(--color-foreground);
-	--tw-prose-headings: var(--color-foreground);
-	--tw-prose-lead: var(--color-muted-foreground);
-	--tw-prose-links: var(--color-cyan);
-	--tw-prose-bold: var(--color-foreground-strong);
-	--tw-prose-counters: var(--color-muted-foreground);
-	--tw-prose-bullets: var(--color-border);
-	--tw-prose-hr: var(--color-border);
-	--tw-prose-quotes: var(--color-foreground-strong);
-	--tw-prose-quote-borders: var(--color-border);
-	--tw-prose-captions: var(--color-muted-foreground);
-	--tw-prose-code: var(--color-yellow);
-	--tw-prose-kbd: var(--color-foreground-strong);
-	--tw-prose-kbd-shadows: var(--color-border); /* solid, not alpha — blocky keycap */
-	--tw-prose-pre-code: var(--syn-plain);
-	--tw-prose-pre-bg: var(--syn-bg);
-	--tw-prose-th-borders: var(--color-border);
-	--tw-prose-td-borders: var(--color-border);
+  --tw-prose-body: var(--color-foreground);
+  --tw-prose-headings: var(--color-foreground);
+  --tw-prose-lead: var(--color-muted-foreground);
+  --tw-prose-links: var(--color-cyan);
+  --tw-prose-bold: var(--color-foreground-strong);
+  --tw-prose-counters: var(--color-muted-foreground);
+  --tw-prose-bullets: var(--color-border);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-foreground-strong);
+  --tw-prose-quote-borders: var(--color-border);
+  --tw-prose-captions: var(--color-muted-foreground);
+  --tw-prose-code: var(--color-yellow);
+  --tw-prose-kbd: var(--color-foreground-strong);
+  --tw-prose-kbd-shadows: var(
+    --color-border
+  ); /* solid, not alpha — blocky keycap */
+  --tw-prose-pre-code: var(--syn-plain);
+  --tw-prose-pre-bg: var(--syn-bg);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
 
-	max-width: 90%;
+  max-width: 90%;
 }
 
 /* The plugin hardcodes 6px on `pre` and 5px on `kbd`; --radius cannot reach them. */
 .prose :is(pre, kbd, img, table) {
-	border-radius: 0;
+  border-radius: 0;
 }
 
 .prose :is(h1, h2, h3, h4) {
-	font-weight: 400;
+  font-weight: 400;
 }
-
-
-
-
