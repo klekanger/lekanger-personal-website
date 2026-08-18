@@ -11,6 +11,7 @@ export default defineCliConfig({
      * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
      */
     autoUpdates: true,
+    appId: "ec8524a5b4e2f973b0c63c18",
   },
   typegen: {
     // Runs typegen automatically on `sanity dev` (watch) and `sanity build`.
