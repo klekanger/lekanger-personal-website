@@ -1,5 +1,6 @@
+import { BackButton } from "#/components/ui/BackButton";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
-import { CustomPortableText } from "@/components/PortableText/PortableText";
+import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/blog-page/$slug";
 
 export function BlogPage() {
@@ -14,10 +15,12 @@ export function BlogPage() {
 
   return (
     <article className="prose py-16">
+      <BackButton buttonText="Tilbake" className="mb-8" />
       <h1>{title}</h1>
       <CustomPortableText value={overview} isPreamble />
       <br />
       <CustomPortableText value={bodyTextToRender} />
+      <BackButton buttonText="Tilbake" className="my-8" />
       <BlinkingCursor />
     </article>
   );
