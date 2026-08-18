@@ -144,7 +144,7 @@
   --radius-4xl: var(--radius);
 
   /* Animations */
-  --animate-c64blink: c64blink 1.2s step-end 0s infinite normal none running;
+  --animate-c64blink: c64blink 1.5s step-end 0s infinite normal none running;
 
   @keyframes c64blink {
     0%,
@@ -222,6 +222,29 @@
         transparent 16px,
         transparent 32px
       );
+  }
+
+  .crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    background-image:
+      /* vignette */
+      radial-gradient(
+        ellipse at center,
+        transparent 55%,
+        rgba(0, 0, 0, 0.45) 100%
+      ),
+      /* scanlines */
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.30) 0px,
+        transparent 1.5px,
+        rgba(0, 0, 0, 0.20) 3px,
+        transparent 4px
+      )
   }
 }
 

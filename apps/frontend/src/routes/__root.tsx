@@ -83,6 +83,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             },
           ]}
         />
+        <div className="crt-overlay" aria-hidden="true" />
         <Scripts />
       </body>
     </html>
