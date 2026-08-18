@@ -624,7 +624,7 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/blogPagesQuery.ts
 // Variable: ALL_BLOGS_QUERY
-// Query: { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start..$end]{    _id,    _createdAt,    _updatedAt,    title,    overview,    isExternalBlog,    externalBlogUrl,    slug  },"total": count(*[_type=="blog"])}
+// Query: { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{    _id,    _createdAt,    _updatedAt,    title,    overview,    isExternalBlog,    externalBlogUrl,    slug  },"total": count(*[_type=="blog"])}
 export type ALL_BLOGS_QUERY_RESULT = {
   items: Array<{
     _id: string;
@@ -650,6 +650,91 @@ export type ALL_BLOGS_QUERY_RESULT = {
     slug: Slug | null;
   }>;
   total: number;
+};
+
+// Source: ../frontend/src/lib/sanity/queries/homepageQuery.ts
+// Variable: HOMEPAGE_QUERY
+// Query: { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..5]{        _id,        _createdAt,        _updatedAt,        title,        overview,        isExternalBlog,        externalBlogUrl,        slug      },    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{      ...    },      "heroText": *[_type=="heroText"] {heroTitle},      "settings": *[_type=="settings"] {        companyName,        metaDescription,        metaKeywords,        metaOgImage,        metaTitle,        gitHubAccount,        linkedInAccount,        twitterAccount,        otherSocialAccount,        phone,        email      }    }
+export type HOMEPAGE_QUERY_RESULT = {
+  blogPosts: Array<{
+    _id: string;
+    _createdAt: string;
+    _updatedAt: string;
+    title: string | null;
+    overview: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: never;
+      markDefs?: null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    isExternalBlog: boolean | null;
+    externalBlogUrl: string | null;
+    slug: Slug | null;
+  }>;
+  showcases: Array<{
+    _id: string;
+    _type: "showcase";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title?: string;
+    slug?: Slug;
+    overview?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: never;
+      markDefs?: null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    mainImage?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    bodyText?: PortableText;
+    github?: string;
+    projectUrl?: string;
+  }>;
+  heroText: Array<{
+    heroTitle: string | null;
+  }>;
+  settings: Array<{
+    companyName: string | null;
+    metaDescription: string | null;
+    metaKeywords: string | null;
+    metaOgImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    metaTitle: string | null;
+    gitHubAccount: string | null;
+    linkedInAccount: string | null;
+    twitterAccount: string | null;
+    otherSocialAccount: string | null;
+    phone: string | null;
+    email: string | null;
+  }>;
 };
 
 // Source: ../frontend/src/lib/sanity/queries/projectPageQuery.ts
@@ -707,7 +792,8 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
-    '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start..$end]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
+    '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
+    '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..5]{\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {heroTitle},\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
   }
