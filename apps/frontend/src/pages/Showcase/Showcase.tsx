@@ -1,5 +1,5 @@
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
-import { CustomPortableText } from "@/components/PortableText/PortableText";
+import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/showcase/$slug";
 
 export function Showcase() {
