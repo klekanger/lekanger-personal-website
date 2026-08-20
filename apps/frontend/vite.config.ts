@@ -12,48 +12,32 @@ const config = defineConfig({
   // react-tweet ships CSS modules; Node's ESM loader can't import ".css", so it
   // must be bundled by Vite instead of externalized for SSR.
   ssr: { noExternal: ["react-tweet"] },
+  server: {
+    allowedHosts: [".ngrok-free.app"],
+  },
   plugins: [
     devtools(),
-    nitro({ rollupConfig: { external: [/^@sentry\//] } }),
-    tailwindcss(),
-    tanstackStart({
-      prerender: {
-        // Switch to true to enable prerendering
-        enabled: true,
-
-        // Disable if you need pages to be at `/page.html` instead of `/page/index.html`
-        autoSubfolderIndex: true,
-
-        // If disabled, only the root path or the paths defined in the pages config will be prerendered
-        autoStaticPathsDiscovery: true,
-
-        // How many prerender jobs to run at once
-        concurrency: 14,
-
-        // Whether to extract links from the HTML and prerender them also
-        crawlLinks: true,
-
-        // Filter function takes the page object and returns whether it should prerender
-        filter: ({ path }) => !path.startsWith("/do-not-render-me"),
-
-        // Number of times to retry a failed prerender job
-        retryCount: 2,
-
-        // Delay between retries in milliseconds
-        retryDelay: 1000,
-
-        // Maximum number of redirects to follow during prerendering
-        maxRedirects: 5,
-
-        // Fail if an error occurs during prerendering
-        failOnError: true,
-
-        // Callback when page is successfully rendered
-        onSuccess: ({ page }) => {
-          console.log(`Rendered ${page.path}!`);
+    nitro({
+      rollupConfig: { external: [/^@sentry\//] },
+      serverDir: "server",
+      routeRules: {
+        "/": { isr: { expiration: 3600 } },
+        "/blog-page/**": {
+          isr: { expiration: 3600, allowQuery: ["page"], passQuery: true },
+        },
+        "/showcase/**": {
+          isr: { expiration: 3600, allowQuery: ["page"], passQuery: true },
+        },
+        "/project/**": {
+          isr: { expiration: 3600, allowQuery: ["page"], passQuery: true },
         },
       },
+      vercel: {
+        config: { bypassToken: process.env.VERCEL_BYPASS_TOKEN, version: 3 },
+      },
     }),
+    tailwindcss(),
+    tanstackStart(),
     viteReact(),
   ],
 });
