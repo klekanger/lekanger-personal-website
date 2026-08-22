@@ -15,11 +15,136 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type FactItem = {
+  _type: "factItem";
+  label?: string;
+  value?: string;
+};
+
+export type ProjectPortableText = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & Figure)
+  | ({
+      _key: string;
+    } & Code)
+  | ({
+      _key: string;
+    } & Youtube)
+  | ({
+      _key: string;
+    } & Twitter)
+>;
+
+export type SimplePortableText = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type PortableText = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & ArticleImage)
+  | ({
+      _key: string;
+    } & Youtube)
+  | ({
+      _key: string;
+    } & Twitter)
+  | ({
+      _key: string;
+    } & Code)
+  | ({
+      _key: string;
+    } & Code)
+>;
+
 export type SanityImageAssetReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ArticleImage = {
+  _type: "articleImage";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  caption?: string;
+  alt?: string;
+  credits?: string;
+};
+
+export type Youtube = {
+  _type: "youtube";
+  url?: string;
+};
+
+export type Twitter = {
+  _type: "twitter";
+  tweetId?: string;
+  twitterTitle?: string;
+};
+
+export type Figure = {
+  _type: "figure";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  caption?: string;
+  alt?: string;
 };
 
 export type Settings = {
@@ -74,6 +199,26 @@ export type HeroText = {
   _updatedAt: string;
   _rev: string;
   heroTitle?: string;
+  preamble?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  tags?: Array<string>;
+  facts?: Array<
+    {
+      _key: string;
+    } & FactItem
+  >;
 };
 
 export type Author = {
@@ -118,125 +263,6 @@ export type Category = {
   _rev: string;
   title?: string;
   description?: string;
-};
-
-export type Figure = {
-  _type: "figure";
-  asset?: SanityImageAssetReference;
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  caption?: string;
-  alt?: string;
-};
-
-export type ProjectPortableText = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | ({
-      _key: string;
-    } & Figure)
-  | ({
-      _key: string;
-    } & Code)
-  | ({
-      _key: string;
-    } & Youtube)
-  | ({
-      _key: string;
-    } & Twitter)
->;
-
-export type SimplePortableText = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal";
-  listItem?: never;
-  markDefs?: null;
-  level?: number;
-  _type: "block";
-  _key: string;
-}>;
-
-export type ArticleImage = {
-  _type: "articleImage";
-  image?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  caption?: string;
-  alt?: string;
-  credits?: string;
-};
-
-export type PortableText = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | ({
-      _key: string;
-    } & ArticleImage)
-  | ({
-      _key: string;
-    } & Youtube)
-  | ({
-      _key: string;
-    } & Twitter)
-  | ({
-      _key: string;
-    } & Code)
-  | ({
-      _key: string;
-    } & Code)
->;
-
-export type Youtube = {
-  _type: "youtube";
-  url?: string;
-};
-
-export type Twitter = {
-  _type: "twitter";
-  tweetId?: string;
-  twitterTitle?: string;
 };
 
 export type AuthorReference = {
@@ -516,20 +542,21 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | FactItem
+  | ProjectPortableText
+  | SimplePortableText
+  | PortableText
   | SanityImageAssetReference
+  | ArticleImage
+  | Youtube
+  | Twitter
+  | Figure
   | Settings
   | SanityImageCrop
   | SanityImageHotspot
   | HeroText
   | Author
   | Category
-  | Figure
-  | ProjectPortableText
-  | SimplePortableText
-  | ArticleImage
-  | PortableText
-  | Youtube
-  | Twitter
   | AuthorReference
   | CategoryReference
   | ProjectReference
@@ -654,7 +681,7 @@ export type ALL_BLOGS_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/homepageQuery.ts
 // Variable: HOMEPAGE_QUERY
-// Query: { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..5]{        _id,        _createdAt,        _updatedAt,        title,        overview,        isExternalBlog,        externalBlogUrl,        slug      },    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{      ...    },      "heroText": *[_type=="heroText"] {heroTitle},      "settings": *[_type=="settings"] {        companyName,        metaDescription,        metaKeywords,        metaOgImage,        metaTitle,        gitHubAccount,        linkedInAccount,        twitterAccount,        otherSocialAccount,        phone,        email      }    }
+// Query: { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{        _id,        _createdAt,        _updatedAt,        title,        overview,        isExternalBlog,        externalBlogUrl,        slug      },    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{      ...    },      "heroText": *[_type=="heroText"] {             heroTitle,             preamble,             facts,             tags},      "settings": *[_type=="settings"] {        companyName,        metaDescription,        metaKeywords,        metaOgImage,        metaTitle,        gitHubAccount,        linkedInAccount,        twitterAccount,        otherSocialAccount,        phone,        email      }    }
 export type HOMEPAGE_QUERY_RESULT = {
   blogPosts: Array<{
     _id: string;
@@ -715,6 +742,26 @@ export type HOMEPAGE_QUERY_RESULT = {
   }>;
   heroText: Array<{
     heroTitle: string | null;
+    preamble: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: never;
+      markDefs?: null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    facts: Array<
+      {
+        _key: string;
+      } & FactItem
+    > | null;
+    tags: Array<string> | null;
   }>;
   settings: Array<{
     companyName: string | null;
@@ -793,7 +840,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
     '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
-    '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..5]{\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {heroTitle},\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
+    '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {\n             heroTitle,\n             preamble,\n             facts,\n             tags},\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
   }
