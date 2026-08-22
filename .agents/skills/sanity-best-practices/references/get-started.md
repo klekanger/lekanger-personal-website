@@ -326,7 +326,7 @@ export default async function PostPage({
   const { slug } = await params;
   const post = await client.fetch<SanityDocument | null>(POST_QUERY, { slug }, options);
 
-  if (!post) return notFound();
+  if (!post) throw notFound();
 
   return (
     <article>

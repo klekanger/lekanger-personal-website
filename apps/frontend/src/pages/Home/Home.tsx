@@ -6,7 +6,7 @@ import { Route } from "@/routes/index";
 
 export function Home() {
   const { data } = Route.useLoaderData();
-  if (!data) return notFound();
+  if (!data) throw notFound();
 
   const { showcases, blogPosts, heroText, settings } = data;
 
