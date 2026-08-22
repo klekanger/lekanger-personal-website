@@ -12,8 +12,6 @@ export function BlogCard(props: BlogCardProps) {
 
   if (!post) return null;
 
-  console.log("post ", post);
-
   const blogUrl = post?.isExternalBlog
     ? post?.externalBlogUrl || "#"
     : `/blog-page/${post?.slug?.current}` || "#";
@@ -24,7 +22,7 @@ export function BlogCard(props: BlogCardProps) {
         <div className="flex flex-col md:flex-row pt-4">
           <div className="min-w-32">{shortDate(post._createdAt)}</div>
           <div className="w-full md:w-2/3">
-            <h1 className="pb-2">{post?.title}</h1>
+            <h1 className="pb-2 text-white">{post?.title}</h1>
             <PortableText value={post?.overview} />
           </div>
         </div>
