@@ -1,72 +1,100 @@
-import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { urlForImage } from "@/lib/sanity/imageUtils";
+import type {
+  SanityImageAssetReference,
+  SanityImageCrop,
+  SanityImageHotspot,
+} from "@repo/shared";
+import { dimensionsFromRef, urlForImage } from "@/lib/sanity/imageUtils";
 
-type ArticleImageValue = NonNullable<
-  HOMEPAGE_QUERY_RESULT["aboutText"]
->[number]["topImage"];
-
-const WIDTHS = [400, 800, 1200, 1600, 2000] as const;
+const WIDTHS = [400, 600, 800, 1024, 1400, 2000]; // All widths we will generate srcset images for
 const FALLBACK_WIDTH = 800;
 const SIZES = {
-  full: "(min-width: 1152px) 979px, 85vw",
-  half: "(min-width: 1152px) 512px, (min-width: 768px) 45vw, 90vw",
-};
-const ASPECT_RATIOS = {
-  horizontal: 16 / 9,
-  square: 1,
+  full: "(min-width: 1152px) 979px, calc(90vw - 57.6px)",
+  half: "(min-width: 1152px) 512px, (min-width: 768px) calc(50vw - 64px), calc(100vw - 64px)",
 } as const;
 
-interface SanityImageProps {
-  imageSrc: ArticleImageValue;
-  caption?: string | undefined | null;
+const cropAxis = (size: number | undefined, start = 0, end = 0) =>
+  size ? size * (1 - start - end) : undefined;
+
+export interface SanityImageValue {
+  asset?: Pick<SanityImageAssetReference, "_ref"> | null;
+  hotspot?: SanityImageHotspot | null;
+  crop?: SanityImageCrop | null;
+}
+
+export interface SanityImageProps {
+  image: SanityImageValue | null | undefined;
+  alt?: string | null;
+  caption?: string | null;
+  lqip?: string | null;
   variant?: keyof typeof SIZES;
-  format?: keyof typeof ASPECT_RATIOS | "natural";
+  aspectRatio?: number;
+  className?: string;
+  loading?: "lazy" | "eager";
 }
 
 export function SanityImage({
-  imageSrc,
+  image,
+  alt,
   caption,
+  lqip,
   variant = "full",
-  format = "natural",
+  aspectRatio,
+  className,
+  loading = "lazy",
 }: SanityImageProps) {
-  if (!imageSrc) return null;
+  const ref = image?.asset?._ref;
+  if (!ref) return null;
 
-  const { alt, image, metadata } = imageSrc;
-  if (!image) return null;
+  const { assetWidth, assetHeight } = dimensionsFromRef(ref);
+  const crop = image?.crop;
 
-  const dimensions = metadata?.dimensions;
-  const aspectRatio =
-    format === "natural" ? dimensions?.aspectRatio : ASPECT_RATIOS[format];
-  const maxWidth = dimensions?.width;
+  const cropWidth = cropAxis(assetWidth, crop?.left, crop?.right);
+  const cropHeight = cropAxis(assetHeight, crop?.top, crop?.bottom);
+
+  const ratio =
+    aspectRatio ??
+    (cropWidth && cropHeight ? cropWidth / cropHeight : undefined);
+
+  const maxWidth =
+    cropWidth && cropHeight && ratio
+      ? Math.floor(Math.min(cropWidth, cropHeight * ratio))
+      : undefined;
+
   const candidates = maxWidth
     ? [...WIDTHS.filter((w) => w < maxWidth), maxWidth]
-    : [...WIDTHS];
+    : WIDTHS;
 
-  const builder = urlForImage(image).auto("format");
+  const srcWidth = Math.min(
+    FALLBACK_WIDTH,
+    maxWidth ?? Number.POSITIVE_INFINITY,
+  );
 
-  const toUrl = (width: number) =>
-    aspectRatio
-      ? builder
-          .width(width)
-          .height(Math.round(width / aspectRatio))
-          .url()
-      : builder.width(width).url();
+  const heightFor = (width: number) =>
+    ratio ? Math.round(width / ratio) : undefined;
 
-  const height = aspectRatio
-    ? Math.round(FALLBACK_WIDTH / aspectRatio)
-    : undefined;
-  const width = height ? FALLBACK_WIDTH : undefined;
-  const lqip = metadata?.lqip;
+  const toUrl = (width: number) => {
+    const builder = urlForImage({ ...image, asset: { _ref: ref } })
+      .auto("format")
+      .width(width);
+
+    const height = heightFor(width);
+
+    return height ? builder.height(height).url() : builder.url();
+  };
+
+  const srcHeight = heightFor(srcWidth);
 
   return (
-    <figure>
+    <figure className={className}>
       <img
-        src={toUrl(FALLBACK_WIDTH)}
+        src={toUrl(srcWidth)}
         srcSet={candidates.map((w) => `${toUrl(w)} ${w}w`).join(", ")}
         sizes={SIZES[variant]}
-        alt={alt || ""}
-        width={width}
-        height={height}
+        alt={alt ?? ""}
+        width={srcHeight ? srcWidth : undefined}
+        height={srcHeight}
+        loading={loading}
+        decoding="async"
         className="w-full"
         style={
           lqip
