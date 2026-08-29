@@ -221,6 +221,35 @@ export type HeroText = {
   >;
 };
 
+export type About = {
+  _id: string;
+  _type: "about";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  topImage?: ArticleImage;
+  facts?: Array<
+    {
+      _key: string;
+    } & FactItem
+  >;
+};
+
 export type Author = {
   _id: string;
   _type: "author";
@@ -555,6 +584,7 @@ export type AllSanitySchemaTypes =
   | SanityImageCrop
   | SanityImageHotspot
   | HeroText
+  | About
   | Author
   | Category
   | AuthorReference
@@ -576,11 +606,12 @@ export type AllSanitySchemaTypes =
 
 // Source: ../frontend/src/lib/sanity/queries/blogPageQuery.ts
 // Variable: BLOGS_BY_SLUG_QUERY
-// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    mainImage,    title,    overview,    body,    bodyText,    isExternalBlog,    externalBlogUrl,    "slug": slug.current  }
+// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    topImage,    mainImage,    title,    overview,    body,    bodyText,    isExternalBlog,    externalBlogUrl,    "slug": slug.current  }
 export type BLOGS_BY_SLUG_QUERY_RESULT = {
   _id: string;
   _createdAt: string;
   _updatedAt: string;
+  topImage: ArticleImage | null;
   mainImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -681,7 +712,7 @@ export type ALL_BLOGS_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/homepageQuery.ts
 // Variable: HOMEPAGE_QUERY
-// Query: { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{        _id,        _createdAt,        _updatedAt,        title,        overview,        isExternalBlog,        externalBlogUrl,        slug      },    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{      ...    },      "heroText": *[_type=="heroText"] {             heroTitle,             preamble,             facts,             tags},      "settings": *[_type=="settings"] {        companyName,        metaDescription,        metaKeywords,        metaOgImage,        metaTitle,        gitHubAccount,        linkedInAccount,        twitterAccount,        otherSocialAccount,        phone,        email      }    }
+// Query: { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{        _id,        _createdAt,        _updatedAt,        title,        overview,        isExternalBlog,        externalBlogUrl,        slug      },    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{      ...    },      "heroText": *[_type=="heroText"] {          heroTitle,          preamble,          facts,          tags},      "aboutText": *[_type=="about"] {        title,        body,        topImage {          _type,          alt,          caption,          image,          "lqip": image.asset->metadata.lqip,          },        facts      },      "settings": *[_type=="settings"] {        companyName,        metaDescription,        metaKeywords,        metaOgImage,        metaTitle,        gitHubAccount,        linkedInAccount,        twitterAccount,        otherSocialAccount,        phone,        email      }    }
 export type HOMEPAGE_QUERY_RESULT = {
   blogPosts: Array<{
     _id: string;
@@ -763,6 +794,41 @@ export type HOMEPAGE_QUERY_RESULT = {
     > | null;
     tags: Array<string> | null;
   }>;
+  aboutText: Array<{
+    title: string | null;
+    body: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: never;
+      markDefs?: null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    topImage: {
+      _type: "articleImage";
+      alt: string | null;
+      caption: string | null;
+      image: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+      lqip: string | null;
+    } | null;
+    facts: Array<
+      {
+        _key: string;
+      } & FactItem
+    > | null;
+  }>;
   settings: Array<{
     companyName: string | null;
     metaDescription: string | null;
@@ -838,9 +904,9 @@ export type SHOWCASE_BY_SLUG_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
     '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
-    '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {\n             heroTitle,\n             preamble,\n             facts,\n             tags},\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
+    '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {\n          heroTitle,\n          preamble,\n          facts,\n          tags},\n      "aboutText": *[_type=="about"] {\n        title,\n        body,\n        topImage {\n          _type,\n          alt,\n          caption,\n          image,\n          "lqip": image.asset->metadata.lqip,\n          },\n        facts\n      },\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    mainImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
   }
