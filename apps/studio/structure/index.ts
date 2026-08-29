@@ -43,6 +43,11 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
         .child(S.document().schemaType("heroText").documentId("heroText")),
 
       S.listItem()
+        .title("Forside - om meg")
+        .icon(HomeIcon)
+        .child(S.document().schemaType("about").documentId("about")),
+
+      S.listItem()
         .title("Nettside-innstillinger")
         .icon(CogIcon)
         .child(S.document().schemaType("settings").documentId("settings")),
