@@ -1,3 +1,4 @@
+import about from "./documents/about";
 import blog from "./documents/blog";
 import project from "./documents/project";
 import showcase from "./documents/showcase";
@@ -20,6 +21,7 @@ export const schemaTypes = [
   project,
   category,
   author,
+  about,
 
   // Singletons
   heroText,
