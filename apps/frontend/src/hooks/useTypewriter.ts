@@ -24,9 +24,17 @@ export type TypewriterItem<TFact extends FactItem = FactItem> = {
   showCursor: boolean;
 };
 
+type C64Command = NonNullable<FactItem["c64command"]>;
+
+type CommandSpec = {
+  format: (label: string) => string;
+  tapeLoad: boolean;
+};
+
 type Action =
-  | { type: "tick"; facts: FactItem[] }
-  | { type: "reset"; facts: FactItem[] };
+  | { type: "tick"; entries: TypewriterEntry[] }
+  | { type: "reset"; entries: TypewriterEntry[] }
+  | { type: "skipAll"; entries: TypewriterEntry[] };
 
 const C64_COMMANDS = {
   c64Load: {
@@ -41,50 +49,50 @@ const C64_COMMANDS = {
     format: (label: string) => label,
     tapeLoad: false,
   },
+} satisfies Record<C64Command, CommandSpec>;
+
+type TypewriterEntry<TFact extends FactItem = FactItem> = {
+  fact: TFact;
+  text: string;
+  tapeLoad: boolean;
 };
 
-// Add C64 commands like LOAD and PRINT to fact.label
-// based on the fact.c64command value
-//
-function getLabelToPrint(fact: FactItem | undefined): string {
-  const typedText =
-    fact?.c64command !== undefined
-      ? C64_COMMANDS[fact.c64command].format(fact?.label ?? "")
-      : C64_COMMANDS.c64NoCommand.format(fact?.label ?? "");
+function toEntry<TFact extends FactItem>(fact: TFact) {
+  const { format, tapeLoad } = C64_COMMANDS[fact.c64command ?? "c64NoCommand"];
 
-  return typedText;
+  return { fact, text: format(fact.label ?? ""), tapeLoad };
 }
 
-function enterItem(facts: FactItem[], index: number): TypingState {
-  const fact = facts[index];
-  if (!fact) return { index, charIndex: 0, phase: "done" };
+function enterItem(entries: TypewriterEntry[], index: number): TypingState {
+  if (!entries[index]) return { index, charIndex: 0, phase: "done" };
 
   return { index, charIndex: 0, phase: "typing" };
 }
 
+// Reducer
+//
 function reducer(state: TypingState, action: Action): TypingState {
-  const { facts, type } = action;
+  const { entries, type } = action;
 
   switch (type) {
     case "reset":
-      return enterItem(facts, 0);
+      return enterItem(entries, 0);
+
+    case "skipAll":
+      return { index: entries.length, charIndex: 0, phase: "done" };
 
     case "tick":
       switch (state.phase) {
         case "typing": {
+          const entry = entries[state?.index];
           const charIndex = state.charIndex + 1;
-          const newLabel = getLabelToPrint(facts[state.index]) ?? "";
 
-          if (charIndex < newLabel.length) return { ...state, charIndex };
-
-          const tapeLoad =
-            C64_COMMANDS[facts[state.index]?.c64command ?? "c64NoCommand"]
-              ?.tapeLoad === true;
+          if (charIndex < entry.text.length) return { ...state, charIndex };
 
           return {
             ...state,
             charIndex,
-            phase: tapeLoad ? "searching" : "revealed",
+            phase: entry?.tapeLoad ? "searching" : "revealed",
           };
         }
 
@@ -95,7 +103,7 @@ function reducer(state: TypingState, action: Action): TypingState {
           return { ...state, phase: "revealed" };
 
         case "revealed":
-          return enterItem(facts, state.index + 1);
+          return enterItem(entries, state.index + 1);
 
         case "done":
           return state;
@@ -117,7 +125,9 @@ export function useTypewriterSequence<TFact extends FactItem>(
     searchTime = 1500,
   }: UseTypeWriterOpts = {},
 ) {
-  const [state, dispatch] = useReducer(reducer, facts, (initial) => {
+  const entries = useMemo(() => facts.map(toEntry), [facts]);
+
+  const [state, dispatch] = useReducer(reducer, entries, (initial) => {
     return enterItem(initial, 0);
   });
 
@@ -128,8 +138,8 @@ export function useTypewriterSequence<TFact extends FactItem>(
       isFirstRun.current = false;
       return;
     }
-    dispatch({ type: "reset", facts });
-  }, [facts]);
+    dispatch({ type: "reset", entries });
+  }, [entries]);
 
   useEffect(() => {
     const DELAY: Record<Exclude<Phase, "done">, number> = {
@@ -142,18 +152,16 @@ export function useTypewriterSequence<TFact extends FactItem>(
     if (state.phase === "done") return;
 
     const id = setTimeout(
-      () => dispatch({ type: "tick", facts }),
+      () => dispatch({ type: "tick", entries }),
       DELAY[state.phase],
     );
 
     return () => clearTimeout(id);
-  }, [state, pause, typeSpeed, facts, searchTime, loadTime]);
+  }, [state, pause, typeSpeed, entries, searchTime, loadTime]);
 
   const items = useMemo<TypewriterItem<TFact>[]>(
     () =>
-      facts.map((fact, i) => {
-        const label = getLabelToPrint(fact);
-
+      entries.map(({ fact, text }, i) => {
         if (i > state.index) {
           return {
             fact,
@@ -168,7 +176,7 @@ export function useTypewriterSequence<TFact extends FactItem>(
           return {
             fact,
             visible: true,
-            labelText: label,
+            labelText: text,
             showValue: true,
             showCursor: false,
           };
@@ -177,12 +185,12 @@ export function useTypewriterSequence<TFact extends FactItem>(
         return {
           fact,
           visible: true,
-          labelText: label.slice(0, state.charIndex),
+          labelText: text.slice(0, state.charIndex),
           showValue: state.phase !== "typing",
           showCursor: true,
         };
       }),
-    [facts, state],
+    [entries, state],
   );
 
   return { items, phase: state.phase };
