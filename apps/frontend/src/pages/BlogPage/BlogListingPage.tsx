@@ -25,9 +25,7 @@ export function BlogListingPage({ items, page }: BlogListingPageProps) {
       <hr />
       <div className="font-heading uppercase mt-8 relative w-fit">
         1337 blocks free.
-        <span className="inline-block absolute top-0 -right-8">
-          <BlinkingCursor />
-        </span>
+        <BlinkingCursor />
       </div>
     </>
   );

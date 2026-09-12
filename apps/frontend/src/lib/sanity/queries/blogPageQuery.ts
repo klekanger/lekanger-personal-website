@@ -5,6 +5,7 @@ export const BLOGS_BY_SLUG_QUERY = defineQuery(`
     _id,
     _createdAt,
     _updatedAt,
+    topImage,
     mainImage,
     title,
     overview,
