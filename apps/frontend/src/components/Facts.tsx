@@ -10,6 +10,8 @@ interface TypeWriterProps extends UseTypeWriterOpts {
   className?: string;
 }
 
+const NO_FACTS: NonNullable<HeroText["facts"]> = [];
+
 const Cursor = () => (
   <span
     aria-hidden="true"
@@ -18,7 +20,7 @@ const Cursor = () => (
 );
 
 export function Facts({ content, className, ...opts }: TypeWriterProps) {
-  const { items, phase } = useTypewriterSequence(content ?? [], opts);
+  const { items, phase } = useTypewriterSequence(content ?? NO_FACTS, opts);
   if (!content?.length) return null;
 
   return (
