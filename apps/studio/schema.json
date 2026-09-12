@@ -25,6 +25,27 @@
             "type": "string"
           },
           "optional": true
+        },
+        "c64command": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "c64Load"
+              },
+              {
+                "type": "string",
+                "value": "c64Print"
+              },
+              {
+                "type": "string",
+                "value": "c64NoCommand"
+              }
+            ]
+          },
+          "optional": true
         }
       }
     }

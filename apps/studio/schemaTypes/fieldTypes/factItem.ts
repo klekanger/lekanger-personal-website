@@ -1,11 +1,12 @@
 import { BlockElementIcon } from "@sanity/icons/BlockElement";
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const factItem = defineType({
   name: "factItem",
   title: "Faktalinje",
   type: "object",
   icon: BlockElementIcon,
+
   fields: [
     defineField({
       name: "label",
@@ -20,6 +21,20 @@ export const factItem = defineType({
       title: "Verdi",
       type: "string",
       validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: "c64command",
+      title: "C64-kommando",
+      type: "string",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "LOAD", value: "c64Load" },
+          { title: "PRINT", value: "c64Print" },
+          { title: "Ingen", value: "c64NoCommand" },
+        ],
+      },
     }),
   ],
   preview: {

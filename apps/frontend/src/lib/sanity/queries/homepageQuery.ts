@@ -15,10 +15,22 @@ export const HOMEPAGE_QUERY = defineQuery(`
       ...
     },
       "heroText": *[_type=="heroText"] {
-             heroTitle,
-             preamble,
-             facts,
-             tags},
+          heroTitle,
+          preamble,
+          facts,
+          tags},
+      "aboutText": *[_type=="about"] {
+        title,
+        body,
+        topImage {
+          _type,
+          alt,
+          caption,
+          image,
+          "lqip": image.asset->metadata.lqip,
+          },
+        facts
+      },
       "settings": *[_type=="settings"] {
         companyName,
         metaDescription,

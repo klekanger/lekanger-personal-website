@@ -1,7 +1,7 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
 import { notFound } from "@tanstack/react-router";
-import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "#/components/ui/Badge";
+import { Facts } from "@/components/Facts";
 import { Button } from "@/components/ui/button";
 import { CustomPortableText } from "./PortableText/CustomPortableText";
 
@@ -10,8 +10,7 @@ interface HeroProps {
 }
 
 export function Hero({ heroText }: HeroProps) {
-  if (!heroText) throw notFound();
-
+  if (!heroText?.length) throw notFound();
   const { heroTitle, preamble, facts, tags } = heroText[0];
 
   return (
@@ -33,17 +32,7 @@ export function Hero({ heroText }: HeroProps) {
           />
 
           <div className="flex gap-2 py-8 font-heading flex-wrap">
-            {tags
-              ? tags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant={"outline"}
-                    className="py-4 text-white text-lg"
-                  >
-                    {tag}
-                  </Badge>
-                ))
-              : null}
+            {tags ? tags.map((tag) => <Badge key={tag} text={tag} />) : null}
           </div>
 
           <div className="flex gap-2 pb-4">
@@ -51,21 +40,16 @@ export function Hero({ heroText }: HeroProps) {
             <Button>KONTAKT</Button>
           </div>
         </div>
-
-        <div className="font-heading text-sm mt-0 prose flex-1 pt-8 lg:pt-0">
-          <p>READY.</p>
-          <p className="text-white">LOAD "WHOAMI",8,1</p>
-          <p>SEARCHING FOR WHOAMI</p>
-          <p>LOADING... OK</p>
-          <p>KURT LEKANGER — SENIOR FULLSTACK-UTVIKLER </p>
-          <p>READY.</p>
-          <p className="text-white">PRINT STACK$</p>
-          <p>REACT NEXT.JS ASTRO VUE SANITY TYPESCRIPT</p>
-          <p>READY.</p>
-          <p className="text-white">PRINT BAKGRUNN$</p>
-          <p>TIDLIGERE TEKNOLOGIJOURNALIST OG REDAKTØR</p>
-          <p className="mb-0">READY.</p>
-          <BlinkingCursor />
+        <div className="font-heading text-sm mt-0 prose flex-1 pt-8 lg:pt-0 ">
+          <Facts
+            content={facts}
+            pause={1200}
+            typeSpeed={45}
+            searchTime={100}
+            loadTime={120}
+          />
+          <br />
+          {/* <BlinkingCursor /> */}
         </div>
       </div>
     </section>
