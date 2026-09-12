@@ -1,20 +1,27 @@
 import { notFound } from "@tanstack/react-router";
+import { About } from "#/components/About";
 import { BlogPromo } from "#/components/BlogPromo";
 import { Hero } from "#/components/Hero";
 import { ShowcasePromo } from "#/components/ShowcasePromo";
+import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { Route } from "@/routes/index";
 
 export function Home() {
   const { data } = Route.useLoaderData();
   if (!data) throw notFound();
 
-  const { showcases, blogPosts, heroText, settings } = data;
+  const { showcases, blogPosts, heroText, aboutText } = data;
 
   return (
     <main className="w-full">
       <Hero heroText={heroText} />
       <ShowcasePromo showcases={showcases} />
       <BlogPromo blogPosts={blogPosts} />
+      <About aboutText={aboutText} />
+      <div className="py-8 font-heading uppercase">
+        <p>sys 49152</p>
+        READY. <BlinkingCursor />
+      </div>
     </main>
   );
 }
