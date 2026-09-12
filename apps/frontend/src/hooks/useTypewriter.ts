@@ -26,8 +26,7 @@ export type TypewriterItem<TFact extends FactItem = FactItem> = {
 
 type Action =
   | { type: "tick"; facts: FactItem[] }
-  | { type: "reset"; facts: FactItem[] }
-  | { type: "skipAll"; facts: FactItem[] };
+  | { type: "reset"; facts: FactItem[] };
 
 const C64_COMMANDS = {
   c64Load: {
@@ -69,9 +68,6 @@ function reducer(state: TypingState, action: Action): TypingState {
   switch (type) {
     case "reset":
       return enterItem(facts, 0);
-
-    case "skipAll":
-      return { index: facts.length, charIndex: 0, phase: "done" };
 
     case "tick":
       switch (state.phase) {
