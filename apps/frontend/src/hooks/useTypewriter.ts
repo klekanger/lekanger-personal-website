@@ -1,4 +1,4 @@
-import type {
+(import type {
   Action,
   C64Command,
   CommandSpec,
@@ -60,7 +60,7 @@ function toEntry<TFact extends FactItem>(fact: TFact) {
     diskLines: diskLoad
       ? {
           searching: `SEARCHING FOR ${label}`,
-          loading: `LOADING... OK`,
+          loading: "LOADING... OK",
         }
       : null,
   };
