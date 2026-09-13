@@ -1,76 +1,89 @@
-import type { FactItem } from "@repo/shared";
+import type {
+  Action,
+  C64Command,
+  CommandSpec,
+  FactItem,
+  Phase,
+  TypewriterEntry,
+  TypewriterItem,
+  TypingState,
+  UseTypeWriterOpts,
+} from "@repo/shared";
 import { useEffect, useMemo, useReducer, useRef } from "react";
 
-export type UseTypeWriterOpts = {
-  pause?: number | undefined;
-  typeSpeed?: number | undefined;
-  searchTime?: number | undefined;
-  loadTime?: number | undefined;
+// We need to keep track of the order of the operations to render
+// the "searching" or "loading" lines at the right time
+// and also hide the cursor when the disk is loading
+const PHASE_ORDER: Record<Phase, number> = {
+  typing: 0,
+  searching: 1,
+  loading: 2,
+  revealed: 3,
+  done: 4,
 };
-
-type Phase = "typing" | "searching" | "loading" | "revealed" | "done";
-
-type TypingState = {
-  index: number;
-  charIndex: number;
-  phase: Phase;
-};
-
-export type TypewriterItem<TFact extends FactItem = FactItem> = {
-  fact: TFact;
-  visible: boolean;
-  labelText: string;
-  showValue: boolean;
-  showCursor: boolean;
-};
-
-type C64Command = NonNullable<FactItem["c64command"]>;
-
-type CommandSpec = {
-  format: (label: string) => string;
-  tapeLoad: boolean;
-};
-
-type Action =
-  | { type: "tick"; entries: TypewriterEntry[] }
-  | { type: "reset"; entries: TypewriterEntry[] }
-  | { type: "skipAll"; entries: TypewriterEntry[] };
 
 const C64_COMMANDS = {
   c64Load: {
     format: (label: string) => `LOAD "${label}",8,1`,
-    tapeLoad: true,
+    diskLoad: true,
   },
   c64Print: {
     format: (label: string) => `PRINT ${label}$`,
-    tapeLoad: false,
+    diskLoad: false,
   },
   c64NoCommand: {
     format: (label: string) => label,
-    tapeLoad: false,
+    diskLoad: false,
   },
 } satisfies Record<C64Command, CommandSpec>;
 
-type TypewriterEntry<TFact extends FactItem = FactItem> = {
-  fact: TFact;
-  text: string;
-  tapeLoad: boolean;
-};
-
+/**
+ * Convert a fact item's label into a "C64 command"
+ * Example:
+ * - `label: "HELLO"` with c64command `c64Print` becomes `text: PRINT HELLO$`
+ * - `label: "WORLD"` with c64command `c64Load` becomes `text: LOAD "WORLD",8,1`
+ *
+ * The c64 commands are defined in Sanity, together with the labels.
+ *
+ * If the c64command is `c64Load` we add "searching" and "loading" text lines
+ * that are rendered during the searching and loading phases.
+ */
 function toEntry<TFact extends FactItem>(fact: TFact) {
-  const { format, tapeLoad } = C64_COMMANDS[fact.c64command ?? "c64NoCommand"];
+  const { format, diskLoad } = C64_COMMANDS[fact.c64command ?? "c64NoCommand"];
 
-  return { fact, text: format(fact.label ?? ""), tapeLoad };
+  const label = fact.label ?? "";
+
+  return {
+    fact,
+    text: format(label),
+    diskLoad,
+    diskLines: diskLoad
+      ? {
+          searching: `SEARCHING FOR ${label}`,
+          loading: `LOADING... OK`,
+        }
+      : null,
+  };
 }
 
+/**
+ * Build the start state for the fact item at `index`.
+ * When `index` is past the end of `entries` there is nothing
+ * more to type out, and we will enter the `done` state and stop typing.
+ */
 function enterItem(entries: TypewriterEntry[], index: number): TypingState {
   if (!entries[index]) return { index, charIndex: 0, phase: "done" };
 
   return { index, charIndex: 0, phase: "typing" };
 }
 
-// Reducer
-//
+/**
+ * Reducer function for the typewriter state machine.
+ *
+ * @param state The current typing state (which item we are typing out, which character, and the phase (typing, searching, loading, revealed, done))
+ * @param action The action to perform (tick, reset, skipAll)
+ * @returns The updated typing state
+ */
 function reducer(state: TypingState, action: Action): TypingState {
   const { entries, type } = action;
 
@@ -87,12 +100,14 @@ function reducer(state: TypingState, action: Action): TypingState {
           const entry = entries[state?.index];
           const charIndex = state.charIndex + 1;
 
+          // Type letters one by one until we reach the end of the text
           if (charIndex < entry.text.length) return { ...state, charIndex };
 
+          // When all letters have been typed out, go to the next phase.
           return {
             ...state,
             charIndex,
-            phase: entry?.tapeLoad ? "searching" : "revealed",
+            phase: entry?.diskLoad ? "searching" : "revealed",
           };
         }
 
@@ -112,9 +127,16 @@ function reducer(state: TypingState, action: Action): TypingState {
 }
 
 /**
- * Renders "C64 commands" on the screen.
- * Typing speed and features like typing "LOAD" or "PRINT"
- * is defined in Sanity
+ * Hook for rendering "C64 commands" on the screen in a typewriter style.
+ * The commands (eg. "LOAD", "PRINT") are defined in Sanity.
+ * Different commands makes the text appear in different ways on the screen.
+ *
+ * @param facts An array of fact items with `label`, `value` and a ´c64command`
+ * @param opts Timings for the typewriter animation. Each value is how long a phase lasts.
+ * - `pause`: How long a finished fact stays on screen before the next item starts typing
+ * - `typeSpeed`: Speed of typing (ms per char)
+ * - `loadTime`: How long "loading ok" stays on screen before revealing the value
+ * - `searchTime`: How long "searching for" stays on screen before "loading ok" appears
  */
 export function useTypewriterSequence<TFact extends FactItem>(
   facts: TFact[],
@@ -159,39 +181,56 @@ export function useTypewriterSequence<TFact extends FactItem>(
     return () => clearTimeout(id);
   }, [state, pause, typeSpeed, entries, searchTime, loadTime]);
 
-  const items = useMemo<TypewriterItem<TFact>[]>(
-    () =>
-      entries.map(({ fact, text }, i) => {
-        if (i > state.index) {
-          return {
-            fact,
-            visible: false,
-            labelText: "",
-            showValue: false,
-            showCursor: false,
-          };
-        }
+  const items = useMemo<TypewriterItem<TFact>[]>(() => {
+    const order = PHASE_ORDER[state.phase];
 
-        if (i < state.index) {
-          return {
-            fact,
-            visible: true,
-            labelText: text,
-            showValue: true,
-            showCursor: false,
-          };
-        }
+    return entries.map(({ fact, text, diskLines }, i) => {
+      if (i > state.index) {
+        return {
+          fact,
+          visible: false,
+          labelText: "",
+          statusLines: [],
+          showValue: false,
+          showCursor: false,
+        };
+      }
 
+      if (i < state.index) {
         return {
           fact,
           visible: true,
-          labelText: text.slice(0, state.charIndex),
-          showValue: state.phase !== "typing",
-          showCursor: true,
+          labelText: text,
+          statusLines: diskLines
+            ? [diskLines.searching, diskLines.loading]
+            : [],
+          showValue: true,
+          showCursor: false,
         };
-      }),
-    [entries, state],
-  );
+      }
+
+      const statusLines: string[] = [];
+
+      if (diskLines) {
+        if (order >= PHASE_ORDER.searching)
+          statusLines.push(diskLines.searching);
+        if (order >= PHASE_ORDER.loading) statusLines.push(diskLines.loading);
+      }
+
+      // Do not show cursor when loading from the disk drive
+      const isDriveBusy =
+        order >= PHASE_ORDER.searching && order < PHASE_ORDER.revealed;
+
+      return {
+        fact,
+        visible: true,
+        labelText: text.slice(0, state.charIndex),
+        statusLines,
+        showValue: order >= PHASE_ORDER.revealed,
+        showCursor: !isDriveBusy,
+      };
+    });
+  }, [entries, state]);
 
   return { items, phase: state.phase };
 }

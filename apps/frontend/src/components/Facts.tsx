@@ -1,8 +1,5 @@
-import type { HeroText } from "@repo/shared";
-import {
-  type UseTypeWriterOpts,
-  useTypewriterSequence,
-} from "#/hooks/useTypewriter";
+import type { HeroText, UseTypeWriterOpts } from "@repo/shared";
+import { useTypewriterSequence } from "#/hooks/useTypewriter";
 import { cn } from "#/lib/utils";
 
 interface TypeWriterProps extends UseTypeWriterOpts {
@@ -25,22 +22,28 @@ export function Facts({ content, className, ...opts }: TypeWriterProps) {
 
   return (
     <div className={cn("font-heading", className)}>
-      {items.map(({ fact, visible, labelText, showValue, showCursor }) =>
-        visible ? (
-          <div key={fact._key}>
-            <div className="uppercase text-white h-8 flex align-middle py-2">
-              <span className="mr-1 ">{labelText}</span>
-              {showCursor && !showValue && <Cursor />}
+      {items.map(
+        ({ fact, visible, labelText, showValue, statusLines, showCursor }) =>
+          visible ? (
+            <div key={fact._key}>
+              <div className="uppercase text-white h-8 flex align-middle py-2">
+                <span className="mr-1 ">{labelText}</span>
+                {showCursor && !showValue && <Cursor />}
+              </div>
+              {statusLines.map((line) => (
+                <p key={line} className="uppercase text-foreground">
+                  {line}
+                </p>
+              ))}
+              {showValue && (
+                <>
+                  <p className="uppercase text-foreground">{fact.value}</p>
+                  <p className="text-foreground">READY.</p>
+                  {showCursor && <Cursor />}
+                </>
+              )}
             </div>
-            {showValue && (
-              <>
-                <p className="uppercase text-foreground">{fact.value}</p>
-                <p className="text-foreground">READY.</p>
-                {showCursor && <Cursor />}
-              </>
-            )}
-          </div>
-        ) : null,
+          ) : null,
       )}
       {phase === "done" && <Cursor />}
     </div>

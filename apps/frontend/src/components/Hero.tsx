@@ -45,8 +45,8 @@ export function Hero({ heroText }: HeroProps) {
             content={facts}
             pause={1200}
             typeSpeed={45}
-            searchTime={100}
-            loadTime={120}
+            searchTime={1200}
+            loadTime={1000}
           />
           <br />
           {/* <BlinkingCursor /> */}
