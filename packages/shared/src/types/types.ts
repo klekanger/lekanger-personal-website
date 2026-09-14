@@ -27,7 +27,6 @@ type DiskLines = {
 export type TypewriterEntry<TFact extends FactItem = FactItem> = {
   fact: TFact;
   text: string;
-  diskLoad: boolean;
   diskLines: DiskLines | null;
 };
 

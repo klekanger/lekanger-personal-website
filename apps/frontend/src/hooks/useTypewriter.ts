@@ -1,4 +1,4 @@
-(import type {
+import type {
   Action,
   C64Command,
   CommandSpec,
@@ -10,6 +10,7 @@
   UseTypeWriterOpts,
 } from "@repo/shared";
 import { useEffect, useMemo, useReducer, useRef } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 // We need to keep track of the order of the operations to render
 // the "searching" or "loading" lines at the right time
@@ -92,22 +93,25 @@ function reducer(state: TypingState, action: Action): TypingState {
       return enterItem(entries, 0);
 
     case "skipAll":
+      if (state.phase === "done" && state.index === entries.length)
+        return state;
+
       return { index: entries.length, charIndex: 0, phase: "done" };
 
     case "tick":
       switch (state.phase) {
         case "typing": {
-          const entry = entries[state?.index];
+          const entry = entries[state.index];
           const charIndex = state.charIndex + 1;
 
           // Type letters one by one until we reach the end of the text
-          if (charIndex < entry.text.length) return { ...state, charIndex };
+          if (charIndex < entry?.text.length) return { ...state, charIndex };
 
           // When all letters have been typed out, go to the next phase.
           return {
             ...state,
             charIndex,
-            phase: entry?.diskLoad ? "searching" : "revealed",
+            phase: entry?.diskLines ? "searching" : "revealed",
           };
         }
 
@@ -148,6 +152,7 @@ export function useTypewriterSequence<TFact extends FactItem>(
   }: UseTypeWriterOpts = {},
 ) {
   const entries = useMemo(() => facts.map(toEntry), [facts]);
+  const wantsReducedMotion = useReducedMotion();
 
   const [state, dispatch] = useReducer(reducer, entries, (initial) => {
     return enterItem(initial, 0);
@@ -164,6 +169,10 @@ export function useTypewriterSequence<TFact extends FactItem>(
   }, [entries]);
 
   useEffect(() => {
+    if (wantsReducedMotion) dispatch({ type: "skipAll", entries });
+  }, [wantsReducedMotion, entries]);
+
+  useEffect(() => {
     const DELAY: Record<Exclude<Phase, "done">, number> = {
       loading: loadTime,
       searching: searchTime,
@@ -171,7 +180,7 @@ export function useTypewriterSequence<TFact extends FactItem>(
       revealed: pause,
     };
 
-    if (state.phase === "done") return;
+    if (state.phase === "done" || wantsReducedMotion) return;
 
     const id = setTimeout(
       () => dispatch({ type: "tick", entries }),
@@ -179,7 +188,15 @@ export function useTypewriterSequence<TFact extends FactItem>(
     );
 
     return () => clearTimeout(id);
-  }, [state, pause, typeSpeed, entries, searchTime, loadTime]);
+  }, [
+    state,
+    pause,
+    typeSpeed,
+    entries,
+    searchTime,
+    loadTime,
+    wantsReducedMotion,
+  ]);
 
   const items = useMemo<TypewriterItem<TFact>[]>(() => {
     const order = PHASE_ORDER[state.phase];

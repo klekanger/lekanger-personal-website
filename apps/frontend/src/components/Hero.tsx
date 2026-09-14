@@ -49,7 +49,6 @@ export function Hero({ heroText }: HeroProps) {
             loadTime={1000}
           />
           <br />
-          {/* <BlinkingCursor /> */}
         </div>
       </div>
     </section>
