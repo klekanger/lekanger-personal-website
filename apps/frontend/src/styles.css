@@ -95,6 +95,7 @@
     "Consolas", "DejaVu Sans Mono", monospace;
   --font-term: var(--font-body);
   --font-code: var(--font-body);
+  --font-mono: var(--font-body);
 
   --color-background: var(--c64-blue);
   --color-card: var(--c64-blue-deep);

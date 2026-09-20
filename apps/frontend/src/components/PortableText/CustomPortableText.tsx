@@ -24,16 +24,21 @@ const components = {
 export function CustomPortableText({
   value,
   isPreamble = false,
+  className,
 }: {
   value: PortableTextValue | null | undefined;
   isPreamble?: boolean;
+  className?: string;
 }) {
   return (
-    // <div className="prose lg:prose-xl">
     <div
-      className={cn("prose lg:prose-xl font-mono", {
-        "font-bold": isPreamble,
-      })}
+      className={cn(
+        "prose lg:prose-xl font-mono",
+        {
+          "font-bold": isPreamble,
+        },
+        className,
+      )}
     >
       <PortableText components={components} value={value} />
     </div>

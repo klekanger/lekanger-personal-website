@@ -5,6 +5,5 @@ import { Home } from "@/pages/Home/Home";
 
 export const Route = createFileRoute("/")({
   component: Home,
-  loader: async ({ context, params }) =>
-    await loadSanityQuery(context, HOMEPAGE_QUERY),
+  loader: async ({ context }) => await loadSanityQuery(context, HOMEPAGE_QUERY),
 });

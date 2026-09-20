@@ -4,7 +4,7 @@ import { loadSanityQuery } from "#/lib/sanity/loader";
 import { BlogListingPage } from "#/pages/BlogPage/BlogListingPage";
 import { ALL_BLOGS_QUERY } from "@/lib/sanity/queries/blogPagesQuery";
 
-const POSTS_PER_PAGE = 3;
+const POSTS_PER_PAGE = 10;
 
 export const Route = createFileRoute("/blog-page/")({
   validateSearch: (search) => ({

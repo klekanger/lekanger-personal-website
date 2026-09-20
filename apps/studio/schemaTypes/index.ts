@@ -1,7 +1,9 @@
+import about from "./documents/about";
 import blog from "./documents/blog";
 import project from "./documents/project";
 import showcase from "./documents/showcase";
 import { articleImage } from "./fieldTypes/articleImage";
+import { factItem } from "./fieldTypes/factItem";
 import { portableText } from "./fieldTypes/portableText";
 import { twitter } from "./fieldTypes/twitter";
 import { youtube } from "./fieldTypes/youtube";
@@ -17,17 +19,21 @@ export const schemaTypes = [
   blog,
   showcase,
   project,
-  twitter,
-  youtube,
-  portableText,
-  articleImage,
-  simplePortableText,
-  projectPortableText,
-  figure,
   category,
   author,
+  about,
 
   // Singletons
   heroText,
   siteSettings,
+
+  // fieldTypes
+  figure,
+  twitter,
+  youtube,
+  articleImage,
+  portableText,
+  simplePortableText,
+  projectPortableText,
+  factItem,
 ];

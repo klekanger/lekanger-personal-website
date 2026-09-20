@@ -1,3 +1,4 @@
+import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
@@ -7,7 +8,16 @@ export function BlogPage() {
   const { data } = Route.useLoaderData();
   if (!data) return <h1>404</h1>;
 
-  const { title, overview, body, bodyText } = data;
+  const {
+    title,
+    overview,
+    body,
+    bodyText,
+    topImage,
+    mainImage,
+    _createdAt,
+    _updatedAt,
+  } = data;
 
   // Field type `body` is deprecated, but we are keeping it to be able to render old articles
   // Using `bodyText` on all new articles
@@ -17,6 +27,11 @@ export function BlogPage() {
     <article className="prose py-16">
       <BackButton buttonText="Tilbake" className="mb-8" />
       <h1>{title}</h1>
+      <SanityImage
+        image={topImage?.image ? topImage.image : mainImage}
+        alt={topImage?.alt || mainImage?.alt}
+        caption={topImage?.caption || ""}
+      />
       <CustomPortableText value={overview} isPreamble />
       <br />
       <CustomPortableText value={bodyTextToRender} />
