@@ -68,6 +68,25 @@ function toEntry<TFact extends FactItem>(fact: TFact) {
 }
 
 /**
+ * The finished state of an entry.
+ * We use this to know how much y space we should reserve for the text
+ * to avoid cumulative layout shift
+ */
+function toFinalItem<TFact extends FactItem>(
+  { fact, text, diskLines }: TypewriterEntry<TFact>,
+  showCursor = false,
+): TypewriterItem<TFact> {
+  return {
+    fact,
+    visible: true,
+    labelText: text,
+    statusLines: diskLines ? [diskLines.searching, diskLines.loading] : [],
+    showValue: true,
+    showCursor,
+  };
+}
+
+/**
  * Build the start state for the fact item at `index`.
  * When `index` is past the end of `entries` there is nothing
  * more to type out, and we will enter the `done` state and stop typing.
@@ -152,6 +171,11 @@ export function useTypewriterSequence<TFact extends FactItem>(
   }: UseTypeWriterOpts = {},
 ) {
   const entries = useMemo(() => facts.map(toEntry), [facts]);
+  const finalItems = useMemo(
+    () =>
+      entries.map((entry, i) => toFinalItem(entry, i === entries.length - 1)),
+    [entries],
+  );
   const wantsReducedMotion = useReducedMotion();
 
   const [state, dispatch] = useReducer(reducer, entries, (initial) => {
@@ -201,7 +225,9 @@ export function useTypewriterSequence<TFact extends FactItem>(
   const items = useMemo<TypewriterItem<TFact>[]>(() => {
     const order = PHASE_ORDER[state.phase];
 
-    return entries.map(({ fact, text, diskLines }, i) => {
+    return entries.map((entry, i) => {
+      const { fact, text, diskLines } = entry;
+
       if (i > state.index) {
         return {
           fact,
@@ -213,18 +239,11 @@ export function useTypewriterSequence<TFact extends FactItem>(
         };
       }
 
-      if (i < state.index) {
-        return {
-          fact,
-          visible: true,
-          labelText: text,
-          statusLines: diskLines
-            ? [diskLines.searching, diskLines.loading]
-            : [],
-          showValue: true,
-          showCursor: false,
-        };
-      }
+      if (i < state.index)
+        return toFinalItem(
+          entry,
+          state.phase === "done" && i === entries.length - 1,
+        );
 
       const statusLines: string[] = [];
 
@@ -249,5 +268,5 @@ export function useTypewriterSequence<TFact extends FactItem>(
     });
   }, [entries, state]);
 
-  return { items, phase: state.phase };
+  return { items, finalItems, phase: state.phase };
 }

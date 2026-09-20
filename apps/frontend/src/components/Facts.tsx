@@ -1,4 +1,4 @@
-import type { HeroText, UseTypeWriterOpts } from "@repo/shared";
+import type { HeroText, TypewriterItem, UseTypeWriterOpts } from "@repo/shared";
 import { useTypewriterSequence } from "#/hooks/useTypewriter";
 import { cn } from "#/lib/utils";
 
@@ -6,6 +6,8 @@ interface TypeWriterProps extends UseTypeWriterOpts {
   content: HeroText["facts"] | null;
   className?: string;
 }
+
+type Fact = NonNullable<HeroText["facts"]>[number];
 
 const NO_FACTS: NonNullable<HeroText["facts"]> = [];
 
@@ -16,18 +18,15 @@ const Cursor = () => (
   />
 );
 
-export function Facts({ content, className, ...opts }: TypeWriterProps) {
-  const { items, phase } = useTypewriterSequence(content ?? NO_FACTS, opts);
-  if (!content?.length) return null;
-
+function FactLines({ items }: { items: TypewriterItem<Fact>[] }) {
   return (
-    <div className={cn("font-heading", className)}>
+    <>
       {items.map(
         ({ fact, visible, labelText, showValue, statusLines, showCursor }) =>
           visible ? (
             <div key={fact._key}>
-              <div className="uppercase text-white h-8 flex align-middle py-2">
-                <span className="mr-1 ">{labelText}</span>
+              <div className="uppercase text-white h-8 flex py-2">
+                <span className="mr-1">{labelText}</span>
                 {showCursor && !showValue && <Cursor />}
               </div>
               {statusLines.map((line) => (
@@ -45,7 +44,25 @@ export function Facts({ content, className, ...opts }: TypeWriterProps) {
             </div>
           ) : null,
       )}
-      {phase === "done" && <Cursor />}
+    </>
+  );
+}
+
+export function Facts({ content, className, ...opts }: TypeWriterProps) {
+  const { items, finalItems } = useTypewriterSequence(
+    content ?? NO_FACTS,
+    opts,
+  );
+  if (!content?.length) return null;
+
+  return (
+    <div className={cn("grid font-heading", className)}>
+      <div aria-hidden="true" className="invisible col-start-1 row-start-1">
+        <FactLines items={finalItems} />
+      </div>
+      <div className="col-start-1 row-start-1">
+        <FactLines items={items} />
+      </div>
     </div>
   );
 }
