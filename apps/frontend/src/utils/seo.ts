@@ -2,16 +2,23 @@ import { toPlainText } from "@portabletext/react";
 import type {
   BLOGS_BY_SLUG_QUERY_RESULT,
   PROJECTS_BY_SLUG_QUERY_RESULT,
+  SHOWCASE_BY_SLUG_QUERY_RESULT,
 } from "@repo/shared";
 import { ogImageUrl } from "@/lib/sanity/imageUtils";
 
 type BlogPost = NonNullable<BLOGS_BY_SLUG_QUERY_RESULT>;
 type Project = NonNullable<PROJECTS_BY_SLUG_QUERY_RESULT>;
+type Showcase = NonNullable<SHOWCASE_BY_SLUG_QUERY_RESULT>;
 
-export type SeoSource = Partial<
-  Pick<BlogPost, "title" | "overview" | "topImage"> & Pick<Project, "excerpt">
-> & {
-  mainImage?: BlogPost["mainImage"] | Project["mainImage"];
+export type SeoSource = {
+  title?: BlogPost["title"] | Project["title"] | Showcase["title"];
+  overview?: BlogPost["overview"] | Showcase["overview"];
+  excerpt?: Project["excerpt"];
+  topImage?: BlogPost["topImage"];
+  mainImage?:
+    | BlogPost["mainImage"]
+    | Project["mainImage"]
+    | Showcase["mainImage"];
   url?: string | null;
 };
 
