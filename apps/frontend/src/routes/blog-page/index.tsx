@@ -23,6 +23,15 @@ export const Route = createFileRoute("/blog-page/")({
     return data;
   },
   component: RouteComponent,
+  head: ({ matches }) => {
+    const page = matches[1].search?.page || 1;
+    return {
+      meta: [
+        { title: `Kurt Lekanger - Blogg - Side ${page}` },
+        { name: "sdfsdfsdf" },
+      ],
+    };
+  },
 });
 
 function RouteComponent() {

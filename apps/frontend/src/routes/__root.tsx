@@ -9,6 +9,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import kurtPhoto from "/images/OG_Kurt Lekanger portrett wide.webp";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import appCss from "../styles.css?url";
@@ -16,6 +17,10 @@ import appCss from "../styles.css?url";
 interface MyRouterContext {
   queryClient: QueryClient;
 }
+
+const TITLE = "Kurt Lekanger - senior fullstack-utvikler";
+const DESCRIPTION =
+  "Kurt Lekangers personlige nettside. Skriver om web- og programvareutvikling, retro-programmering på gamle datamaskiner og andre ting som inspirerer meg.";
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
@@ -28,8 +33,49 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Kurt Lekanger - senior fullstack-utvikler",
+        title: TITLE,
       },
+      {
+        property: "og:title",
+        content: TITLE,
+      },
+      {
+        property: "og:image",
+        content: kurtPhoto,
+      },
+      {
+        name: "description",
+        content: DESCRIPTION,
+      },
+
+      {
+        property: "og:description",
+        content: DESCRIPTION,
+      },
+      {
+        property: "og:url",
+        content: process.env.SITE_URL || "https://www.lekanger.no",
+      },
+      {
+        property: "og:site_name",
+        content: "Kurt Lekanger",
+      },
+      {
+        property: "og:locale",
+        content: "nb_NO",
+      },
+      {
+        property: "og:type",
+        content: "website",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: TITLE },
+      { name: "twitter:description", content: DESCRIPTION },
+      {
+        name: "twitter:url",
+        content: "https://x.com/lekanger",
+      },
+      { name: "twitter:image", content: kurtPhoto },
     ],
     links: [
       {
