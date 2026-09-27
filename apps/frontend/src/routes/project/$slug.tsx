@@ -10,9 +10,9 @@ export const Route = createFileRoute("/project/$slug")({
     await loadSanityQuery(context, PROJECTS_BY_SLUG_QUERY, {
       slug: params.slug,
     }),
-  head: ({ loaderData }) => {
+  head: ({ loaderData, match }) => {
     const project = loaderData?.data;
 
-    return createSeoMetadataFromPost(project);
+    return createSeoMetadataFromPost(project, match.pathname);
   },
 });

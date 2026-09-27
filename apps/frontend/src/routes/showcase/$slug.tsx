@@ -10,9 +10,9 @@ export const Route = createFileRoute("/showcase/$slug")({
     await loadSanityQuery(context, SHOWCASE_BY_SLUG_QUERY, {
       slug: params.slug,
     }),
-  head: ({ loaderData }) => {
+  head: ({ loaderData, match }) => {
     const showcase = loaderData?.data;
 
-    return createSeoMetadataFromPost(showcase);
+    return createSeoMetadataFromPost(showcase, match.pathname);
   },
 });

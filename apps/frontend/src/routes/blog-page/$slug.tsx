@@ -22,9 +22,9 @@ export const Route = createFileRoute("/blog-page/$slug")({
 
     return { data, ...rest };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, match }) => {
     const blogPost = loaderData?.data;
 
-    return createSeoMetadataFromPost(blogPost);
+    return createSeoMetadataFromPost(blogPost, match.pathname);
   },
 });
