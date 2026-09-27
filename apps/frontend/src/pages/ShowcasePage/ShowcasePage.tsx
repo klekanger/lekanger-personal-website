@@ -8,24 +8,15 @@ export function ShowcasePage() {
 
   if (!data) return <h1>404</h1>;
 
-  const {
-    title,
-    bodyText,
-    overview,
-    _createdAt,
-    _updatedAt,
-    github,
-    mainImage,
-    projectUrl,
-  } = data;
+  const { title, bodyText, overview, topImage } = data;
 
   return (
     <article className="prose py-16">
       <h1>{title}</h1>
       <SanityImage
-        image={mainImage}
-        alt={mainImage?.alt}
-        caption={mainImage?.caption}
+        image={topImage?.image}
+        alt={topImage?.alt}
+        caption={topImage?.caption}
       />
       <CustomPortableText value={overview} isPreamble />
       <br />
