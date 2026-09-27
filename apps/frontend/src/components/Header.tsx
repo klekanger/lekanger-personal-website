@@ -10,6 +10,7 @@ export function Header() {
         <div className="flex gap-8">
           <Link
             to="/showcase"
+            search={{ page: 1 }}
             className="hover:text-yellow"
             activeProps={{ className: `font-bold` }}
           >
