@@ -1,13 +1,17 @@
-import type { ALL_BLOGS_QUERY_RESULT } from "@repo/shared";
+import type {
+  ALL_BLOGS_QUERY_RESULT,
+  ALL_SHOWCASES_QUERY_RESULT,
+} from "@repo/shared";
 import { BlogCard } from "#/components/BlogCard";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 
 interface BlogListingPageProps {
-  items: ALL_BLOGS_QUERY_RESULT["items"];
+  items: ALL_BLOGS_QUERY_RESULT["items"] | ALL_SHOWCASES_QUERY_RESULT["items"];
   page: number;
+  title: string;
 }
 
-export function BlogListingPage({ items, page }: BlogListingPageProps) {
+export function BlogListingPage({ items, page, title }: BlogListingPageProps) {
   return (
     <>
       <div className="p-4 w-full border-2 border-foreground my-8 uppercase font-heading">
@@ -15,7 +19,11 @@ export function BlogListingPage({ items, page }: BlogListingPageProps) {
           <div className="h-full fill-pattern"></div>
         </div>
         <p className="uppercase">Directory listing – drive 8</p>
-        <h1 className="text-2xl text-white py-2">Bloggen - side {page}</h1>
+        {title && (
+          <h1 className="text-2xl text-white py-2">
+            {`${title} - side ${page}`}
+          </h1>
+        )}
       </div>
       <ul>
         {items.map((item) => {
