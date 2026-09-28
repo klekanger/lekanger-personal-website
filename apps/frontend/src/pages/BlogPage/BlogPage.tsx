@@ -3,6 +3,7 @@ import { BackButton } from "#/components/ui/BackButton";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/blog-page/$slug";
+import { longDate } from "@/utils/dateFormatters";
 
 export function BlogPage() {
   const { data } = Route.useLoaderData();
@@ -35,6 +36,11 @@ export function BlogPage() {
       <CustomPortableText value={overview} isPreamble />
       <br />
       <CustomPortableText value={bodyTextToRender} />
+
+      <div className="pt-8">---</div>
+      <div className="py-4 text-yellow font-heading text-xs">
+        PUBLISERT: {longDate(_createdAt).toUpperCase()}
+      </div>
       <BackButton buttonText="Tilbake" className="my-8" />
       <BlinkingCursor />
     </article>
