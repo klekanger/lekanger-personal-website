@@ -3,7 +3,7 @@ import { BackButton } from "#/components/ui/BackButton";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/blog-page/$slug";
-import { longDate } from "@/utils/dateFormatters";
+import { longDate, shortDate } from "@/utils/dateFormatters";
 
 export function BlogPage() {
   const { data } = Route.useLoaderData();
@@ -39,7 +39,8 @@ export function BlogPage() {
 
       <div className="pt-8">---</div>
       <div className="py-4 text-yellow font-heading text-xs">
-        PUBLISERT: {longDate(_createdAt).toUpperCase()}
+        PUBLISERT: {longDate(_createdAt).toUpperCase()} (OPPDATERT:{" "}
+        {shortDate(_updatedAt)} )
       </div>
       <BackButton buttonText="Tilbake" className="my-8" />
       <BlinkingCursor />
