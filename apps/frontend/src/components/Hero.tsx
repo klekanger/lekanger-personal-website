@@ -1,5 +1,5 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { notFound } from "@tanstack/react-router";
+import { Link, notFound } from "@tanstack/react-router";
 import { Badge } from "#/components/ui/Badge";
 import { Facts } from "@/components/Facts";
 import { Button } from "@/components/ui/button";
@@ -36,8 +36,20 @@ export function Hero({ heroText }: HeroProps) {
           </div>
 
           <div className="flex gap-2 pb-4">
-            <Button>RUN "PROSJEKTER"</Button>
-            <Button>KONTAKT</Button>
+            <Button asChild className="no-underline">
+              <Link
+                to="/showcase"
+                search={{
+                  page: 1,
+                }}
+              >
+                {" "}
+                RUN "PROSJEKTER"
+              </Link>
+            </Button>
+            <Button asChild className="no-underline">
+              <a href="#ommeg">KONTAKT</a>
+            </Button>
           </div>
         </div>
         <div className="font-heading text-sm mt-0 prose flex-1 pt-8 lg:pt-0 ">

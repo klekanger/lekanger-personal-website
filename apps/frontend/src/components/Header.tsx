@@ -26,7 +26,9 @@ export function Header() {
             BLOGG
           </Link>
 
-          <div className="hover:text-yellow">OM MEG</div>
+          <div className="hover:text-yellow">
+            <a href="#ommeg">OM MEG</a>
+          </div>
         </div>
       </nav>
     </header>

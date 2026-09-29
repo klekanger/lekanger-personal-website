@@ -16,7 +16,10 @@ export function About({ aboutText }: AboutProps) {
   return (
     <section className="my-16">
       <p className="uppercase font-heading">Print whoami$</p>
-      <h2 className="uppercase font-heading text-white text-2xl pt-4 pb-8">
+      <h2
+        className="uppercase font-heading text-white text-2xl pt-4 pb-8"
+        id="ommeg"
+      >
         {title}
       </h2>
       <div className="grid md:grid-cols-2 gap-8 md:gap-16">
