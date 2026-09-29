@@ -178,6 +178,10 @@
     /* `clip`, not `overflow-x: hidden` — hidden makes this a scroll
 		   container and silently breaks `position: sticky` headers. */
     overflow-x: clip;
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
