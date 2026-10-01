@@ -48,7 +48,7 @@ export function Hero({ heroText }: HeroProps) {
               </Link>
             </Button>
             <Button asChild className="no-underline">
-              <a href="#ommeg">KONTAKT</a>
+              <a href="#ommeg">OM MEG</a>
             </Button>
           </div>
         </div>
