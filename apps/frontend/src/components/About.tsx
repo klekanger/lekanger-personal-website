@@ -58,29 +58,31 @@ export function About({ aboutText, contactInfo }: AboutProps) {
           <div>
             <h3 className="py-4">Du finner meg her:</h3>
 
-            <div className="flex items-center">
-              <LinkedInIcon className="size-7 pr-2" />
-              <a href={contactInfo?.linkedIn}>LinkedIn</a>
-            </div>
+            <div className="w-fit">
+              <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <LinkedInIcon className="size-7 pr-2" />
+                <a href={contactInfo?.linkedIn}>LinkedIn</a>
+              </div>
 
-            <div className="flex items-center">
-              <GitHubIcon className="size-7 pr-2" />
-              <a href={contactInfo?.gitHub}>GitHub</a>
-            </div>
+              <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <GitHubIcon className="size-7 pr-2" />
+                <a href={contactInfo?.gitHub}>GitHub</a>
+              </div>
 
-            <div className="flex items-center">
-              <BlueSkyIcon className="size-7 pr-2" />
-              <a href={contactInfo?.blueSky}>Bluesky</a>
-            </div>
+              <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <BlueSkyIcon className="size-7 pr-2" />
+                <a href={contactInfo?.blueSky}>Bluesky</a>
+              </div>
 
-            <div className="flex items-center">
-              <XIcon className="size-7 pr-2" />
-              <a href={contactInfo?.twitter}>X (Twitter)</a>
-            </div>
+              <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <XIcon className="size-7 pr-2" />
+                <a href={contactInfo?.twitter}>X (Twitter)</a>
+              </div>
 
-            <div className="flex items-center">
-              <EmailIcon className="size-7 pr-2" />
-              <a href={contactInfo?.email}>E-post</a>
+              <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <EmailIcon className="size-7 pr-2" />
+                <a href={`mailto:${contactInfo?.email}`}>E-post</a>
+              </div>
             </div>
           </div>
         </div>
