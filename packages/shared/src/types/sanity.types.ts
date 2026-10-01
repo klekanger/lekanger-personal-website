@@ -852,6 +852,38 @@ export type PROJECTS_BY_SLUG_QUERY_RESULT = {
   body: ProjectPortableText | null;
 } | null;
 
+// Source: ../frontend/src/lib/sanity/queries/settingsQuery.ts
+// Variable: SETTINGS_QUERY
+// Query: *[_type=="settings"][0]{...}
+export type SETTINGS_QUERY_RESULT = {
+  _id: string;
+  _type: "settings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  companyName?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  companyDescription?: string;
+  phone?: string;
+  email?: string;
+  organisationNumber?: string;
+  gitHubAccount?: string;
+  twitterAccount?: string;
+  linkedInAccount?: string;
+  otherSocialAccount?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  metaOgImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+} | null;
+
 // Source: ../frontend/src/lib/sanity/queries/showcaseQuery.ts
 // Variable: SHOWCASE_BY_SLUG_QUERY
 // Query: *[_type=="showcase" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    topImage,    title,    overview,    bodyText,    github,    projectUrl,    "slug": slug.current    }
@@ -917,6 +949,7 @@ declare global {
     '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
     '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {\n          heroTitle,\n          preamble,\n          facts,\n          tags},\n      "aboutText": *[_type=="about"] {\n        title,\n        body,\n        topImage {\n          _type,\n          alt,\n          caption,\n          image,\n          "lqip": image.asset->metadata.lqip,\n          },\n        facts\n      },\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
+    '\n   *[_type=="settings"][0]{...}\n': SETTINGS_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
     '\n  { "items": *[_type=="showcase"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    slug\n  },\n"total": count(*[_type=="showcase"])\n}\n': ALL_SHOWCASES_QUERY_RESULT;
   }
