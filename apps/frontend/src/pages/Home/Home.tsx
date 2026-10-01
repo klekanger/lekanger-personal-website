@@ -10,14 +10,23 @@ export function Home() {
   const { data } = Route.useLoaderData();
   if (!data) throw notFound();
 
-  const { showcases, blogPosts, heroText, aboutText } = data;
+  const { showcases, blogPosts, heroText, aboutText, settings } = data;
+
+  const contactInfo = {
+    linkedIn: settings[0].linkedInAccount ?? undefined,
+    gitHub: settings[0]?.gitHubAccount ?? undefined,
+    blueSky: settings[0]?.otherSocialAccount ?? undefined,
+    twitter: settings[0]?.twitterAccount ?? undefined,
+    email: settings[0]?.email ?? undefined,
+  };
+  console.log("concactInfo 1 ", contactInfo);
 
   return (
     <main className="w-full">
       <Hero heroText={heroText} />
       <ShowcasePromo showcases={showcases} />
       <BlogPromo blogPosts={blogPosts} />
-      <About aboutText={aboutText} />
+      <About aboutText={aboutText} contactInfo={contactInfo} />
       <div className="py-8 font-heading uppercase">
         <p>sys 49152</p>
         READY. <BlinkingCursor />
