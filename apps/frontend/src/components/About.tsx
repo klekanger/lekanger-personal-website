@@ -21,9 +21,8 @@ interface AboutProps {
 }
 
 export function About({ aboutText, contactInfo }: AboutProps) {
-  if (!aboutText) throw notFound();
+  if (!aboutText[0]) return null;
 
-  console.log("contactInfo ", contactInfo);
   const { body, facts, title, topImage } = aboutText[0];
 
   return (

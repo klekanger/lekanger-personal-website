@@ -8,7 +8,7 @@ import { Route } from "@/routes/index";
 
 export function Home() {
   const { data } = Route.useLoaderData();
-  if (!data) throw notFound();
+  if (!data) return null;
 
   const { showcases, blogPosts, heroText, aboutText, settings } = data;
 
@@ -19,7 +19,6 @@ export function Home() {
     twitter: settings[0]?.twitterAccount ?? undefined,
     email: settings[0]?.email ?? undefined,
   };
-  console.log("concactInfo 1 ", contactInfo);
 
   return (
     <main className="w-full">

@@ -7,7 +7,7 @@ interface ShowCasePromoProps {
 }
 
 export function ShowcasePromo({ showcases }: ShowCasePromoProps) {
-  if (!showcases) throw notFound();
+  if (!showcases) return null;
 
   return (
     <section className="my-16">

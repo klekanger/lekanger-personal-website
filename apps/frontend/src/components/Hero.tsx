@@ -10,7 +10,7 @@ interface HeroProps {
 }
 
 export function Hero({ heroText }: HeroProps) {
-  if (!heroText?.length) throw notFound();
+  if (!heroText?.length) return null;
   const { heroTitle, preamble, facts, tags } = heroText[0];
 
   return (
