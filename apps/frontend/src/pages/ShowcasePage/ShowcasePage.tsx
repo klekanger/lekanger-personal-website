@@ -10,11 +10,12 @@ export function ShowcasePage() {
 
   if (!data) return <h1>404</h1>;
 
-  const { title, bodyText, overview, topImage, _createdAt, _updatedAt } = data;
+  const { title, bodyText, overview, topImage, _createdAt, _updatedAt, slug } =
+    data;
 
   return (
     <article className="prose py-16">
-      <h1>{title}</h1>
+      <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
       <SanityImage
         image={topImage?.image}
         alt={topImage?.alt}

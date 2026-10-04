@@ -18,6 +18,7 @@ export function BlogPage() {
     mainImage,
     _createdAt,
     _updatedAt,
+    slug,
   } = data;
 
   // Field type `body` is deprecated, but we are keeping it to be able to render old articles
@@ -27,7 +28,7 @@ export function BlogPage() {
   return (
     <article className="prose py-16">
       <BackButton buttonText="Tilbake" className="mb-8" />
-      <h1>{title}</h1>
+      <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
       <SanityImage
         image={topImage?.image ? topImage.image : mainImage}
         alt={topImage?.alt || mainImage?.alt}

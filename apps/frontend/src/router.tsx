@@ -14,6 +14,19 @@ export function getRouter() {
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
     defaultNotFoundComponent: NotFound,
+
+    // Turn off those fancy view transitions if the user has prefers-reduced-motion turned on
+    defaultViewTransition: {
+      types: () => {
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        return prefersReducedMotion ? false : ["default"];
+      },
+    },
+
+    scrollRestorationBehavior: "instant",
+
     Wrap: (props: { children: React.ReactNode }) => {
       return (
         <TanstackQuery.Provider {...rqContext}>

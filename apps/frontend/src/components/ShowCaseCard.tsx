@@ -4,7 +4,7 @@ import { Link, notFound } from "@tanstack/react-router";
 
 export function ShowCaseCard(props: { showcase: Showcase }) {
   const { showcase } = props;
-  if (!showcase) throw notFound();
+  if (!showcase) return null;
 
   const fullPreamble = showcase?.overview ? toPlainText(showcase.overview) : "";
   const preamble =
@@ -17,7 +17,12 @@ export function ShowCaseCard(props: { showcase: Showcase }) {
   return (
     <div className="w-full border border-foreground p-4 flex flex-col gap-1 hover:cursor-pointer hover:bg-accent hover:border-white min-h-72">
       <Link to={showcaseUrl}>
-        <h3 className="text-xl text-white">{showcase?.title}</h3>
+        <h3
+          className="text-xl text-white"
+          style={{ viewTransitionName: `post-${showcase.slug?.current}` }}
+        >
+          {showcase?.title}
+        </h3>
         <p className="font-mono grow">{preamble}</p>
         <p className="font-mono text-white uppercase text-sm font-normal!">
           {`> Åpne prosjekt`}

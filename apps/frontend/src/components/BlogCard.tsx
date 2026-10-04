@@ -30,7 +30,12 @@ export function BlogCard(props: BlogCardProps) {
         <div className="flex flex-col md:flex-row pt-4">
           <div className="min-w-32">{shortDate(post._createdAt)}</div>
           <div className="w-full md:w-2/3">
-            <h1 className="pb-2 text-white">{post?.title}</h1>
+            <h3
+              className="pb-2 text-white"
+              style={{ viewTransitionName: `post-${post.slug?.current}` }}
+            >
+              {post?.title}
+            </h3>
             <PortableText value={post?.overview} />
           </div>
         </div>
