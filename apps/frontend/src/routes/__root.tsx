@@ -9,6 +9,8 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { loadSanityQuery } from "#/lib/sanity/loader";
+import { SETTINGS_QUERY } from "@/lib/sanity/queries/settingsQuery";
 import {
   absoluteUrl,
   SITE_DESCRIPTION,
@@ -28,6 +30,17 @@ const OG_IMAGE = absoluteUrl(ogDefaultImage);
 const OG_IMAGE_ALT = "Portrett av Kurt Lekanger";
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+  loader: async ({ context }) => {
+    const data = await loadSanityQuery(context, SETTINGS_QUERY);
+    return data;
+  },
+  errorComponent: ({ error }) => {
+    return (
+      <div>
+        <div>Noe gikk galt</div>
+      </div>
+    );
+  },
   head: ({ matches }) => {
     const url = absoluteUrl(matches.at(-1)?.pathname ?? "/");
 
@@ -87,6 +100,8 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { data } = Route.useLoaderData();
+
   return (
     <html lang="nb" suppressHydrationWarning>
       <head>
@@ -96,7 +111,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <div className="bg-background wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto min-h-dvh flex flex-col px-8">
           <Header />
           <div className="grow">{children}</div>
-          <Footer />
+          <Footer footerData={data} />
         </div>
         <TanStackDevtools
           config={{

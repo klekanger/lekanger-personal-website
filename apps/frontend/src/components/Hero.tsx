@@ -48,7 +48,9 @@ export function Hero({ heroText }: HeroProps) {
               </Link>
             </Button>
             <Button asChild className="no-underline">
-              <a href="#ommeg">OM MEG</a>
+              <Link to="/page/$slug" params={{ slug: "om-meg" }}>
+                OM MEG
+              </Link>
             </Button>
           </div>
         </div>
