@@ -179,6 +179,8 @@
 		   container and silently breaks `position: sticky` headers. */
     overflow-x: clip;
 
+    scrollbar-gutter: stable;
+
     @media (prefers-reduced-motion: no-preference) {
       scroll-behavior: smooth;
     }
