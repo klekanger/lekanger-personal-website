@@ -1,5 +1,6 @@
 import { CogIcon } from "@sanity/icons/Cog";
 import { ComposeIcon } from "@sanity/icons/Compose";
+import { DocumentsIcon } from "@sanity/icons/Documents";
 import { HomeIcon } from "@sanity/icons/Home";
 import { ProjectsIcon } from "@sanity/icons/Projects";
 import type { StructureBuilder, StructureResolver } from "sanity/structure";
@@ -32,6 +33,14 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
 
             .filter('_type == "showcase"'),
         ),
+
+      S.listItem().title("Side").icon(DocumentsIcon).schemaType("page").child(
+        S.documentList()
+          .apiVersion(API_VERSION)
+          .title("Alle sider")
+
+          .filter('_type == "page"'),
+      ),
 
       S.divider(),
 

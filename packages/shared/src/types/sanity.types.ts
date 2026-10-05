@@ -295,6 +295,38 @@ export type Category = {
   description?: string;
 };
 
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  topImage?: ArticleImage;
+  bodyText?: PortableText;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
@@ -345,12 +377,6 @@ export type Project = {
     } & ProjectReference
   >;
   keywords?: Array<string>;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type Showcase = {
@@ -581,11 +607,12 @@ export type AllSanitySchemaTypes =
   | About
   | Author
   | Category
+  | Page
+  | Slug
   | AuthorReference
   | CategoryReference
   | ProjectReference
   | Project
-  | Slug
   | Showcase
   | Blog
   | Code
@@ -838,6 +865,33 @@ export type HOMEPAGE_QUERY_RESULT = {
   }>;
 };
 
+// Source: ../frontend/src/lib/sanity/queries/pageQuery.ts
+// Variable: PAGE_BY_SLUG_QUERY
+// Query: *[_type=="page" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    topImage,    title,    overview,    bodyText,    "slug": slug.current,    }
+export type PAGE_BY_SLUG_QUERY_RESULT = {
+  _id: string;
+  _createdAt: string;
+  _updatedAt: string;
+  topImage: ArticleImage | null;
+  title: string | null;
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  bodyText: PortableText | null;
+  slug: string | null;
+} | null;
+
 // Source: ../frontend/src/lib/sanity/queries/projectPageQuery.ts
 // Variable: PROJECTS_BY_SLUG_QUERY
 // Query: *[_type == "project" && slug.current == $slug][0] {    mainImage,      excerpt,    slug,    title,    _createdAt,    _updatedAt,    _id,    body,  }
@@ -948,6 +1002,7 @@ declare global {
     '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
     '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
     '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {\n          heroTitle,\n          preamble,\n          facts,\n          tags},\n      "aboutText": *[_type=="about"] {\n        title,\n        body,\n        topImage {\n          _type,\n          alt,\n          caption,\n          image,\n          "lqip": image.asset->metadata.lqip,\n          },\n        facts\n      },\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
+    '\n    *[_type=="page" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    title,\n    overview,\n    bodyText,\n    "slug": slug.current,\n    }\n  ': PAGE_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
     '\n   *[_type=="settings"][0]{...}\n': SETTINGS_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
