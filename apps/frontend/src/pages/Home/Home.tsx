@@ -1,4 +1,3 @@
-import { notFound } from "@tanstack/react-router";
 import { About } from "#/components/About";
 import { BlogPromo } from "#/components/BlogPromo";
 import { Hero } from "#/components/Hero";
