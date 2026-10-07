@@ -1,6 +1,6 @@
 import { toPlainText } from "@portabletext/react";
 import type { Showcase } from "@repo/shared/types/sanity.types";
-import { Link, notFound } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 export function ShowCaseCard(props: { showcase: Showcase }) {
   const { showcase } = props;

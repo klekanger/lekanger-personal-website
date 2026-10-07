@@ -1,5 +1,4 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { notFound } from "@tanstack/react-router";
 import { ShowCaseCard } from "@/components/ShowCaseCard";
 
 interface ShowCasePromoProps {
