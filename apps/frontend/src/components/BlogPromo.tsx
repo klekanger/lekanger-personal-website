@@ -11,7 +11,6 @@ export function BlogPromo(props: BlogPromoProps) {
 
   return (
     <section className="my-16">
-      <p className="uppercase font-heading">List blogg</p>
       <h2 className="uppercase font-heading text-white text-2xl pt-4">
         Fra bloggen
       </h2>
