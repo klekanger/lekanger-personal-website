@@ -22,20 +22,18 @@ export function Hero({ heroText }: HeroProps) {
         </div>
       </div>
       <hr />
-      <div className="flex flex-col lg:flex-row gap-16 md:gap-4 pt-8">
-        <div className="prose flex-1">
-          <h1 className="text-white uppercase">{heroTitle}</h1>
-          <CustomPortableText
-            value={preamble}
-            isPreamble
-            className="font-normal! text-base!"
-          />
-
-          <div className="flex gap-2 py-8 font-heading flex-wrap">
-            {tags ? tags.map((tag) => <Badge key={tag} text={tag} />) : null}
+      <div className="flex flex-col lg:flex-row pt-8">
+        <div className="prose flex-1 flex flex-col justify-between gap-8">
+          <div>
+            <h1 className="text-white uppercase">{heroTitle}</h1>
+            <CustomPortableText
+              value={preamble}
+              isPreamble
+              className="font-normal! text-base!"
+            />
           </div>
 
-          <div className="flex gap-2 pb-4">
+          <div className="flex flex-col gap-2 mb-12 lg:mb-8  prose uppercase">
             <Button asChild className="no-underline">
               <Link
                 to="/showcase"
@@ -44,17 +42,22 @@ export function Hero({ heroText }: HeroProps) {
                 }}
               >
                 {" "}
-                PROSJEKTER
+                Store og små prosjekter
+              </Link>
+            </Button>
+            <Button asChild className="no-underline">
+              <Link to="/blog-page" search={{ page: 1 }}>
+                Blogg om litt av hvert
               </Link>
             </Button>
             <Button asChild className="no-underline">
               <Link to="/page/$slug" params={{ slug: "om-meg" }}>
-                OM MEG
+                Om meg
               </Link>
             </Button>
           </div>
         </div>
-        <div className="font-heading text-sm mt-0 prose flex-1 pt-8 lg:pt-0 ">
+        <div className="font-heading text-sm mt-0 prose flex-1">
           <Facts
             content={facts}
             pause={1200}
