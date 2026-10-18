@@ -8,7 +8,7 @@ import { Route } from "@/routes/page/$slug";
 export function Page() {
   const { data } = Route.useLoaderData();
 
-  if (!data) return <h1>404</h1>;
+  if (!data) return null;
 
   const { title, bodyText, overview, topImage, _createdAt, _updatedAt, slug } =
     data;

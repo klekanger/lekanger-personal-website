@@ -5,8 +5,7 @@ import { Route } from "@/routes/project/$slug";
 
 export function ProjectPage() {
   const { data } = Route.useLoaderData();
-  if (!data) return <h1>404</h1>;
-
+  if (!data) return null;
   const { title, excerpt, body, mainImage } = data;
 
   return (
