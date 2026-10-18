@@ -44,7 +44,7 @@ export function Hero({ heroText }: HeroProps) {
                 }}
               >
                 {" "}
-                RUN "PROSJEKTER"
+                PROSJEKTER
               </Link>
             </Button>
             <Button asChild className="no-underline">

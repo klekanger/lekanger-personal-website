@@ -25,10 +25,6 @@ export function Home() {
       <ShowcasePromo showcases={showcases} />
       <BlogPromo blogPosts={blogPosts} />
       <About aboutText={aboutText} contactInfo={contactInfo} />
-      <div className="py-8 font-heading uppercase">
-        <p>sys 49152</p>
-        READY. <BlinkingCursor />
-      </div>
     </main>
   );
 }
