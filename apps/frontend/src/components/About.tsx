@@ -1,9 +1,7 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { notFound } from "@tanstack/react-router";
-import { Badge } from "#/components/ui/Badge";
 import { LinkedInIcon } from "@/components/icons/LinkedInIcon";
 import { BlueSkyIcon } from "./icons/BlueSkyIcon";
-import { EmailIcon } from "./icons/emailIcon";
+import { EmailIcon } from "./icons/EmailIcon";
 import { GitHubIcon } from "./icons/GitHubIcon";
 import { XIcon } from "./icons/XIcon";
 import { CustomPortableText } from "./PortableText/CustomPortableText";
