@@ -14,11 +14,9 @@ export function BlogPromo(props: BlogPromoProps) {
       <h2 className="uppercase font-heading text-white text-2xl pt-4">
         Fra bloggen
       </h2>
-      <ul>
-        {blogPosts.map((post) => {
-          return <BlogCard key={post._id} post={post} />;
-        })}
-      </ul>
+      {blogPosts.map((post) => {
+        return <BlogCard key={post._id} post={post} />;
+      })}
     </section>
   );
 }
