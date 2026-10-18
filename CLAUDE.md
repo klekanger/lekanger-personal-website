@@ -2,6 +2,21 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## How to help in this repo (read first)
+
+This is a **hand-coded** project. The owner writes the code himself to learn and stay in control of it.
+
+- **Never change code unless explicitly asked to.** That means no edits, new files, refactors, formatting runs, dependency installs or generated output, even if a fix looks obvious or small. A question is not a request to change code.
+- **Default to teaching, not doing.** Most requests are about documentation, syntax, APIs or how to approach a problem. Explain the basics and point the owner in the right direction so he can write the solution himself:
+  - Explain the relevant concept and why it applies here.
+  - Point to the files, functions or docs involved (`file_path:line_number`, links to official docs).
+  - Keep code to short, generic snippets that show syntax or a pattern. Don't write a complete, paste-ready solution for his specific problem.
+  - Outline the steps when a task spans several files, and leave the implementation to him.
+- **Reading is fine.** Reading files, searching the codebase, running read-only commands (e.g. `git log`, `tsc --noEmit`, `pnpm check` without `--write`) and looking up docs are all fine for answering questions.
+- **If you're unsure whether a change is wanted, ask** instead of making it.
+
+The architecture notes below are there to help you give accurate explanations, not to invite you to implement things.
+
 ## Overview
 
 Personal website for Kurt Lekanger. pnpm + Turborepo monorepo:
@@ -101,7 +116,7 @@ Stega / `resultSourceMap` are currently **off**: draft mode is not wired up, and
 
 ## Skill loading (from apps/frontend/AGENTS.md)
 
-Before editing files for a substantial task in `apps/frontend`:
+These skills are also useful for answering questions accurately. When explicitly asked to edit files for a substantial task in `apps/frontend`:
 
 - Run `pnpm dlx @tanstack/intent@latest list` from the workspace root to see available local skills.
 - If a listed skill matches the task, run `pnpm dlx @tanstack/intent@latest load <package>#<skill>` before changing files, and follow the loaded `SKILL.md`.
