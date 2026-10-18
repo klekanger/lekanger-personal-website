@@ -6,19 +6,22 @@ import { timingSafeEqual } from "node:crypto";
 import { defineHandler, HTTPError } from "nitro";
 
 interface RevalidatePayload {
-  slug?: string;
+  slug?: string | null;
   type?: string | null;
 }
 
 // Sanity document types and their affected paths on the frontend
 function affectedPaths({ type, slug }: RevalidatePayload): Array<string> {
   switch (type) {
+    case "page":
+      return slug ? [`/page/${slug}`] : [];
     case "blog":
       return ["/", "/blog-page", ...(slug ? [`/blog-page/${slug}`] : [])];
     case "showcase":
       return ["/", "/showcase", ...(slug ? [`/showcase/${slug}`] : [])];
     case "project":
       return slug ? [`/project/${slug}`] : [];
+    case "about":
     case "heroText":
     case "settings":
       return ["/"];
@@ -55,7 +58,7 @@ export default defineHandler(async (event) => {
     });
   }
 
-  const receivedSecret = event.req.headers.get("x-vercel-secret");
+  const receivedSecret = event.req.headers.get("x-revalidate-secret");
 
   if (!secretMatches(receivedSecret, secret)) {
     throw new HTTPError({

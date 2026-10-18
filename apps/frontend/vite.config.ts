@@ -22,14 +22,13 @@ const config = defineConfig({
       rollupConfig: { external: [/^@sentry\//] },
       serverDir: "server",
       routeRules: {
-        "/": { isr: { expiration: 3600 } },
+        "/": { isr: { expiration: 3600, allowQuery: [] } },
+        "/page/**": { isr: { expiration: 3600, allowQuery: [] } },
+        "/project/**": { isr: { expiration: 3600, allowQuery: [] } },
         "/blog-page/**": {
           isr: { expiration: 3600, allowQuery: ["page"], passQuery: true },
         },
         "/showcase/**": {
-          isr: { expiration: 3600, allowQuery: ["page"], passQuery: true },
-        },
-        "/project/**": {
           isr: { expiration: 3600, allowQuery: ["page"], passQuery: true },
         },
       },
