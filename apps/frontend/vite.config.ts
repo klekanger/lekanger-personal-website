@@ -18,6 +18,7 @@ const config = defineConfig({
   plugins: [
     devtools(),
     nitro({
+      traceDeps: ["react"],
       rollupConfig: { external: [/^@sentry\//] },
       serverDir: "server",
       routeRules: {
