@@ -5,7 +5,9 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
+      "outputs": [".output/**", ".vercel/output/**", "dist/**"],
+      "env": ["VITE_*", "VERCEL_BYPASS_TOKEN"],
+      "passThroughEnv": ["SANITY_*", "REVALIDATE_SECRET", "SITE_URL"]
     },
     "lint": {
       "dependsOn": ["^lint"]
