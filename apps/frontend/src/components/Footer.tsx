@@ -1,12 +1,23 @@
+import { BlinkingCursor } from "./ui/BlinkingCursor";
+
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer>
-      <hr />
-      <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left h-16 py-16 font-heading">
-        <div className="text-white uppercase">Håndkodet av Kurt Lekanger</div>
-        <div className="text-white not-prose mt-0! pt-0!">&copy; {year}</div>
+    <footer className="pb-16 relative">
+      <div className="relative h-13.5 w-screen ml-[calc(50%-50vw)]">
+        <div className="rasterbar">
+          <div className="rasterbar rasterbar2" />
+          <div className="rasterbar rasterbar3" />
+        </div>
+      </div>
+      <div className="pt-16 font-heading text-xs lg:text-base">
+        <p className="pb-4">LIST</p>
+        <p> 10 REM HÅNDKODET AV KURT LEKANGER</p>
+        <p>20 REM BYGGET MED TANSTACK START + SANITY</p>
+        <p>30 REM (C) {year}</p>
+        <p>READY.</p>
+        <BlinkingCursor />
       </div>
     </footer>
   );

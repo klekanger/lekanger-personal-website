@@ -24,7 +24,7 @@ export function Badge(props: BadgeProps) {
   return (
     <div
       className={cn(
-        "not-prose h-fit border w-fit inline-flex  items-start justify-center gap-2 shrink-0 overflow-hidden p-4 whitespace-nowrap border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
+        "not-prose justify-start border w-fit inline-flex items-start gap-2 shrink-0 overflow-hidden p-4 border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
         noUpperCase ? "" : "uppercase",
         subTitleUnder ? "flex-col-reverse" : "flex-col",
         className,
@@ -33,7 +33,7 @@ export function Badge(props: BadgeProps) {
       {subtitle && (
         <div className="text-foreground font-heading text-xs">{subtitle}</div>
       )}
-      <div className="text-sm text-white font-heading">{text}</div>
+      <div className="text-sm text-white font-mono wrap-break-word">{text}</div>
     </div>
   );
 }

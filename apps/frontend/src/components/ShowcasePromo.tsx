@@ -1,5 +1,4 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { notFound } from "@tanstack/react-router";
 import { ShowCaseCard } from "@/components/ShowCaseCard";
 
 interface ShowCasePromoProps {
@@ -7,7 +6,7 @@ interface ShowCasePromoProps {
 }
 
 export function ShowcasePromo({ showcases }: ShowCasePromoProps) {
-  if (!showcases) throw notFound();
+  if (!showcases) return null;
 
   return (
     <section className="my-16">

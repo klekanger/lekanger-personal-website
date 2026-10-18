@@ -88,28 +88,36 @@ export default defineType({
     defineField({
       name: "gitHubAccount",
       title: "Lenke til GitHub-konto",
-      type: "string",
+      type: "url",
+      validation: (rule) =>
+        rule.uri({ scheme: ["https"] }).error("Må være en gyldig url"),
       group: "company",
       fieldset: "socialMedia",
     }),
     defineField({
       name: "twitterAccount",
       title: "Lenke til X (Twitter)",
-      type: "string",
+      type: "url",
+      validation: (rule) =>
+        rule.uri({ scheme: ["https"] }).error("Må være en gyldig url"),
       group: "company",
       fieldset: "socialMedia",
     }),
     defineField({
       name: "linkedInAccount",
       title: "Lenke til LinkedIn-profil",
-      type: "string",
+      type: "url",
+      validation: (rule) =>
+        rule.uri({ scheme: ["https"] }).error("Må være en gyldig url"),
       group: "company",
       fieldset: "socialMedia",
     }),
     defineField({
       name: "otherSocialAccount",
       title: "Lenke til annen sosiale medier-konto",
-      type: "string",
+      type: "url",
+      validation: (rule) =>
+        rule.uri({ scheme: ["https"] }).error("Må være en gyldig url"),
       group: "company",
       fieldset: "socialMedia",
     }),

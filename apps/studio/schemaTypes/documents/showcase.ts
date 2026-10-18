@@ -52,22 +52,10 @@ export default defineType({
       validation: (rule) => rule.max(155).required(),
     }),
     defineField({
-      type: "image",
-      name: "mainImage",
+      name: "topImage",
+      type: "articleImage",
       title: "Hovedbilde",
       description: "Bildet som vises øverst på siden.",
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: "alt",
-          type: "string",
-          title: "Alt-tekst",
-          description:
-            "Alternativ tekst til bildet, for tilgjengelighet for blinde og svaksynte.",
-        }),
-      ],
     }),
     defineField({
       type: "portableText",

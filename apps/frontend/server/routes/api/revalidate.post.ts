@@ -30,7 +30,14 @@ function affectedPaths({ type, slug }: RevalidatePayload): Array<string> {
 // Check if two secrets matches
 function secretMatches(provided: string | null, expected: string): boolean {
   if (!provided) return false;
-  return timingSafeEqual(Buffer.from(provided), Buffer.from(expected));
+
+  const providedBytes = Buffer.from(provided);
+  const expectedBytes = Buffer.from(expected);
+
+  return (
+    providedBytes.length === expectedBytes.length &&
+    timingSafeEqual(providedBytes, expectedBytes)
+  );
 }
 
 /**

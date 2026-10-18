@@ -178,6 +178,12 @@
     /* `clip`, not `overflow-x: hidden` — hidden makes this a scroll
 		   container and silently breaks `position: sticky` headers. */
     overflow-x: clip;
+
+    scrollbar-gutter: stable;
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -281,4 +287,47 @@
 
 .prose :is(h1, h2, h3, h4) {
   font-weight: 400;
+}
+
+
+.rasterbar {
+  height:22px;
+  width:100%;
+  position: absolute;
+  inset: 0 0 auto;
+  animation: rasteranim 1s ease-in-out infinite alternate;
+  background:linear-gradient(
+    var(--c64-brown) 0 2px, var(--c64-red) 0 4px, var(--c64-orange) 0 6px,
+    var(--c64-lightred) 0 8px, var(--c64-yellow) 0 10px, var(--c64-white) 0 12px,
+    var(--c64-yellow) 0 14px, var(--c64-lightred) 0 16px, var(--c64-orange) 0 18px,
+    var(--c64-red) 0 20px, var(--c64-brown) 0 22px);
+}
+
+.rasterbar:nth-child(2){animation-delay: -.5s}
+.rasterbar:nth-child(3){animation-delay: -1s}
+
+.rasterbar2 {
+  height:22px;
+  width:100%;
+  background:linear-gradient(
+    var(--c64-blue) 0 2px, var(--c64-lightblue) 0 4px, var(--c64-gray) 0 6px,
+    var(--c64-cyan) 0 8px, var(--c64-lightgray) 0 10px, var(--c64-white) 0 12px,
+    var(--c64-lightgray) 0 14px, var(--c64-cyan) 0 16px, var(--c64-gray) 0 18px,
+    var(--c64-lightblue) 0 20px, var(--c64-blue) 0 22px);
+}
+
+.rasterbar3 {
+  height:22px;
+  width:100%;
+  background:linear-gradient(
+    var(--c64-brown) 0 2px, var(--c64-darkgray) 0 4px, var(--c64-green) 0 6px,
+    var(--c64-gray) 0 8px, var(--c64-lightgreen) 0 10px, var(--c64-white) 0 12px,
+    var(--c64-lightgreen) 0 14px, var(--c64-gray) 0 16px, var(--c64-green) 0 18px,
+    var(--c64-darkgray) 0 20px, var(--c64-brown) 0 22px);
+}
+
+@keyframes rasteranim {
+  to {
+    top: 32px;
+  }
 }

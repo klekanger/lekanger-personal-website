@@ -5,7 +5,7 @@ export const SHOWCASE_BY_SLUG_QUERY = defineQuery(`
     _id,
     _createdAt,
     _updatedAt,
-    mainImage,
+    topImage,
     title,
     overview,
     bodyText,

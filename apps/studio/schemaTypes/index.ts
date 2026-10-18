@@ -1,5 +1,6 @@
 import about from "./documents/about";
 import blog from "./documents/blog";
+import page from "./documents/page";
 import project from "./documents/project";
 import showcase from "./documents/showcase";
 import { articleImage } from "./fieldTypes/articleImage";
@@ -19,6 +20,7 @@ export const schemaTypes = [
   blog,
   showcase,
   project,
+  page,
   category,
   author,
   about,
