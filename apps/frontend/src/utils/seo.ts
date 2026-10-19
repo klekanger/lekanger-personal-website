@@ -16,10 +16,7 @@ export type SeoSource = {
   overview?: BlogPost["overview"] | Showcase["overview"];
   excerpt?: Project["excerpt"];
   topImage?: BlogPost["topImage"];
-  mainImage?:
-    | BlogPost["mainImage"]
-    | Project["mainImage"]
-    | Showcase["mainImage"];
+  mainImage?: BlogPost["mainImage"] | Project["mainImage"];
   _createdAt?: string;
   _updatedAt?: string;
 };

@@ -8,6 +8,6 @@
     "./types/*": "./src/types/*.ts"
   },
   "dependencies": {
-    "@sanity/client": "^7.25.0"
+    "@sanity/client": "catalog:"
   }
 }
