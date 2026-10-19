@@ -20,5 +20,6 @@ export function sanityQueryOptions<const TQuery extends keyof SanityQueries>({
     // Published content is public — no token needed. A token is only required
     // for drafts/preview, and it must never be sent from the client anyway.
     queryFn: () => client.withConfig({ perspective }).fetch(query, params),
+    staleTime: "static",
   });
 }

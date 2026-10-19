@@ -7,7 +7,7 @@ export async function loadSanityQuery<const TQuery extends keyof SanityQueries>(
   query: TQuery,
   params: QueryParams = {},
 ) {
-  const data = await context.queryClient.ensureQueryData(
+  const data = await context.queryClient.query(
     sanityQueryOptions({ query, params }),
   );
 

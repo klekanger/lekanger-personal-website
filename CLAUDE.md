@@ -74,7 +74,7 @@ Because `enabled: true`, types regenerate automatically during `sanity dev` (wat
 Sanity fetching goes through two shared generic helpers in `src/lib/sanity/` — there is no per-resource loader or `queryOptions` factory:
 
 - `queryOptions.ts` — `sanityQueryOptions({ query, params, perspective })` builds the TanStack Query options: key `["sanity", query, params, perspective]`, `queryFn` calling `client.withConfig({ perspective }).fetch(query, params)`.
-- `loader.ts` — `loadSanityQuery(context, query, params)` calls `context.queryClient.ensureQueryData(...)` and returns `{ data, query, params }` (query + params are returned for live/visual-editing support).
+- `loader.ts` — `loadSanityQuery(context, query, params)` calls `context.queryClient.query(...)` and returns `{ data, query, params }` (query + params are returned for live/visual-editing support).
 
 Both are generic over `const TQuery extends keyof SanityQueries`, **not** `string`. This is load-bearing: TypeGen types results by matching the literal query string against the `SanityQueries` module augmentation, so widening the parameter to `string` makes `ClientReturn` fall back to `Any` and every route silently loses its types. The `keyof SanityQueries` constraint also turns a not-yet-generated query into a compile error instead of silent `any`.
 
