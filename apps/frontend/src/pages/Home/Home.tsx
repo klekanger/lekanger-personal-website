@@ -2,7 +2,6 @@ import { About } from "#/components/About";
 import { BlogPromo } from "#/components/BlogPromo";
 import { Hero } from "#/components/Hero";
 import { ShowcasePromo } from "#/components/ShowcasePromo";
-import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import { Route } from "@/routes/index";
 
 export function Home() {
