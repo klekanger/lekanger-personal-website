@@ -1,3 +1,4 @@
+import ProjectSummary from "#/components/ProjectSummary";
 import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
@@ -10,8 +11,17 @@ export function ShowcasePage() {
 
   if (!data) return null;
 
-  const { title, bodyText, overview, topImage, _createdAt, _updatedAt, slug } =
-    data;
+  const {
+    title,
+    bodyText,
+    overview,
+    topImage,
+    _createdAt,
+    _updatedAt,
+    slug,
+    github,
+    projectUrl,
+  } = data;
 
   return (
     <article className="prose py-16">
@@ -24,7 +34,12 @@ export function ShowcasePage() {
       <CustomPortableText value={overview} isPreamble />
       <br />
       <CustomPortableText value={bodyText} />
-      <div className="pt-8">---</div>
+      <ProjectSummary
+        github={github}
+        projectUrl={projectUrl}
+        projectText="Lenke til prosjektet"
+      />
+
       <div className="py-4 text-yellow font-heading text-xs">
         PUBLISERT: {longDate(_createdAt).toUpperCase()} (OPPDATERT:{" "}
         {shortDate(_updatedAt)} )
