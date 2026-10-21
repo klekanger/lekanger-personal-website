@@ -1,13 +1,14 @@
 /* ============================================================
    Kurt Lekanger — Commodore 64 theme.
    Single mode: there is no dark mode and no light mode.
-   Layer 1  --c64-*   every hex literal in the project lives here.
-   Layer 2  @theme    semantic tokens -> Tailwind utilities. Use these.
+   Tier 1  --c64-*   every hex literal in the project lives here.
+   Tier 2  @theme    semantic tokens -> Tailwind utilities. Use these.
    ============================================================ */
 
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
+
+@plugin "@tailwindcss/typography";
 
 @font-face {
   font-family: "Sixtyfour Variable";
@@ -112,19 +113,8 @@
   --color-accent-foreground: var(--c64-white);
   --color-destructive: var(--c64-red);
 
-  --color-border: var(--c64-lightblue);
-  --color-frame: var(--c64-lightblue);
-  --color-input: var(--c64-lightblue-soft);
   --color-ring: var(--c64-lightblue-soft);
-
-  --color-cyan: var(--c64-cyan);
-  --color-yellow: var(--c64-yellow);
-  --color-lime: var(--c64-lightgreen);
-  --color-red: var(--c64-red-pale);
-  --color-purple: var(--c64-purple-pale);
-  --color-orange: var(--c64-orange-pale);
-  --color-green: var(--c64-green-pale);
-  --color-dim: var(--c64-gray-pale);
+  --color-input: var(--c64-lightblue-soft);
 
   /* The C64 has no rounded corners. One knob — raise it to soften globally.
 	   All 8 keys: shadcn also uses rounded-xs, and Tailwind's scale runs to 4xl. */
@@ -140,6 +130,7 @@
 
   /* Animations */
   --animate-c64blink: c64blink 1.5s step-end 0s infinite normal none running;
+  --animate-raster: rasteranim 1s ease-in-out infinite alternate;
 
   @keyframes c64blink {
     0%,
@@ -150,6 +141,12 @@
     25%,
     75% {
       opacity: 0;
+    }
+  }
+
+  @keyframes rasteranim {
+    to {
+      transform: translateY(40px);
     }
   }
 }
@@ -169,10 +166,8 @@
     /* Permanently dark UI: native scrollbars, form controls and autofill
 		   render dark instead of light-on-blue. */
     color-scheme: dark;
-    /* `clip`, not `overflow-x: hidden` — hidden makes this a scroll
-		   container and silently breaks `position: sticky` headers. */
-    overflow-x: clip;
 
+    overflow-x: clip;
     scrollbar-gutter: stable;
 
     @media (prefers-reduced-motion: no-preference) {
@@ -206,7 +201,9 @@
     font-family: var(--font-heading);
     font-weight: 400;
   }
+}
 
+@layer components {
   .fill-pattern {
     background-image:
       repeating-linear-gradient(
@@ -245,115 +242,140 @@
         transparent 1.5px,
         rgba(0, 0, 0, 0.20) 3px,
         transparent 4px
-      )
+      );
+  }
+
+  .rasterbar {
+    height: 22px;
+    width: 100%;
+    position: absolute;
+    inset: 0 0 auto;
+    animation: var(--animate-raster);
+    background: linear-gradient(
+      var(--c64-brown) 0 2px,
+      var(--c64-red) 0 4px,
+      var(--c64-orange) 0 6px,
+      var(--c64-lightred) 0 8px,
+      var(--c64-yellow) 0 10px,
+      var(--c64-white) 0 12px,
+      var(--c64-yellow) 0 14px,
+      var(--c64-lightred) 0 16px,
+      var(--c64-orange) 0 18px,
+      var(--c64-red) 0 20px,
+      var(--c64-brown) 0 22px
+    );
+
+    @variant motion-reduce {
+      animation: none;
+    }
+  }
+
+  .rasterbar:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+
+  .rasterbar:nth-child(3) {
+    animation-delay: -1s;
+  }
+
+  .rasterbar2 {
+    height: 22px;
+    width: 100%;
+    background: linear-gradient(
+      var(--c64-blue) 0 2px,
+      var(--c64-lightblue) 0 4px,
+      var(--c64-gray) 0 6px,
+      var(--c64-cyan) 0 8px,
+      var(--c64-lightgray) 0 10px,
+      var(--c64-white) 0 12px,
+      var(--c64-lightgray) 0 14px,
+      var(--c64-cyan) 0 16px,
+      var(--c64-gray) 0 18px,
+      var(--c64-lightblue) 0 20px,
+      var(--c64-blue) 0 22px
+    );
+  }
+
+  .rasterbar3 {
+    height: 22px;
+    width: 100%;
+    background: linear-gradient(
+      var(--c64-brown) 0 2px,
+      var(--c64-darkgray) 0 4px,
+      var(--c64-green) 0 6px,
+      var(--c64-gray) 0 8px,
+      var(--c64-lightgreen) 0 10px,
+      var(--c64-white) 0 12px,
+      var(--c64-lightgreen) 0 14px,
+      var(--c64-gray) 0 16px,
+      var(--c64-green) 0 18px,
+      var(--c64-darkgray) 0 20px,
+      var(--c64-brown) 0 22px
+    );
   }
 }
 
-.prose {
-  --tw-prose-body: var(--color-foreground);
-  --tw-prose-headings: var(--color-foreground);
-  --tw-prose-lead: var(--color-muted-foreground);
-  --tw-prose-links: var(--color-cyan);
-  --tw-prose-bold: var(--color-foreground-strong);
-  --tw-prose-counters: var(--color-muted-foreground);
-  --tw-prose-bullets: var(--color-border);
-  --tw-prose-hr: var(--color-border);
-  --tw-prose-quotes: var(--color-foreground-strong);
-  --tw-prose-quote-borders: var(--color-border);
-  --tw-prose-captions: var(--color-muted-foreground);
-  --tw-prose-code: var(--color-yellow);
-  --tw-prose-kbd: var(--color-foreground-strong);
-  --tw-prose-kbd-shadows: var(
-    --color-border
-  ); /* solid, not alpha — blocky keycap */
-  --tw-prose-pre-code: var(--syn-plain);
-  --tw-prose-pre-bg: var(--syn-bg);
-  --tw-prose-th-borders: var(--color-border);
-  --tw-prose-td-borders: var(--color-border);
+@layer utilities {
+  .prose {
+    --tw-prose-body: var(--color-foreground);
+    --tw-prose-headings: var(--color-foreground);
+    --tw-prose-lead: var(--color-muted-foreground);
+    --tw-prose-links: var(--color-cyan);
+    --tw-prose-bold: var(--color-foreground-strong);
+    --tw-prose-counters: var(--color-muted-foreground);
+    --tw-prose-bullets: var(--color-border);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-foreground-strong);
+    --tw-prose-quote-borders: var(--color-border);
+    --tw-prose-captions: var(--color-muted-foreground);
+    --tw-prose-code: var(--color-yellow);
+    --tw-prose-pre-code: var(--color-foreground);
+    --tw-prose-pre-bg: var(--color-ink);
+    --tw-prose-kbd: var(--color-foreground-strong);
+    --tw-prose-kbd-shadows: var(--color-border);
+    --tw-prose-th-borders: var(--color-border);
+    --tw-prose-td-borders: var(--color-border);
 
-  max-width: none;
+    max-width: none;
 
-  @variant md {
-    max-width: 90%;
+    @variant md {
+      max-width: 90%;
+    }
   }
-}
 
-/* The plugin hardcodes 6px on `pre` and 5px on `kbd`; --radius cannot reach them. */
-.prose :is(pre, kbd, img, table) {
-  border-radius: 0;
-}
-
-.prose :is(h1, h2, h3, h4) {
-  font-weight: 400;
-}
-
-.prose h1:not([class]) {
-  font-size: 1.5em;
-
-  @variant md {
-    font-size: 2em;
+  .prose :is(pre, kbd, img, table) {
+    border-radius: 0;
   }
-}
 
-.prose h2:not([class]) {
-  font-size: 1.25em;
+  .prose :is(h1, h2, h3, h4) {
+    font-weight: 400;
+  }
 
-  @variant md {
+  .prose h1:not([class]) {
     font-size: 1.5em;
+
+    @variant md {
+      font-size: 2em;
+    }
   }
-}
 
-.prose h3:not([class]) {
-  font-size: 1.125em;
-
-  @variant md {
+  .prose h2:not([class]) {
     font-size: 1.25em;
+
+    @variant md {
+      font-size: 1.5em;
+    }
   }
-}
 
-.prose h4:not([class]) {
-  font-size: 1em;
-}
+  .prose h3:not([class]) {
+    font-size: 1.125em;
 
+    @variant md {
+      font-size: 1.25em;
+    }
+  }
 
-.rasterbar {
-  height:22px;
-  width:100%;
-  position: absolute;
-  inset: 0 0 auto;
-  animation: rasteranim 1s ease-in-out infinite alternate;
-  background:linear-gradient(
-    var(--c64-brown) 0 2px, var(--c64-red) 0 4px, var(--c64-orange) 0 6px,
-    var(--c64-lightred) 0 8px, var(--c64-yellow) 0 10px, var(--c64-white) 0 12px,
-    var(--c64-yellow) 0 14px, var(--c64-lightred) 0 16px, var(--c64-orange) 0 18px,
-    var(--c64-red) 0 20px, var(--c64-brown) 0 22px);
-}
-
-.rasterbar:nth-child(2){animation-delay: -.5s}
-.rasterbar:nth-child(3){animation-delay: -1s}
-
-.rasterbar2 {
-  height:22px;
-  width:100%;
-  background:linear-gradient(
-    var(--c64-blue) 0 2px, var(--c64-lightblue) 0 4px, var(--c64-gray) 0 6px,
-    var(--c64-cyan) 0 8px, var(--c64-lightgray) 0 10px, var(--c64-white) 0 12px,
-    var(--c64-lightgray) 0 14px, var(--c64-cyan) 0 16px, var(--c64-gray) 0 18px,
-    var(--c64-lightblue) 0 20px, var(--c64-blue) 0 22px);
-}
-
-.rasterbar3 {
-  height:22px;
-  width:100%;
-  background:linear-gradient(
-    var(--c64-brown) 0 2px, var(--c64-darkgray) 0 4px, var(--c64-green) 0 6px,
-    var(--c64-gray) 0 8px, var(--c64-lightgreen) 0 10px, var(--c64-white) 0 12px,
-    var(--c64-lightgreen) 0 14px, var(--c64-gray) 0 16px, var(--c64-green) 0 18px,
-    var(--c64-darkgray) 0 20px, var(--c64-brown) 0 22px);
-}
-
-@keyframes rasteranim {
-  to {
-    top: 32px;
+  .prose h4:not([class]) {
+    font-size: 1em;
   }
 }
