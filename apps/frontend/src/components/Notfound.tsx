@@ -4,8 +4,8 @@ import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 
 export const NotFound = (props: NotFoundRouteProps) => {
   return (
-    <section className="mt-72 font-heading text-center">
-      <h1 className="font-heading text-9xl">404</h1>
+    <section className="mt-24 md:mt-72 font-heading text-center">
+      <h1 className="text-7xl md:text-9xl">404</h1>
       <p className="pb-6">Siden ble ikke funnet</p>
 
       <div className="pb-8">

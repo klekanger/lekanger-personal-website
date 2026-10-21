@@ -26,7 +26,7 @@ export function BlogPage() {
   const bodyTextToRender = body ? body : bodyText;
 
   return (
-    <article className="prose py-16">
+    <article className="prose py-10 md:py-16">
       <BackButton buttonText="Tilbake" className="mb-8" />
       <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
       <SanityImage

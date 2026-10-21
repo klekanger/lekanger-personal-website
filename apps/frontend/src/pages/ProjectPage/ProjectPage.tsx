@@ -9,7 +9,7 @@ export function ProjectPage() {
   const { title, excerpt, body, mainImage } = data;
 
   return (
-    <article className="prose py-16">
+    <article className="prose py-10 md:py-16">
       <h1>{title}</h1>
       <SanityImage
         image={mainImage}

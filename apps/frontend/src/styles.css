@@ -40,12 +40,6 @@
     format("woff2");
 }
 
-/* shadcn components ship `dark:` classes. Tailwind's built-in `dark` variant is
-   prefers-color-scheme, so removing this line would let a visitor's OS setting
-   restyle the site. Rebinding it to a `.dark` class we never set makes those
-   classes permanently inert. Do not delete. */
-@custom-variant dark (&:is(.dark *));
-
 :root {
   --c64-black: #000000;
   --c64-white: #ffffff;
@@ -277,7 +271,11 @@
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
 
-  max-width: 90%;
+  max-width: none;
+
+  @variant md {
+    max-width: 90%;
+  }
 }
 
 /* The plugin hardcodes 6px on `pre` and 5px on `kbd`; --radius cannot reach them. */
@@ -287,6 +285,34 @@
 
 .prose :is(h1, h2, h3, h4) {
   font-weight: 400;
+}
+
+.prose h1:not([class]) {
+  font-size: 1.5em;
+
+  @variant md {
+    font-size: 2em;
+  }
+}
+
+.prose h2:not([class]) {
+  font-size: 1.25em;
+
+  @variant md {
+    font-size: 1.5em;
+  }
+}
+
+.prose h3:not([class]) {
+  font-size: 1.125em;
+
+  @variant md {
+    font-size: 1.25em;
+  }
+}
+
+.prose h4:not([class]) {
+  font-size: 1em;
 }
 
 

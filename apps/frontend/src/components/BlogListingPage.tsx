@@ -20,7 +20,7 @@ export function BlogListingPage({ items, page, title }: BlogListingPageProps) {
         </div>
         <p className="uppercase">Directory listing – drive 8</p>
         {title && (
-          <h1 className="text-2xl text-white py-2">
+          <h1 className="text-lg md:text-2xl text-white py-2">
             {`${title} - side ${page}`}
           </h1>
         )}

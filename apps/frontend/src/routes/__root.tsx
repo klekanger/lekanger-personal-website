@@ -100,18 +100,16 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { data } = Route.useLoaderData();
-
   return (
     <html lang="nb" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body className="bg-border py-8">
-        <div className="bg-background wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto min-h-dvh flex flex-col px-8">
+      <body className="bg-border py-4 sm:py-8">
+        <div className="bg-background wrap-anywhere selection:bg-foreground selection:text-background max-w-6xl m-auto min-h-dvh flex flex-col px-4 sm:px-8">
           <Header />
           <div className="grow">{children}</div>
-          <Footer footerData={data} />
+          <Footer />
         </div>
         <TanStackDevtools
           config={{

@@ -15,16 +15,16 @@ export function ShowCaseCard(props: { showcase: Showcase }) {
   const showcaseUrl = `/showcase/${showcase?.slug?.current}` || "#";
 
   return (
-    <div className="w-full border border-foreground p-4 flex flex-col gap-1 hover:cursor-pointer hover:bg-accent hover:border-white min-h-72">
+    <div className="w-full border border-foreground p-4 flex flex-col gap-1 hover:cursor-pointer hover:bg-accent hover:border-white md:min-h-72">
       <Link to={showcaseUrl}>
         <h3
-          className="text-xl text-white"
+          className="text-base md:text-xl text-white"
           style={{ viewTransitionName: `post-${showcase.slug?.current}` }}
         >
           {showcase?.title}
         </h3>
-        <p className="font-mono grow">{preamble}</p>
-        <p className="font-mono text-white uppercase text-sm font-normal!">
+        <p className="font-mono grow pt-2">{preamble}</p>
+        <p className="font-mono text-white uppercase text-sm font-normal! pt-2">
           {`> Åpne prosjekt`}
         </p>
       </Link>

@@ -20,12 +20,12 @@ export function PaginationComponent({
     <Pagination className="pt-8">
       <PaginationContent>
         {page !== 1 ? (
-          <PaginationItem className="font-heading text-2xl">
+          <PaginationItem>
             <PaginationPrevious
               to="."
               search={{ page: page - 1 }}
               text="Forrige"
-              className="font-heading text-2xl hover:bg-foreground hover:text-background"
+              className="font-heading text-lg md:text-2xl hover:bg-foreground hover:text-background"
             />
           </PaginationItem>
         ) : null}
@@ -36,7 +36,7 @@ export function PaginationComponent({
               to="."
               search={{ page: page + 1 }}
               text="Neste"
-              className="font-heading text-2xl hover:bg-foreground hover:text-background"
+              className="font-heading text-lg md:text-2xl hover:bg-foreground hover:text-background"
             />
           </PaginationItem>
         ) : null}

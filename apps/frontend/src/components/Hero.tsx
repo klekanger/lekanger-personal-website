@@ -14,8 +14,8 @@ export function Hero({ heroText }: HeroProps) {
   const { heroTitle, preamble, facts, tags } = heroText[0];
 
   return (
-    <section className="border border-foreground/50 p-4 my-16">
-      <div className="pb-4 text-center font-heading text-sm leading-8">
+    <section className="border border-foreground/50 p-4 my-10 md:my-16">
+      <div className="pb-4 text-center font-heading text-xs md:text-sm leading-8">
         <div>**** LEKANGER 64 BASIC V2 ****</div>
         <div>
           64K RAM SYSTEM<span className="mx-2"> </span> 38911 BASIC BYTES FREE
@@ -23,9 +23,11 @@ export function Hero({ heroText }: HeroProps) {
       </div>
       <hr />
       <div className="flex flex-col lg:flex-row pt-8">
-        <div className="prose flex-1 flex flex-col justify-between gap-8">
-          <div>
-            <h1 className="text-white uppercase">{heroTitle}</h1>
+        <div className="flex-1 flex flex-col justify-between gap-8">
+          <div className="prose">
+            <h1 className="text-white uppercase text-base md:text-2xl lg:text-4xl">
+              {heroTitle}
+            </h1>
             <CustomPortableText
               value={preamble}
               isPreamble
@@ -34,7 +36,10 @@ export function Hero({ heroText }: HeroProps) {
           </div>
 
           <div className="flex flex-col gap-2 mb-12 lg:mb-8  prose uppercase">
-            <Button asChild className="no-underline">
+            <Button
+              asChild
+              className="no-underline text-sm md:text-base lg:text-lg font-semibold font-mono"
+            >
               <Link
                 to="/showcase"
                 search={{
@@ -45,12 +50,18 @@ export function Hero({ heroText }: HeroProps) {
                 Store og små prosjekter
               </Link>
             </Button>
-            <Button asChild className="no-underline">
+            <Button
+              asChild
+              className="no-underline text-sm md:text-base lg:text-lg font-semibold font-mono"
+            >
               <Link to="/blog-page" search={{ page: 1 }}>
                 Blogg om litt av hvert
               </Link>
             </Button>
-            <Button asChild className="no-underline">
+            <Button
+              asChild
+              className="no-underline text-sm md:text-base lg:text-lg font-semibold font-mono"
+            >
               <Link to="/page/$slug" params={{ slug: "om-meg" }}>
                 Om meg
               </Link>

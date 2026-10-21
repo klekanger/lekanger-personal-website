@@ -24,7 +24,7 @@ export function ShowcasePage() {
   } = data;
 
   return (
-    <article className="prose py-16">
+    <article className="prose py-10 md:py-16">
       <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
       <SanityImage
         image={topImage?.image}

@@ -14,7 +14,7 @@ export function Page() {
     data;
 
   return (
-    <article className="prose py-16">
+    <article className="prose py-10 md:py-16">
       <h1 style={{ viewTransitionName: `page-${slug}` }}>{title}</h1>
       <SanityImage
         image={topImage?.image}

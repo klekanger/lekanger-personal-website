@@ -10,8 +10,8 @@ export function BlogPromo(props: BlogPromoProps) {
   if (!blogPosts) return null;
 
   return (
-    <section className="my-16">
-      <h2 className="uppercase font-heading text-white text-2xl pt-4">
+    <section className="my-10 md:my-16">
+      <h2 className="uppercase text-white text-base md:text-2xl pt-4">
         Fra bloggen
       </h2>
       {blogPosts.map((post) => {

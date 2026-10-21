@@ -24,10 +24,10 @@ export function About({ aboutText, contactInfo }: AboutProps) {
   const { body, facts, title, topImage } = aboutText[0];
 
   return (
-    <section className="my-16">
+    <section className="my-10 md:my-16">
       <p className="uppercase font-heading">Print whoami$</p>
       <h2
-        className="uppercase font-heading text-white text-2xl pt-4 pb-8"
+        className="uppercase text-white text-base md:text-2xl pt-4 pb-8"
         id="ommeg"
       >
         {title}
@@ -47,34 +47,48 @@ export function About({ aboutText, contactInfo }: AboutProps) {
               isPreamble
               className="font-mono text-base! font-normal!"
             />
-            <div>
+            <div className="pt-4">
               <h3 className="py-4">Du finner meg her:</h3>
 
               <div className="w-fit">
-                <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <a
+                  href={contactInfo?.linkedIn}
+                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                >
                   <LinkedInIcon className="size-7 pr-2" />
-                  <a href={contactInfo?.linkedIn}>LinkedIn</a>
-                </div>
+                  LinkedIn
+                </a>
 
-                <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <a
+                  href={contactInfo?.gitHub}
+                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                >
                   <GitHubIcon className="size-7 pr-2" />
-                  <a href={contactInfo?.gitHub}>GitHub</a>
-                </div>
+                  GitHub
+                </a>
 
-                <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <a
+                  href={contactInfo?.blueSky}
+                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                >
                   <BlueSkyIcon className="size-7 pr-2" />
-                  <a href={contactInfo?.blueSky}>Bluesky</a>
-                </div>
+                  Bluesky
+                </a>
 
-                <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
-                  <XIcon className="size-7 pr-2" />
-                  <a href={contactInfo?.twitter}>X (Twitter)</a>
-                </div>
+                <a
+                  href={contactInfo?.twitter}
+                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                >
+                  <XIcon className="size-7 pr-2" />X (Twitter)
+                </a>
 
-                <div className="flex items-center -ml-1 pl-1 pr-2 hover:bg-foreground hover:text-background">
+                <a
+                  href={`mailto:${contactInfo?.email}`}
+                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                >
                   <EmailIcon className="size-7 pr-2" />
-                  <a href={`mailto:${contactInfo?.email}`}>E-post</a>
-                </div>
+                  E-post
+                </a>
               </div>
             </div>
           </div>
