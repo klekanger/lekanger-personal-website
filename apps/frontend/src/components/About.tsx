@@ -40,6 +40,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
             lqip={topImage?.lqip}
             variant="half"
             aspectRatio={1}
+            className="c64-blue-overlay"
           />
           <div>
             <CustomPortableText
