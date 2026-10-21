@@ -21,7 +21,7 @@ interface AboutProps {
 export function About({ aboutText, contactInfo }: AboutProps) {
   if (!aboutText[0]) return null;
 
-  const { body, facts, title, topImage } = aboutText[0];
+  const { body, title, topImage } = aboutText[0];
 
   return (
     <section className="my-10 md:my-16">
@@ -52,44 +52,53 @@ export function About({ aboutText, contactInfo }: AboutProps) {
               <h3 className="py-4">Du finner meg her:</h3>
 
               <div className="w-fit">
-                <a
-                  href={contactInfo?.linkedIn}
-                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
-                >
-                  <LinkedInIcon className="size-7 pr-2" />
-                  LinkedIn
-                </a>
+                {contactInfo?.linkedIn && (
+                  <a
+                    href={contactInfo.linkedIn}
+                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                  >
+                    <LinkedInIcon className="size-7 pr-2" />
+                    LinkedIn
+                  </a>
+                )}
 
-                <a
-                  href={contactInfo?.gitHub}
-                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
-                >
-                  <GitHubIcon className="size-7 pr-2" />
-                  GitHub
-                </a>
+                {contactInfo?.gitHub && (
+                  <a
+                    href={contactInfo.gitHub}
+                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                  >
+                    <GitHubIcon className="size-7 pr-2" />
+                    GitHub
+                  </a>
+                )}
+                {contactInfo?.blueSky && (
+                  <a
+                    href={contactInfo.blueSky}
+                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                  >
+                    <BlueSkyIcon className="size-7 pr-2" />
+                    Bluesky
+                  </a>
+                )}
 
-                <a
-                  href={contactInfo?.blueSky}
-                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
-                >
-                  <BlueSkyIcon className="size-7 pr-2" />
-                  Bluesky
-                </a>
+                {contactInfo?.twitter && (
+                  <a
+                    href={contactInfo.twitter}
+                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                  >
+                    <XIcon className="size-7 pr-2" />X (Twitter)
+                  </a>
+                )}
 
-                <a
-                  href={contactInfo?.twitter}
-                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
-                >
-                  <XIcon className="size-7 pr-2" />X (Twitter)
-                </a>
-
-                <a
-                  href={`mailto:${contactInfo?.email}`}
-                  className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
-                >
-                  <EmailIcon className="size-7 pr-2" />
-                  E-post
-                </a>
+                {contactInfo?.email && (
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                  >
+                    <EmailIcon className="size-7 pr-2" />
+                    E-post
+                  </a>
+                )}
               </div>
             </div>
           </div>
