@@ -19,12 +19,12 @@
     "@sanity/code-input": "^7.3.3",
     "@sanity/icons": "^5.2.1",
     "@sanity/ui": "^3.4.5",
-    "@sanity/vision": "^6.19.0",
+    "@sanity/vision": "^6.20.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-player": "^3.4.0",
     "react-twitter-embed": "^4.0.4",
-    "sanity": "^6.19.0",
+    "sanity": "^6.20.0",
     "styled-components": "^6.4.4"
   },
   "devDependencies": {
