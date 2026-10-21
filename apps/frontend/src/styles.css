@@ -248,7 +248,7 @@
   .c64-blue-overlay {
     filter: grayscale(1)
             sepia(1)
-            hue-rotate(185deg)
+            hue-rotate(195deg)
             saturate(3)
             brightness(0.85)
             contrast(1.15);
