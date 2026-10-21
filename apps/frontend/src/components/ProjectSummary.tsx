@@ -13,16 +13,19 @@ export default function ProjectSummary(props: ProjectSummaryProps) {
   return (
     <section className="font-heading py-8">
       {github && (
-        <span className="inline-flex items-center gap-2">
-          <GitHubIcon className="size-7" />
-          <a href={github}>GitHub</a>
+        <span>
+          <a href={github} className="flex gap-x-2">
+            <GitHubIcon className="size-7 text-foreground" />
+            GitHub
+          </a>
         </span>
       )}
-      <br />
       {projectUrl && (
-        <span className="inline-flex items-center gap-2">
-          <LinkIcon className="size-7" />
-          <a href={projectUrl}>{projectText} </a>
+        <span>
+          <a href={projectUrl} className="flex gap-2">
+            <LinkIcon className="size-7 text-foreground" />
+            {projectText}
+          </a>
         </span>
       )}
     </section>
