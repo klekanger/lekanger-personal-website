@@ -2,6 +2,7 @@ import { defineQuery } from "groq";
 
 export const HOMEPAGE_QUERY = defineQuery(`
     { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{
+        _type,
         _id,
         _createdAt,
         _updatedAt,
