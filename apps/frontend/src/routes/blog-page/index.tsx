@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { BlogListingPage } from "#/components/BlogListingPage";
+import { BlogListing } from "#/components/BlogListing";
 import { PaginationComponent } from "#/components/PaginationComponent";
 import { loadSanityQuery } from "#/lib/sanity/loader";
 import { ALL_BLOGS_QUERY } from "@/lib/sanity/queries/blogPagesQuery";
@@ -42,7 +42,7 @@ function RouteComponent() {
 
   return (
     <>
-      <BlogListingPage items={items} page={page} title="Bloggen" />
+      <BlogListing items={items} page={page} title="Bloggen" />
       <PaginationComponent page={page} isLastPage={isLastPage} />
     </>
   );

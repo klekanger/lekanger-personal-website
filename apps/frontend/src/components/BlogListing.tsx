@@ -11,7 +11,7 @@ interface BlogListingPageProps {
   title: string;
 }
 
-export function BlogListingPage({ items, page, title }: BlogListingPageProps) {
+export function BlogListing({ items, page, title }: BlogListingPageProps) {
   return (
     <>
       <div className="p-4 w-full border-2 border-foreground my-8 uppercase font-heading">
