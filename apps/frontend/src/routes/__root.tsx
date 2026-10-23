@@ -34,7 +34,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     const data = await loadSanityQuery(context, SETTINGS_QUERY);
     return data;
   },
-  errorComponent: ({ error }) => {
+  errorComponent: () => {
     return (
       <div>
         <div>Noe gikk galt</div>
