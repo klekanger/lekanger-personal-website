@@ -1,6 +1,5 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { Link, notFound } from "@tanstack/react-router";
-import { Badge } from "#/components/ui/Badge";
+import { Link } from "@tanstack/react-router";
 import { Facts } from "@/components/Facts";
 import { Button } from "@/components/ui/button";
 import { CustomPortableText } from "./PortableText/CustomPortableText";
@@ -11,7 +10,7 @@ interface HeroProps {
 
 export function Hero({ heroText }: HeroProps) {
   if (!heroText?.length) return null;
-  const { heroTitle, preamble, facts, tags } = heroText[0];
+  const { heroTitle, preamble, facts } = heroText[0];
 
   return (
     <section className="border border-foreground/50 p-4 my-10 md:my-16">

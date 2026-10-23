@@ -1,8 +1,7 @@
-import type { NotFoundRouteProps } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 
-export const NotFound = (props: NotFoundRouteProps) => {
+export const NotFound = () => {
   return (
     <section className="mt-24 md:mt-72 font-heading text-center">
       <h1 className="text-7xl md:text-9xl">404</h1>
