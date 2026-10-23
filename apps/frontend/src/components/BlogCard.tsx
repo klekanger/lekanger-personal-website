@@ -16,6 +16,8 @@ interface BlogCardProps {
 
 export function BlogCard(props: BlogCardProps) {
   const { post } = props;
+  const isExternalBlog =
+    (post._type === "blog" && post.isExternalBlog) ?? false;
 
   if (!post) return null;
 
@@ -27,13 +29,13 @@ export function BlogCard(props: BlogCardProps) {
         : `/blog-page/${post.slug?.current}`;
 
   return (
-    <div className="pb-4 first:mt-12 border-t hover:cursor-pointer hover:bg-accent">
+    <article className="pb-4 first:mt-12 border-t hover:cursor-pointer hover:bg-accent">
       <Link to={href}>
         <div className="flex flex-col md:flex-row pt-4">
           <div className="min-w-32">{shortDate(post._createdAt)}</div>
           <div className="w-full md:w-2/3">
             <h3
-              className="pb-2 text-white"
+              className="text-white"
               style={{ viewTransitionName: `post-${post.slug?.current}` }}
             >
               {isExternalBlog && (
@@ -43,10 +45,11 @@ export function BlogCard(props: BlogCardProps) {
               )}
               {post?.title}
             </h3>
+
             <PortableText value={post?.overview} />
           </div>
         </div>
       </Link>
-    </div>
+    </article>
   );
 }
