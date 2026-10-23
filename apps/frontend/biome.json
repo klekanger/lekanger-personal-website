@@ -4,5 +4,17 @@
   "extends": "//",
   "files": {
     "includes": ["**", "!**/src/routeTree.gen.ts", "!**/src/styles.css"]
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**", "!**/*.test.*", "!**/*.spec.*"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noFocusedTests": "off"
+          }
+        }
+      }
+    }
+  ]
 }
