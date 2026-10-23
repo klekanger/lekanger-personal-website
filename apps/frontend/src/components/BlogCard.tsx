@@ -5,6 +5,8 @@ import type {
 } from "@repo/shared";
 import { Link } from "@tanstack/react-router";
 import { shortDate } from "#/utils/dateFormatters";
+import { LinkExternalInIcon } from "./icons/LinkExternalIcon";
+import Tooltip from "./ui/Tooltip";
 
 interface BlogCardProps {
   post:
@@ -34,6 +36,11 @@ export function BlogCard(props: BlogCardProps) {
               className="pb-2 text-white"
               style={{ viewTransitionName: `post-${post.slug?.current}` }}
             >
+              {isExternalBlog && (
+                <Tooltip title="Ekstern lenke">
+                  <LinkExternalInIcon className="size-5 inline mr-2 align-text-bottom" />
+                </Tooltip>
+              )}
               {post?.title}
             </h3>
             <PortableText value={post?.overview} />
