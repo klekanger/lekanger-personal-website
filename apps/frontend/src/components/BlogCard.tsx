@@ -16,13 +16,12 @@ interface BlogCardProps {
 }
 
 export function BlogCard(props: BlogCardProps) {
-  const { post, headingAs: as = "h2" } = props;
-  const isExternalBlog =
-    (post._type === "blog" && post.isExternalBlog) ?? false;
+  const { post, headingAs: HeadingTag = "h2" } = props;
 
   if (!post) return null;
 
-  const HeadingTag = as === "h2" ? "h2" : "h3";
+  const isExternalBlog =
+    (post._type === "blog" && post.isExternalBlog) ?? false;
 
   const href =
     post._type === "showcase"
@@ -32,29 +31,31 @@ export function BlogCard(props: BlogCardProps) {
         : `/blog-page/${post.slug?.current}`;
 
   return (
-    <article className="border-t pb-4 first:mt-12 hover:cursor-pointer hover:bg-accent">
-      <Link to={href}>
-        <div className="flex flex-col pt-4 md:flex-row">
-          <time dateTime={post._createdAt} className="min-w-32">
-            {shortDate(post._createdAt)}
-          </time>
-          <div className="w-full md:w-2/3">
-            <HeadingTag
-              className="text-white"
-              style={{ viewTransitionName: `post-${post.slug?.current}` }}
-            >
+    <article className="relative border-t pb-4 first:mt-12 hover:cursor-pointer hover:bg-accent">
+      <div className="flex flex-col pt-4 md:flex-row">
+        <time dateTime={post._createdAt} className="min-w-32">
+          {shortDate(post._createdAt)}
+        </time>
+        <div className="w-full md:w-2/3">
+          <HeadingTag
+            className="text-white"
+            style={{ viewTransitionName: `post-${post.slug?.current}` }}
+          >
+            <Link to={href} className="after:absolute after:inset-0">
               {isExternalBlog && (
-                <Tooltip title="Ekstern lenke">
-                  <LinkExternalInIcon className="mr-2 inline size-5 align-text-bottom" />
-                </Tooltip>
+                <span className="relative z-10">
+                  <Tooltip title="Ekstern lenke">
+                    <LinkExternalInIcon className="mr-2 inline size-5 align-text-bottom" />
+                  </Tooltip>
+                </span>
               )}
-              {post?.title}
-            </HeadingTag>
+              {post.title}
+            </Link>
+          </HeadingTag>
 
-            <PortableText value={post?.overview} />
-          </div>
+          <PortableText value={post.overview} />
         </div>
-      </Link>
+      </div>
     </article>
   );
 }
