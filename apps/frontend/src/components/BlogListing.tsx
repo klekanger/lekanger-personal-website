@@ -25,11 +25,11 @@ export function BlogListing({ items, page, title }: BlogListingPageProps) {
           </h1>
         )}
       </div>
-      <ul>
-        {items.map((item) => {
-          return <BlogCard key={item?._id} post={item} />;
-        })}
-      </ul>
+
+      {items.map((item) => {
+        return <BlogCard key={item?._id} post={item} />;
+      })}
+
       <hr />
       <div className="relative mt-8 w-fit font-heading uppercase">
         1337 blocks free.
