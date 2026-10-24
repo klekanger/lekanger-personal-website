@@ -7,7 +7,7 @@
 export function shortDate(dateToFormat: string) {
   const rawDate = new Date(dateToFormat);
 
-  if (!(rawDate instanceof Date)) {
+  if (Number.isNaN(rawDate.getTime())) {
     console.warn("Invalid date");
     return "–";
   }
@@ -16,6 +16,7 @@ export function shortDate(dateToFormat: string) {
     year: "2-digit",
     month: "2-digit",
     day: "numeric",
+    timeZone: "Europe/Oslo",
   });
 
   return formattedDate;
@@ -30,7 +31,7 @@ export function shortDate(dateToFormat: string) {
 export function longDate(dateToFormat: string) {
   const rawDate = new Date(dateToFormat);
 
-  if (!(rawDate instanceof Date)) {
+  if (Number.isNaN(rawDate.getTime())) {
     console.warn("Invalid date");
     return "–";
   }
@@ -40,6 +41,7 @@ export function longDate(dateToFormat: string) {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "Europe/Oslo",
   });
 
   return formattedDate;
