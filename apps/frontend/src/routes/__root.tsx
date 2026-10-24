@@ -43,31 +43,42 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   },
   head: ({ matches }) => {
     const url = absoluteUrl(matches.at(-1)?.pathname ?? "/");
+    const routeNotFound = matches.some(
+      (m) => m.status === "notFound" || m._notFound,
+    );
 
     return {
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: SITE_NAME },
-        { name: "description", content: SITE_DESCRIPTION },
-        { property: "og:title", content: SITE_NAME },
-        { property: "og:description", content: SITE_DESCRIPTION },
-        { property: "og:url", content: url },
-        { property: "og:site_name", content: SITE_NAME },
-        { property: "og:locale", content: "nb_NO" },
-        { property: "og:type", content: "website" },
-        { property: "og:image", content: OG_IMAGE },
-        { property: "og:image:width", content: "1200" },
-        { property: "og:image:height", content: "630" },
-        { property: "og:image:type", content: "image/jpeg" },
-        { property: "og:image:alt", content: OG_IMAGE_ALT },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:site", content: TWITTER_HANDLE },
-        { name: "twitter:creator", content: TWITTER_HANDLE },
-        { name: "twitter:title", content: SITE_NAME },
-        { name: "twitter:description", content: SITE_DESCRIPTION },
-        { name: "twitter:image", content: OG_IMAGE },
-        { name: "twitter:image:alt", content: OG_IMAGE_ALT },
+        ...(routeNotFound
+          ? [
+              { title: "Siden ble ikke funnet - Kurt Lekanger" },
+              { name: "description", content: "Ingenting å se her - 404" },
+              { name: "robots", content: "noindex" },
+            ]
+          : [
+              { title: SITE_NAME },
+              { name: "description", content: SITE_DESCRIPTION },
+              { property: "og:title", content: SITE_NAME },
+              { property: "og:description", content: SITE_DESCRIPTION },
+              { property: "og:url", content: url },
+              { property: "og:site_name", content: SITE_NAME },
+              { property: "og:locale", content: "nb_NO" },
+              { property: "og:type", content: "website" },
+              { property: "og:image", content: OG_IMAGE },
+              { property: "og:image:width", content: "1200" },
+              { property: "og:image:height", content: "630" },
+              { property: "og:image:type", content: "image/jpeg" },
+              { property: "og:image:alt", content: OG_IMAGE_ALT },
+              { name: "twitter:card", content: "summary_large_image" },
+              { name: "twitter:site", content: TWITTER_HANDLE },
+              { name: "twitter:creator", content: TWITTER_HANDLE },
+              { name: "twitter:title", content: SITE_NAME },
+              { name: "twitter:description", content: SITE_DESCRIPTION },
+              { name: "twitter:image", content: OG_IMAGE },
+              { name: "twitter:image:alt", content: OG_IMAGE_ALT },
+            ]),
       ],
       links: [
         {
