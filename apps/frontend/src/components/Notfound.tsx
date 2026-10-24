@@ -3,7 +3,7 @@ import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 
 export const NotFound = () => {
   return (
-    <section className="mt-24 text-center font-heading md:mt-72">
+    <div className="mt-24 text-center font-heading md:mt-72">
       <h1 className="text-7xl md:text-9xl">404</h1>
       <p className="pb-6">Siden ble ikke funnet</p>
 
@@ -15,6 +15,6 @@ export const NotFound = () => {
         </Link>
       </div>
       <BlinkingCursor />
-    </section>
+    </div>
   );
 };
