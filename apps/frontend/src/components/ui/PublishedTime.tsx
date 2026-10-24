@@ -11,9 +11,8 @@ export default function PublishedTime(props: PublishedTimeProps) {
   if (!_createdAt) return null;
 
   return (
-    <p className="block py-4 font-heading text-xs text-yellow">
-      PUBLISERT:{" "}
-      <time dateTime={_createdAt}>{longDate(_createdAt).toUpperCase()}</time>{" "}
+    <p className="block py-4 font-heading text-xs text-yellow uppercase">
+      PUBLISERT: <time dateTime={_createdAt}>{longDate(_createdAt)}</time>{" "}
       {_updatedAt && !isSameDates && (
         <>
           (OPPDATERT: <time dateTime={_updatedAt}>{shortDate(_updatedAt)}</time>{" "}

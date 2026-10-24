@@ -28,9 +28,9 @@ export function Page() {
       <CustomPortableText value={bodyText} />
 
       <footer>
-        <div className="py-4 font-heading text-xs text-yellow">
-          PUBLISERT: {longDate(_createdAt).toUpperCase()} (OPPDATERT:{" "}
-          {shortDate(_updatedAt)} )
+        <div className="py-4 font-heading text-xs text-yellow uppercase">
+          PUBLISERT: {longDate(_createdAt)} (OPPDATERT: {shortDate(_updatedAt)}{" "}
+          )
         </div>
         <BackButton buttonText="Tilbake" className="my-8" />
       </footer>
