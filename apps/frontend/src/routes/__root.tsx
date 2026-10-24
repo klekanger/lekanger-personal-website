@@ -43,9 +43,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   },
   head: ({ matches }) => {
     const url = absoluteUrl(matches.at(-1)?.pathname ?? "/");
-    const routeNotFound = matches.some(
-      (m) => m.status === "notFound" || m._notFound,
-    );
+    const routeNotFound = matches.some((m) => m.status === "notFound");
 
     return {
       meta: [
