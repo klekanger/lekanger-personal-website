@@ -12,7 +12,7 @@ export const YouTubeSerializer = ({
   const url = value.url || "";
 
   return (
-    <div className="aspect-video mt-8 mb-8">
+    <div className="mt-8 mb-8 aspect-video">
       <ReactPlayer src={url} width="100%" height="100%" controls={true} />
     </div>
   );

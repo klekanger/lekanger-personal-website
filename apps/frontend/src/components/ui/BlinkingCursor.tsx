@@ -1,7 +1,7 @@
 export function BlinkingCursor() {
   return (
     <div
-      className="w-4 h-5 bg-primary animate-c64blink motion-reduce:animate-none"
+      className="h-5 w-4 animate-c64blink bg-primary motion-reduce:animate-none"
       aria-hidden
     ></div>
   );

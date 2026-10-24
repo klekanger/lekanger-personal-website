@@ -4,8 +4,8 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="pb-16 relative pt-16 lg:pt-32">
-      <div className="relative h-13.5 w-screen ml-[calc(50%-50vw)]">
+    <footer className="relative pt-16 pb-16 lg:pt-32">
+      <div className="relative ml-[calc(50%-50vw)] h-13.5 w-screen">
         <div className="rasterbar">
           <div className="rasterbar rasterbar2" />
           <div className="rasterbar rasterbar3" />

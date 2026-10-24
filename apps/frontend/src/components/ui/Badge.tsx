@@ -24,16 +24,16 @@ export function Badge(props: BadgeProps) {
   return (
     <div
       className={cn(
-        "not-prose justify-start border w-fit inline-flex items-start gap-2 shrink-0 overflow-hidden p-4 border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
+        "not-prose inline-flex w-fit shrink-0 items-start justify-start gap-2 overflow-hidden border border-border p-4 text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
         noUpperCase ? "" : "uppercase",
         subTitleUnder ? "flex-col-reverse" : "flex-col",
         className,
       )}
     >
       {subtitle && (
-        <div className="text-foreground font-heading text-xs">{subtitle}</div>
+        <div className="font-heading text-foreground text-xs">{subtitle}</div>
       )}
-      <div className="text-sm text-white font-mono wrap-break-word">{text}</div>
+      <div className="wrap-break-word font-mono text-sm text-white">{text}</div>
     </div>
   );
 }

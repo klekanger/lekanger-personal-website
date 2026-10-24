@@ -16,7 +16,7 @@ export function BackButton({
     <Button
       asChild
       className={cn(
-        "bg-muted-foreground hover:bg-foreground uppercase font-heading no-underline",
+        "bg-muted-foreground font-heading uppercase no-underline hover:bg-foreground",
         className,
       )}
     >

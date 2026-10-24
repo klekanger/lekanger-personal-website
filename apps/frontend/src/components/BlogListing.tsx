@@ -14,13 +14,13 @@ interface BlogListingPageProps {
 export function BlogListing({ items, page, title }: BlogListingPageProps) {
   return (
     <>
-      <div className="p-4 w-full border-2 border-foreground my-8 uppercase font-heading">
-        <div className="h-8 w-full mb-8 p-1 mt-2 border-2 border-foreground">
+      <div className="my-8 w-full border-2 border-foreground p-4 font-heading uppercase">
+        <div className="mt-2 mb-8 h-8 w-full border-2 border-foreground p-1">
           <div className="h-full fill-pattern"></div>
         </div>
         <p className="uppercase">Directory listing – drive 8</p>
         {title && (
-          <h1 className="text-lg md:text-2xl text-white py-2">
+          <h1 className="py-2 text-lg text-white md:text-2xl">
             {`${title} - side ${page}`}
           </h1>
         )}
@@ -31,7 +31,7 @@ export function BlogListing({ items, page, title }: BlogListingPageProps) {
         })}
       </ul>
       <hr />
-      <div className="font-heading uppercase mt-8 relative w-fit">
+      <div className="relative mt-8 w-fit font-heading uppercase">
         1337 blocks free.
         <BlinkingCursor />
       </div>

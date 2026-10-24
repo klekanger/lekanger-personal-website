@@ -25,15 +25,15 @@ export function About({ aboutText, contactInfo }: AboutProps) {
 
   return (
     <section className="my-10 md:my-16">
-      <p className="uppercase font-heading">Print whoami$</p>
+      <p className="font-heading uppercase">Print whoami$</p>
       <h2
-        className="uppercase text-white text-base md:text-2xl pt-4 pb-8"
+        className="pt-4 pb-8 text-base text-white uppercase md:text-2xl"
         id="ommeg"
       >
         {title}
       </h2>
-      <div className="grid ">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-x-16">
+      <div className="grid">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-x-16">
           <SanityImage
             image={topImage?.image}
             alt={topImage?.alt}
@@ -46,7 +46,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
             <CustomPortableText
               value={body}
               isPreamble
-              className="font-mono text-base! font-normal!"
+              className="font-mono font-normal! text-base!"
             />
             <div className="pt-4">
               <h3 className="py-4">Du finner meg her:</h3>
@@ -55,7 +55,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
                 {contactInfo?.linkedIn && (
                   <a
                     href={contactInfo.linkedIn}
-                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                    className="-ml-1 flex items-center pointer-coarse:py-2 pr-2 pl-1 hover:bg-foreground hover:text-background"
                   >
                     <LinkedInIcon className="size-7 pr-2" />
                     LinkedIn
@@ -65,7 +65,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
                 {contactInfo?.gitHub && (
                   <a
                     href={contactInfo.gitHub}
-                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                    className="-ml-1 flex items-center pointer-coarse:py-2 pr-2 pl-1 hover:bg-foreground hover:text-background"
                   >
                     <GitHubIcon className="size-7 pr-2" />
                     GitHub
@@ -74,7 +74,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
                 {contactInfo?.blueSky && (
                   <a
                     href={contactInfo.blueSky}
-                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                    className="-ml-1 flex items-center pointer-coarse:py-2 pr-2 pl-1 hover:bg-foreground hover:text-background"
                   >
                     <BlueSkyIcon className="size-7 pr-2" />
                     Bluesky
@@ -84,7 +84,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
                 {contactInfo?.twitter && (
                   <a
                     href={contactInfo.twitter}
-                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                    className="-ml-1 flex items-center pointer-coarse:py-2 pr-2 pl-1 hover:bg-foreground hover:text-background"
                   >
                     <XIcon className="size-7 pr-2" />X (Twitter)
                   </a>
@@ -93,7 +93,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
                 {contactInfo?.email && (
                   <a
                     href={`mailto:${contactInfo.email}`}
-                    className="flex items-center -ml-1 pl-1 pr-2 pointer-coarse:py-2 hover:bg-foreground hover:text-background"
+                    className="-ml-1 flex items-center pointer-coarse:py-2 pr-2 pl-1 hover:bg-foreground hover:text-background"
                   >
                     <EmailIcon className="size-7 pr-2" />
                     E-post

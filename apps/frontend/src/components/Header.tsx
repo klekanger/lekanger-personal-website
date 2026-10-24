@@ -63,18 +63,18 @@ export function Header() {
         />
       )}
 
-      <nav className="relative flex flex-wrap justify-between font-heading h-16 py-4 text-white select-none w-full ">
-        <div className="text-sm sm:text-lg font-semibold py-0.5 px-1">
+      <nav className="relative flex h-16 w-full select-none flex-wrap justify-between py-4 font-heading text-white">
+        <div className="px-1 py-0.5 font-semibold text-sm sm:text-lg">
           <Link to="/">{`<KURT LEKANGER />`}</Link>
         </div>
 
         {/* Large screen navbar */}
-        <div className="lg:flex gap-8 h-fit hidden">
+        <div className="hidden h-fit gap-8 lg:flex">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.title}
               {...item.linkProps}
-              className="hover:text-background hover:bg-foreground"
+              className="hover:bg-foreground hover:text-background"
               activeProps={
                 item.highlightActive
                   ? { className: `text-background bg-foreground` }
@@ -90,26 +90,26 @@ export function Header() {
         {isOpen ? (
           <button type="button">
             <XMark
-              className="size-6 sm:size-7 hover:cursor-pointer lg:hidden z-99 "
+              className="z-99 size-6 hover:cursor-pointer sm:size-7 lg:hidden"
               onClick={() => setIsOpen(!isOpen)}
             />
           </button>
         ) : (
           <button type="button" aria-label="Meny" aria-expanded={isOpen}>
             <Bars
-              className="size-6 sm:size-7 hover:cursor-pointer lg:hidden z-99"
+              className="z-99 size-6 hover:cursor-pointer sm:size-7 lg:hidden"
               onClick={() => setIsOpen(!isOpen)}
             />
           </button>
         )}
         {isOpen && (
           <>
-            <div className="flex flex-col items-center top-32 bg-foreground gap-2 w-full z-99 pt-16 pb-32 mt-2 lg:hidden">
+            <div className="top-32 z-99 mt-2 flex w-full flex-col items-center gap-2 bg-foreground pt-16 pb-32 lg:hidden">
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.title}
                   {...item.linkProps}
-                  className="px-2 py-2 hover:text-foreground hover:bg-background text-background"
+                  className="px-2 py-2 text-background hover:bg-background hover:text-foreground"
                   activeProps={
                     item.highlightActive
                       ? { className: `text-white bg-background` }
@@ -121,7 +121,7 @@ export function Header() {
                 </Link>
               ))}
             </div>
-            <div className="h-16 bg-foreground w-full text-center text-background font-heading text-sm">
+            <div className="h-16 w-full bg-foreground text-center font-heading text-background text-sm">
               © KURT LEKANGER {year}
             </div>
           </>

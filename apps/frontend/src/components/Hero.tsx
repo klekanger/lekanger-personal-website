@@ -13,18 +13,18 @@ export function Hero({ heroText }: HeroProps) {
   const { heroTitle, preamble, facts } = heroText[0];
 
   return (
-    <section className="border border-foreground/50 p-4 my-10 md:my-16">
-      <div className="pb-4 text-center font-heading text-xs md:text-sm leading-8">
+    <section className="my-10 border border-foreground/50 p-4 md:my-16">
+      <div className="pb-4 text-center font-heading text-xs leading-8 md:text-sm">
         <div>**** LEKANGER 64 BASIC V2 ****</div>
         <div>
           64K RAM SYSTEM<span className="mx-2"> </span> 38911 BASIC BYTES FREE
         </div>
       </div>
       <hr />
-      <div className="flex flex-col lg:flex-row pt-8">
-        <div className="flex-1 flex flex-col justify-between gap-8">
+      <div className="flex flex-col pt-8 lg:flex-row">
+        <div className="flex flex-1 flex-col justify-between gap-8">
           <div className="prose">
-            <h1 className="text-white uppercase text-base md:text-2xl lg:text-4xl">
+            <h1 className="text-base text-white uppercase md:text-2xl lg:text-4xl">
               {heroTitle}
             </h1>
             <CustomPortableText
@@ -34,10 +34,10 @@ export function Hero({ heroText }: HeroProps) {
             />
           </div>
 
-          <div className="flex flex-col gap-2 mb-12 lg:mb-8  prose uppercase">
+          <div className="prose mb-12 flex flex-col gap-2 uppercase lg:mb-8">
             <Button
               asChild
-              className="no-underline text-sm md:text-base lg:text-lg font-semibold font-mono"
+              className="font-mono font-semibold text-sm no-underline md:text-base lg:text-lg"
             >
               <Link
                 to="/showcase"
@@ -51,7 +51,7 @@ export function Hero({ heroText }: HeroProps) {
             </Button>
             <Button
               asChild
-              className="no-underline text-sm md:text-base lg:text-lg font-semibold font-mono"
+              className="font-mono font-semibold text-sm no-underline md:text-base lg:text-lg"
             >
               <Link to="/blog-page" search={{ page: 1 }}>
                 Blogg om litt av hvert
@@ -59,7 +59,7 @@ export function Hero({ heroText }: HeroProps) {
             </Button>
             <Button
               asChild
-              className="no-underline text-sm md:text-base lg:text-lg font-semibold font-mono"
+              className="font-mono font-semibold text-sm no-underline md:text-base lg:text-lg"
             >
               <Link to="/page/$slug" params={{ slug: "om-meg" }}>
                 Om meg
@@ -67,7 +67,7 @@ export function Hero({ heroText }: HeroProps) {
             </Button>
           </div>
         </div>
-        <div className="font-heading text-sm mt-0 prose flex-1">
+        <div className="prose mt-0 flex-1 font-heading text-sm">
           <Facts
             content={facts}
             pause={1200}

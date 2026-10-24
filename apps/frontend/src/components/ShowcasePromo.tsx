@@ -10,11 +10,11 @@ export function ShowcasePromo({ showcases }: ShowCasePromoProps) {
 
   return (
     <section className="my-10 md:my-16">
-      <p className="uppercase font-heading">Load "prosjekter",8,1</p>
-      <h2 className="uppercase text-white text-base md:text-2xl pt-4 pb-8">
+      <p className="font-heading uppercase">Load "prosjekter",8,1</p>
+      <h2 className="pt-4 pb-8 text-base text-white uppercase md:text-2xl">
         Utvalgte prosjekter
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {showcases.map((showcase) => (
           <ShowCaseCard key={showcase._id} showcase={showcase} />
         ))}

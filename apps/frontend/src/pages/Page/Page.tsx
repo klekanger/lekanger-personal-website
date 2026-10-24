@@ -25,7 +25,7 @@ export function Page() {
       <br />
       <CustomPortableText value={bodyText} />
       <div className="pt-8">---</div>
-      <div className="py-4 text-yellow font-heading text-xs">
+      <div className="py-4 font-heading text-xs text-yellow">
         PUBLISERT: {longDate(_createdAt).toUpperCase()} (OPPDATERT:{" "}
         {shortDate(_updatedAt)} )
       </div>

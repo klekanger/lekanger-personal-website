@@ -11,7 +11,7 @@ export function BlogPromo(props: BlogPromoProps) {
 
   return (
     <section className="my-10 md:my-16">
-      <h2 className="uppercase text-white text-base md:text-2xl pt-4">
+      <h2 className="pt-4 text-base text-white uppercase md:text-2xl">
         Fra bloggen
       </h2>
       {blogPosts.map((post) => {

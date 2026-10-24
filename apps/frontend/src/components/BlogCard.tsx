@@ -29,9 +29,9 @@ export function BlogCard(props: BlogCardProps) {
         : `/blog-page/${post.slug?.current}`;
 
   return (
-    <article className="pb-4 first:mt-12 border-t hover:cursor-pointer hover:bg-accent">
+    <article className="border-t pb-4 first:mt-12 hover:cursor-pointer hover:bg-accent">
       <Link to={href}>
-        <div className="flex flex-col md:flex-row pt-4">
+        <div className="flex flex-col pt-4 md:flex-row">
           <div className="min-w-32">{shortDate(post._createdAt)}</div>
           <div className="w-full md:w-2/3">
             <h3
@@ -40,7 +40,7 @@ export function BlogCard(props: BlogCardProps) {
             >
               {isExternalBlog && (
                 <Tooltip title="Ekstern lenke">
-                  <LinkExternalInIcon className="size-5 inline mr-2 align-text-bottom" />
+                  <LinkExternalInIcon className="mr-2 inline size-5 align-text-bottom" />
                 </Tooltip>
               )}
               {post?.title}

@@ -14,7 +14,7 @@ const NO_FACTS: NonNullable<HeroText["facts"]> = [];
 const Cursor = () => (
   <span
     aria-hidden="true"
-    className="inline-block w-4 h-5 bg-primary animate-c64blink motion-reduce:animate-none"
+    className="inline-block h-5 w-4 animate-c64blink bg-primary motion-reduce:animate-none"
   />
 );
 
@@ -25,18 +25,18 @@ function FactLines({ items }: { items: TypewriterItem<Fact>[] }) {
         ({ fact, visible, labelText, showValue, statusLines, showCursor }) =>
           visible ? (
             <div key={fact._key}>
-              <div className="uppercase text-white h-8 flex py-2">
+              <div className="flex h-8 py-2 text-white uppercase">
                 <span className="mr-1">{labelText}</span>
                 {showCursor && !showValue && <Cursor />}
               </div>
               {statusLines.map((line) => (
-                <p key={line} className="uppercase text-foreground">
+                <p key={line} className="text-foreground uppercase">
                   {line}
                 </p>
               ))}
               {showValue && (
                 <>
-                  <p className="uppercase text-foreground">{fact.value}</p>
+                  <p className="text-foreground uppercase">{fact.value}</p>
                   <p className="text-foreground">READY.</p>
                   {showCursor && <Cursor />}
                 </>

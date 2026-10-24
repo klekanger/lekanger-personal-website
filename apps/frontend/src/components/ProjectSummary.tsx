@@ -11,7 +11,7 @@ export default function ProjectSummary(props: ProjectSummaryProps) {
   const { github, projectUrl, projectText = "Les mer" } = props;
 
   return (
-    <section className="font-heading py-8">
+    <section className="py-8 font-heading">
       {github && (
         <span>
           <a href={github} className="flex gap-x-2">
