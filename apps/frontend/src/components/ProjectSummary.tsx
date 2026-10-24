@@ -11,23 +11,26 @@ export default function ProjectSummary(props: ProjectSummaryProps) {
   const { github, projectUrl, projectText = "Les mer" } = props;
 
   return (
-    <section className="py-8 font-heading">
+    <ul
+      className="list-none py-8 pl-0 font-heading"
+      aria-label="Relevante lenker"
+    >
       {github && (
-        <span>
+        <li>
           <a href={github} className="flex gap-x-2">
             <GitHubIcon className="size-7 text-foreground" />
             GitHub
           </a>
-        </span>
+        </li>
       )}
       {projectUrl && (
-        <span>
+        <li>
           <a href={projectUrl} className="flex gap-2">
             <LinkIcon className="size-7 text-foreground" />
             {projectText}
           </a>
-        </span>
+        </li>
       )}
-    </section>
+    </ul>
   );
 }
