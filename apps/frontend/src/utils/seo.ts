@@ -5,7 +5,7 @@ import type {
   SHOWCASE_BY_SLUG_QUERY_RESULT,
 } from "@repo/shared";
 import { ogImageUrl } from "@/lib/sanity/imageUtils";
-import { absoluteUrl, SITE_NAME } from "@/lib/siteConfig";
+import { absoluteUrl } from "@/lib/siteConfig";
 
 type BlogPost = NonNullable<BLOGS_BY_SLUG_QUERY_RESULT>;
 type Project = NonNullable<PROJECTS_BY_SLUG_QUERY_RESULT>;
@@ -21,13 +21,21 @@ export type SeoSource = {
   _updatedAt?: string;
 };
 
+const MAX_DESCRIPTION_LENGTH = 160;
+
 function toDescription(text: Parameters<typeof toPlainText>[0]) {
-  return toPlainText(text).slice(0, 160);
+  const plainText = toPlainText(text).replace(/\s+/g, " ").trim();
+  if (plainText.length <= MAX_DESCRIPTION_LENGTH) return plainText;
+
+  const cut = plainText.slice(0, MAX_DESCRIPTION_LENGTH - 1);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${lastSpace > 0 ? cut.slice(0, lastSpace) : cut}…`;
 }
 
 export function createSeoMetadataFromPost(
   data: SeoSource | null | undefined,
   pathname: string,
+  { type = "article" }: { type?: "article" | "website" } = {},
 ) {
   if (!data) {
     console.warn("No post provided");
@@ -36,6 +44,7 @@ export function createSeoMetadataFromPost(
 
   const url = absoluteUrl(pathname);
   const title = data.title;
+  const isArticle = type === "article";
 
   // The name of the main image field has changed, need to keep
   // supporting both names to support old (legacy) articles (SEO)
@@ -56,7 +65,7 @@ export function createSeoMetadataFromPost(
     meta: [
       ...(title
         ? [
-            { title: `${title} | ${SITE_NAME}` },
+            { title: `${title} - Kurt Lekanger` },
             { property: "og:title", content: title },
             { name: "twitter:title", content: title },
           ]
@@ -69,11 +78,11 @@ export function createSeoMetadataFromPost(
           ]
         : []),
       { property: "og:url", content: url },
-      { property: "og:type", content: "article" },
-      ...(data._createdAt
+      { property: "og:type", content: type },
+      ...(isArticle && data._createdAt
         ? [{ property: "article:published_time", content: data._createdAt }]
         : []),
-      ...(data._updatedAt
+      ...(isArticle && data._updatedAt
         ? [{ property: "article:modified_time", content: data._updatedAt }]
         : []),
       ...(ogImage

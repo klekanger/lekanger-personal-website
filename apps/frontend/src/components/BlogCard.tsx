@@ -31,7 +31,7 @@ export function BlogCard(props: BlogCardProps) {
         : `/blog-page/${post.slug?.current}`;
 
   return (
-    <article className="relative border-t pb-4 first:mt-12 hover:cursor-pointer hover:bg-accent">
+    <article className="relative border-t pb-4 hover:cursor-pointer hover:bg-accent">
       <div className="flex flex-col pt-4 md:flex-row">
         <time dateTime={post._createdAt} className="min-w-32">
           {shortDate(post._createdAt)}

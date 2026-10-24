@@ -3,6 +3,7 @@ import { BlogListing } from "#/components/BlogListing";
 import { PaginationComponent } from "#/components/PaginationComponent";
 import { loadSanityQuery } from "#/lib/sanity/loader";
 import { ALL_SHOWCASES_QUERY } from "@/lib/sanity/queries/showcasesQuery";
+import { absoluteUrl } from "@/lib/siteConfig";
 
 const POSTS_PER_PAGE = 10;
 
@@ -23,13 +24,24 @@ export const Route = createFileRoute("/showcase/")({
     return data;
   },
   component: RouteComponent,
-  head: ({ matches }) => {
-    const page = matches[1].search?.page || 1;
+  head: ({ match }) => {
+    const { page } = match.search;
+    const seoTitle = page > 1 ? `Prosjekter - Side ${page}` : "Prosjekter";
+    const seoDescription = "Mine prosjekter - hobby og kanskje litt jobb";
+    const url = absoluteUrl(`/showcase?page=${page}`);
+
     return {
       meta: [
-        { title: `Kurt Lekanger - Blogg - Side ${page}` },
-        { name: "sdfsdfsdf" },
+        { title: `${seoTitle} - Kurt Lekanger` },
+        { property: "og:title", content: seoTitle },
+        { name: "twitter:title", content: seoTitle },
+        { name: "description", content: seoDescription },
+        { name: "twitter:description", content: seoDescription },
+        { property: "og:description", content: seoDescription },
+        { property: "og:url", content: url },
+        { name: "twitter:url", content: url },
       ],
+      links: [{ rel: "canonical", href: url }],
     };
   },
 });
