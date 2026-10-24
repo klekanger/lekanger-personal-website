@@ -10,7 +10,9 @@ export function ShowcasePromo({ showcases }: ShowCasePromoProps) {
 
   return (
     <section className="my-10 md:my-16">
-      <p className="font-heading uppercase">Load "prosjekter",8,1</p>
+      <p className="font-heading uppercase" aria-hidden="true">
+        Load "prosjekter",8,1
+      </p>
       <h2 className="pt-4 pb-8 text-base text-white uppercase md:text-2xl">
         Utvalgte prosjekter
       </h2>

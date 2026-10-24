@@ -14,7 +14,10 @@ export function Hero({ heroText }: HeroProps) {
 
   return (
     <section className="my-10 border border-foreground/50 p-4 md:my-16">
-      <div className="@container pb-4 text-center font-heading text-xs leading-loose md:text-sm">
+      <div
+        className="@container pb-4 text-center font-heading text-xs leading-loose md:text-sm"
+        aria-hidden="true" // decorative banner only
+      >
         <div className="text-[min(calc(100cqi/30),1.2rem)]">
           **** LEKANGER 64 BASIC V2 ****
         </div>

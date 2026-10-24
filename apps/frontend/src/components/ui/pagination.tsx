@@ -5,7 +5,7 @@ import { cn } from "#/lib/utils.ts";
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
-      aria-label="pagination"
+      aria-label="paginering"
       data-slot="pagination"
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
@@ -69,7 +69,7 @@ function PaginationPrevious({
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label="Gå til forrige side"
       size="default"
       className={cn("pl-1.5!", className)}
       {...props}
@@ -87,7 +87,7 @@ function PaginationNext({
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label="Gå til neste side"
       size="default"
       className={cn("pr-1.5!", className)}
       {...props}

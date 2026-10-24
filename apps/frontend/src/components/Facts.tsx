@@ -1,4 +1,9 @@
-import type { HeroText, TypewriterItem, UseTypeWriterOpts } from "@repo/shared";
+import type {
+  FactItem,
+  HeroText,
+  TypewriterItem,
+  UseTypeWriterOpts,
+} from "@repo/shared";
 import { useTypewriterSequence } from "#/hooks/useTypewriter";
 import { cn } from "#/lib/utils";
 
@@ -25,7 +30,7 @@ function FactLines({ items }: { items: TypewriterItem<Fact>[] }) {
         ({ fact, visible, labelText, showValue, statusLines, showCursor }) =>
           visible ? (
             <div key={fact._key}>
-              <div className="flex h-8 py-2 text-white uppercase">
+              <div className="flex min-h-8 py-2 text-white uppercase">
                 <span className="mr-1">{labelText}</span>
                 {showCursor && !showValue && <Cursor />}
               </div>
@@ -60,9 +65,19 @@ export function Facts({ content, className, ...opts }: TypeWriterProps) {
       <div aria-hidden="true" className="invisible col-start-1 row-start-1">
         <FactLines items={finalItems} />
       </div>
-      <div className="col-start-1 row-start-1">
+      <div className="col-start-1 row-start-1" aria-hidden="true">
         <FactLines items={items} />
       </div>
+
+      {/* SR only version */}
+      <dl className="sr-only">
+        {content.map((item) => (
+          <div key={item._key}>
+            <dt>{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }
