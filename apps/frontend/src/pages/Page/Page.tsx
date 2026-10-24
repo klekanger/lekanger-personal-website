@@ -2,7 +2,6 @@ import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import PublishedTime from "#/components/ui/PublishedTime";
-import { longDate, shortDate } from "#/utils/dateFormatters";
 import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/page/$slug";
 
