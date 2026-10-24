@@ -10,14 +10,13 @@ export default function Tooltip(props: TooltipProps) {
   if (!title) return null;
 
   return (
-    <span className="relative group" aria-hidden="true">
+    <span className="group relative" aria-hidden="true">
       {children}
       <div
         role="tooltip"
-        className="bottom-full left absolute
-      text-background font-mono bg-foreground text-xs opacity-0 px-2 py-1 mb-2 rounded-md w-max -translate-y-0.5 group-hover:-translate-y-1 group-hover:opacity-100 transition-all"
+        className="left pointer-events-none absolute bottom-full mb-2 w-max -translate-y-0.5 rounded-md bg-foreground px-2 py-1 font-mono text-background text-xs opacity-0 transition-all group-hover:-translate-y-1 group-hover:opacity-100"
       >
-        Ekstern lenke
+        {title}
         <span className="absolute top-full left-1.5 size-2 -translate-y-1/2 rotate-45 bg-foreground" />
       </div>
     </span>
