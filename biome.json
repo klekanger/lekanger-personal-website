@@ -9,6 +9,19 @@
     "indentStyle": "space",
     "indentWidth": 2
   },
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useSortedClasses": {
+          "level": "warn",
+          "fix": "safe",
+          "options": {
+            "functions": ["clsx", "cn", "cva"]
+          }
+        }
+      }
+    }
+  },
   "files": {
     "includes": [
       "**",
