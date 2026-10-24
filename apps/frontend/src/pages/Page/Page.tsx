@@ -1,6 +1,7 @@
 import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
 import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
+import PublishedTime from "#/components/ui/PublishedTime";
 import { longDate, shortDate } from "#/utils/dateFormatters";
 import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/page/$slug";
@@ -28,10 +29,7 @@ export function Page() {
       <CustomPortableText value={bodyText} />
 
       <footer>
-        <div className="py-4 font-heading text-xs text-yellow uppercase">
-          PUBLISERT: {longDate(_createdAt)} (OPPDATERT: {shortDate(_updatedAt)}{" "}
-          )
-        </div>
+        <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
         <BackButton buttonText="Tilbake" className="my-8" />
       </footer>
       <BlinkingCursor />

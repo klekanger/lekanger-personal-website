@@ -18,6 +18,6 @@ export const Route = createFileRoute("/page/$slug")({
   head: ({ loaderData, match }) => {
     const page = loaderData?.data;
 
-    return createSeoMetadataFromPost(page, match.pathname);
+    return createSeoMetadataFromPost(page, match.pathname, { type: "website" });
   },
 });

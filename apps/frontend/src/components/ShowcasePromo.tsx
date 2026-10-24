@@ -1,5 +1,5 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { ShowCaseCard } from "@/components/ShowCaseCard";
+import { ShowcaseCard } from "#/components/ShowcaseCard";
 
 interface ShowCasePromoProps {
   showcases: HOMEPAGE_QUERY_RESULT["showcases"];
@@ -16,11 +16,17 @@ export function ShowcasePromo({ showcases }: ShowCasePromoProps) {
       <h2 className="pt-4 pb-8 text-base text-white uppercase md:text-2xl">
         Utvalgte prosjekter
       </h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {showcases.map((showcase) => (
-          <ShowCaseCard key={showcase._id} showcase={showcase} />
+          <li>
+            <ShowcaseCard
+              key={showcase._id}
+              showcase={showcase}
+              headingAs="h3"
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
