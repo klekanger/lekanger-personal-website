@@ -7,7 +7,7 @@ import { Route } from "@/routes/blog-page/$slug";
 
 export function BlogPage() {
   const { data } = Route.useLoaderData();
-  if (!data) return <h1>404</h1>;
+  if (!data) return null;
 
   const {
     title,
@@ -28,19 +28,25 @@ export function BlogPage() {
   return (
     <article className="prose py-10 md:py-16">
       <BackButton buttonText="Tilbake" className="mb-8" />
-      <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
-      <SanityImage
-        image={topImage?.image ? topImage.image : mainImage}
-        alt={topImage?.alt || mainImage?.alt}
-        caption={topImage?.caption || ""}
-      />
-      <CustomPortableText value={overview} isPreamble />
-      <br />
+
+      <header>
+        <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
+
+        <SanityImage
+          image={topImage?.image ? topImage.image : mainImage}
+          alt={topImage?.alt || mainImage?.alt}
+          caption={topImage?.caption || ""}
+        />
+
+        <CustomPortableText value={overview} isPreamble />
+      </header>
+
       <CustomPortableText value={bodyTextToRender} />
 
-      <div className="pt-8">---</div>
-      <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
-      <BackButton buttonText="Tilbake" className="my-8" />
+      <footer>
+        <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
+        <BackButton buttonText="Tilbake" className="my-8" />
+      </footer>
       <BlinkingCursor />
     </article>
   );

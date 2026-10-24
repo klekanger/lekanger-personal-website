@@ -25,23 +25,30 @@ export function ShowcasePage() {
 
   return (
     <article className="prose py-10 md:py-16">
-      <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
-      <SanityImage
-        image={topImage?.image}
-        alt={topImage?.alt}
-        caption={topImage?.caption}
-      />
-      <CustomPortableText value={overview} isPreamble />
-      <br />
-      <CustomPortableText value={bodyText} />
-      <ProjectSummary
-        github={github}
-        projectUrl={projectUrl}
-        projectText="Lenke til prosjektet"
-      />
+      <BackButton buttonText="Tilbake" className="mb-8" />
 
-      <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
-      <BackButton buttonText="Tilbake" className="my-8" />
+      <header>
+        <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
+        <SanityImage
+          image={topImage?.image}
+          alt={topImage?.alt}
+          caption={topImage?.caption}
+        />
+        <CustomPortableText value={overview} isPreamble />
+      </header>
+
+      <CustomPortableText value={bodyText} />
+
+      <footer>
+        <ProjectSummary
+          github={github}
+          projectUrl={projectUrl}
+          projectText="Lenke til prosjektet"
+        />
+
+        <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
+        <BackButton buttonText="Tilbake" className="my-8" />
+      </footer>
       <BlinkingCursor />
     </article>
   );
