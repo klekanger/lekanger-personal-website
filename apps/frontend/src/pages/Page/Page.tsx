@@ -15,21 +15,25 @@ export function Page() {
 
   return (
     <article className="prose py-10 md:py-16">
-      <h1 style={{ viewTransitionName: `page-${slug}` }}>{title}</h1>
-      <SanityImage
-        image={topImage?.image}
-        alt={topImage?.alt}
-        caption={topImage?.caption}
-      />
-      <CustomPortableText value={overview} isPreamble />
-      <br />
+      <header>
+        <h1 style={{ viewTransitionName: `page-${slug}` }}>{title}</h1>
+        <SanityImage
+          image={topImage?.image}
+          alt={topImage?.alt}
+          caption={topImage?.caption}
+        />
+        <CustomPortableText value={overview} isPreamble />
+      </header>
+
       <CustomPortableText value={bodyText} />
-      <div className="pt-8">---</div>
-      <div className="py-4 font-heading text-xs text-yellow">
-        PUBLISERT: {longDate(_createdAt).toUpperCase()} (OPPDATERT:{" "}
-        {shortDate(_updatedAt)} )
-      </div>
-      <BackButton buttonText="Tilbake" className="my-8" />
+
+      <footer>
+        <div className="py-4 font-heading text-xs text-yellow">
+          PUBLISERT: {longDate(_createdAt).toUpperCase()} (OPPDATERT:{" "}
+          {shortDate(_updatedAt)} )
+        </div>
+        <BackButton buttonText="Tilbake" className="my-8" />
+      </footer>
       <BlinkingCursor />
     </article>
   );

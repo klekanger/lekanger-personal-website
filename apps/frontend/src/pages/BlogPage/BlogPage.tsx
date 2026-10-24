@@ -27,8 +27,6 @@ export function BlogPage() {
 
   return (
     <article className="prose py-10 md:py-16">
-      <BackButton buttonText="Tilbake" className="mb-8" />
-
       <header>
         <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
 

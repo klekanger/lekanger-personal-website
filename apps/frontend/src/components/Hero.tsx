@@ -77,7 +77,6 @@ export function Hero({ heroText }: HeroProps) {
             searchTime={1200}
             loadTime={1000}
           />
-          <br />
         </div>
       </div>
     </section>
