@@ -14,9 +14,11 @@ export function Hero({ heroText }: HeroProps) {
 
   return (
     <section className="my-10 border border-foreground/50 p-4 md:my-16">
-      <div className="pb-4 text-center font-heading text-xs leading-8 md:text-sm">
-        <div>**** LEKANGER 64 BASIC V2 ****</div>
-        <div>
+      <div className="@container pb-4 text-center font-heading text-xs leading-loose md:text-sm">
+        <div className="text-[min(calc(100cqi/30),1.2rem)]">
+          **** LEKANGER 64 BASIC V2 ****
+        </div>
+        <div className="text-[min(calc(100cqi/30),1.2rem)]">
           64K RAM SYSTEM<span className="mx-2"> </span> 38911 BASIC BYTES FREE
         </div>
       </div>
