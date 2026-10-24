@@ -19,11 +19,11 @@ export function Home() {
   };
 
   return (
-    <main className="w-full">
+    <div className="w-full">
       <Hero heroText={heroText} />
       <ShowcasePromo showcases={showcases} />
       <BlogPromo blogPosts={blogPosts} />
       <About aboutText={aboutText} contactInfo={contactInfo} />
-    </main>
+    </div>
   );
 }

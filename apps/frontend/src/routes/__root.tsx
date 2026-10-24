@@ -108,7 +108,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="bg-border py-4 sm:py-8">
         <div className="wrap-anywhere m-auto flex min-h-dvh max-w-6xl flex-col bg-background px-4 selection:bg-foreground selection:text-background sm:px-8">
           <Header />
-          <div className="grow">{children}</div>
+          <main className="grow">{children}</main>
           <Footer />
         </div>
         <TanStackDevtools

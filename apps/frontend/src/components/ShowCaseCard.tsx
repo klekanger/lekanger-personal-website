@@ -15,7 +15,7 @@ export function ShowCaseCard(props: { showcase: Showcase }) {
   const showcaseUrl = `/showcase/${showcase?.slug?.current}` || "#";
 
   return (
-    <div className="flex w-full flex-col gap-1 border border-foreground p-4 hover:cursor-pointer hover:border-white hover:bg-accent md:min-h-72">
+    <article className="flex w-full flex-col gap-1 border border-foreground p-4 hover:cursor-pointer hover:border-white hover:bg-accent md:min-h-72">
       <Link to={showcaseUrl}>
         <h3
           className="text-base text-white md:text-xl"
@@ -28,6 +28,6 @@ export function ShowCaseCard(props: { showcase: Showcase }) {
           {`> Åpne prosjekt`}
         </p>
       </Link>
-    </div>
+    </article>
   );
 }

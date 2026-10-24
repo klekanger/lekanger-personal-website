@@ -32,7 +32,9 @@ export function BlogCard(props: BlogCardProps) {
     <article className="border-t pb-4 first:mt-12 hover:cursor-pointer hover:bg-accent">
       <Link to={href}>
         <div className="flex flex-col pt-4 md:flex-row">
-          <div className="min-w-32">{shortDate(post._createdAt)}</div>
+          <time dateTime={post._createdAt} className="min-w-32">
+            {shortDate(post._createdAt)}
+          </time>
           <div className="w-full md:w-2/3">
             <h3
               className="text-white"
