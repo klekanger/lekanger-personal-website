@@ -8,11 +8,9 @@ export const NotFound = () => {
       <p className="pb-6">Siden ble ikke funnet</p>
 
       <div className="pb-8">
-        <Link to="/">
-          <span className="bg-white px-1 py-2 text-background hover:bg-yellow">
-            {`< Tilbake til forsiden`}
-          </span>
-        </Link>
+        <span className="bg-primary p-2 font-heading text-primary-foreground hover:border hover:border-foreground hover:bg-background hover:text-foreground">
+          <Link to="/">{`< Tilbake til forsiden`}</Link>
+        </span>
       </div>
       <BlinkingCursor />
     </div>
