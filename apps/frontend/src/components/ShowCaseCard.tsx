@@ -17,14 +17,17 @@ export function ShowCaseCard(props: { showcase: Showcase }) {
   return (
     <article className="flex w-full flex-col gap-1 border border-foreground p-4 hover:cursor-pointer hover:border-white hover:bg-accent md:min-h-72">
       <Link to={showcaseUrl}>
-        <h3
+        <h2
           className="text-base text-white md:text-xl"
           style={{ viewTransitionName: `post-${showcase.slug?.current}` }}
         >
           {showcase?.title}
-        </h3>
+        </h2>
         <p className="grow pt-2 font-mono">{preamble}</p>
-        <p className="pt-2 font-mono font-normal! text-sm text-white uppercase">
+        <p
+          className="pt-2 font-mono font-normal! text-sm text-white uppercase"
+          aria-hidden="true"
+        >
           {`> Åpne prosjekt`}
         </p>
       </Link>

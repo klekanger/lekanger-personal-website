@@ -15,7 +15,7 @@ export function BlogPromo(props: BlogPromoProps) {
         Fra bloggen
       </h2>
       {blogPosts.map((post) => {
-        return <BlogCard key={post._id} post={post} />;
+        return <BlogCard key={post._id} post={post} headingAs="h3" />;
       })}
     </section>
   );

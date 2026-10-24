@@ -12,14 +12,17 @@ interface BlogCardProps {
   post:
     | ALL_BLOGS_QUERY_RESULT["items"][0]
     | ALL_SHOWCASES_QUERY_RESULT["items"][0];
+  headingAs?: "h2" | "h3";
 }
 
 export function BlogCard(props: BlogCardProps) {
-  const { post } = props;
+  const { post, headingAs: as = "h2" } = props;
   const isExternalBlog =
     (post._type === "blog" && post.isExternalBlog) ?? false;
 
   if (!post) return null;
+
+  const HeadingTag = as === "h2" ? "h2" : "h3";
 
   const href =
     post._type === "showcase"
@@ -36,7 +39,7 @@ export function BlogCard(props: BlogCardProps) {
             {shortDate(post._createdAt)}
           </time>
           <div className="w-full md:w-2/3">
-            <h3
+            <HeadingTag
               className="text-white"
               style={{ viewTransitionName: `post-${post.slug?.current}` }}
             >
@@ -46,7 +49,7 @@ export function BlogCard(props: BlogCardProps) {
                 </Tooltip>
               )}
               {post?.title}
-            </h3>
+            </HeadingTag>
 
             <PortableText value={post?.overview} />
           </div>
