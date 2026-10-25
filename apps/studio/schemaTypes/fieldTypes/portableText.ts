@@ -1,4 +1,3 @@
-import { ImageIcon } from "@sanity/icons/Image";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { ArticleImage } from "../../customInputComponents/articleImage";
 

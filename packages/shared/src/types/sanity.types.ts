@@ -229,20 +229,7 @@ export type About = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: null;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  body?: PortableText;
   topImage?: ArticleImage;
   facts?: Array<
     {
@@ -812,20 +799,7 @@ export type HOMEPAGE_QUERY_RESULT = {
   }>;
   aboutText: Array<{
     title: string | null;
-    body: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal";
-      listItem?: never;
-      markDefs?: null;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
+    body: PortableText | null;
     topImage: {
       _type: "articleImage";
       alt: string | null;

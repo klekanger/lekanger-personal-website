@@ -13,31 +13,11 @@ export default defineType({
       type: "string",
       validation: (rule) => rule.required(),
     }),
+
     defineField({
+      type: "portableText",
       name: "body",
       title: "Brødtekst",
-      type: "array",
-      of: [
-        // Paragraphs
-        defineArrayMember({
-          lists: [],
-          marks: {
-            annotations: [],
-            decorators: [
-              {
-                title: "Kursiv",
-                value: "em",
-              },
-              {
-                title: "Fet skrift",
-                value: "strong",
-              },
-            ],
-          },
-          styles: [],
-          type: "block",
-        }),
-      ],
     }),
 
     defineField({
