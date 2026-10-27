@@ -2,6 +2,7 @@ import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
 import { Link } from "@tanstack/react-router";
 import { Facts } from "@/components/Facts";
 import { Button } from "@/components/ui/button";
+import { PetsciiTitle } from "./PetsciiTitle";
 import { CustomPortableText } from "./PortableText/CustomPortableText";
 
 interface HeroProps {
@@ -29,9 +30,12 @@ export function Hero({ heroText }: HeroProps) {
       <div className="flex flex-col pt-8 lg:flex-row">
         <div className="flex flex-1 flex-col justify-between gap-8">
           <div className="prose">
-            <h1 className="text-base text-white uppercase md:text-2xl lg:text-4xl">
-              {heroTitle}
-            </h1>
+            <PetsciiTitle
+              from={heroTitle || ""}
+              to="Skribent med utviklerkløe"
+              delay={3000}
+              className="uppercase"
+            />
             <CustomPortableText
               value={preamble}
               isPreamble

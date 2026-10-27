@@ -327,6 +327,11 @@
       var(--c64-brown) 0 22px
     );
   }
+
+  .petscii-reversed {
+    color: var(--color-background);
+    background-color: var(--color-foreground);
+  }
 }
 
 @layer utilities {
