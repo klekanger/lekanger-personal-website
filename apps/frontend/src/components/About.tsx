@@ -37,19 +37,14 @@ export function About({ aboutText, contactInfo }: AboutProps) {
       </h2>
       <div className="grid">
         <div className="grid gap-8 md:grid-cols-2 md:gap-x-16">
-          <SanityImage
-            image={topImage?.image}
-            alt={topImage?.alt}
-            lqip={topImage?.lqip}
-            variant="half"
-            aspectRatio={1}
-            className="c64-blue-overlay"
-          />
           <div>
-            <CustomPortableText
-              value={body}
-              isPreamble
-              className="font-mono font-normal! text-base!"
+            <SanityImage
+              image={topImage?.image}
+              alt={topImage?.alt}
+              lqip={topImage?.lqip}
+              variant="half"
+              aspectRatio={1}
+              className="c64-blue-overlay"
             />
             <div className="pt-4">
               <h3 className="py-4">Du finner meg her:</h3>
@@ -114,6 +109,13 @@ export function About({ aboutText, contactInfo }: AboutProps) {
                 )}
               </ul>
             </div>
+          </div>
+          <div>
+            <CustomPortableText
+              value={body}
+              isPreamble
+              className="font-mono font-normal! text-base!"
+            />
           </div>
         </div>
       </div>
