@@ -96,7 +96,10 @@ export function Hero({ heroText }: HeroProps) {
             </ul>
           </nav>
         </div>
-        <div className="mt-0 mb-8 flex-1 rounded-[8px] border-4 border-foreground p-4 font-heading text-sm leading-relaxed">
+        <div className="relative mt-0 mb-8 flex-1 rounded-[8px] border-4 border-foreground p-4 font-heading text-sm leading-relaxed">
+          <div className="absolute -top-3 left-4 z-10 bg-background px-2">
+            FAKTA
+          </div>
           <Facts
             content={facts}
             pause={1200}
