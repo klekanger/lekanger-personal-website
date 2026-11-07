@@ -29,8 +29,8 @@ export function BlogListing({ items, page, title }: BlogListingPageProps) {
       <ul>
         {items.map((item) => {
           return (
-            <li>
-              <BlogCard key={item?._id} post={item} headingAs="h2" />
+            <li key={item?._id}>
+              <BlogCard post={item} headingAs="h2" />
             </li>
           );
         })}
