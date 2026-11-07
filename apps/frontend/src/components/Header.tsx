@@ -54,7 +54,7 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-background">
+    <header className="border-foreground border-b bg-background px-4">
       {isOpen && (
         <div
           aria-hidden="true"
