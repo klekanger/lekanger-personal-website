@@ -26,16 +26,18 @@ export function Hero({ heroText }: HeroProps) {
           64K RAM SYSTEM<span className="mx-2"> </span> 38911 BASIC BYTES FREE
         </div>
       </div>
-      <hr />
+
+      <div className="w-full pt-8 md:pt-16">
+        <PetsciiTitle
+          from={heroTitle || ""}
+          to="Skribent med utviklerkløe"
+          delay={3000}
+          className="text-3xl uppercase"
+        />
+      </div>
       <div className="flex flex-col pt-8 lg:flex-row">
         <div className="flex flex-1 flex-col justify-between gap-8">
           <div className="prose">
-            <PetsciiTitle
-              from={heroTitle || ""}
-              to="Skribent med utviklerkløe"
-              delay={3000}
-              className="uppercase"
-            />
             <CustomPortableText
               value={preamble}
               isPreamble
