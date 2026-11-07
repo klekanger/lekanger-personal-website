@@ -1,7 +1,6 @@
 import type { HOMEPAGE_QUERY_RESULT } from "@repo/shared";
-import { Link } from "@tanstack/react-router";
+import { Link, linkOptions } from "@tanstack/react-router";
 import { Facts } from "@/components/Facts";
-import { Button } from "@/components/ui/button";
 import { PetsciiTitle } from "./PetsciiTitle";
 import { CustomPortableText } from "./PortableText/CustomPortableText";
 
@@ -9,14 +8,32 @@ interface HeroProps {
   heroText: HOMEPAGE_QUERY_RESULT["heroText"];
 }
 
+const HERO_LINKS = linkOptions([
+  {
+    to: "/showcase",
+    search: { page: 1 },
+    label: "Store og små prosjekter",
+  },
+  {
+    to: "/blog-page",
+    search: { page: 1 },
+    label: "Blogg om litt av hvert",
+  },
+  {
+    to: "/page/$slug",
+    params: { slug: "om-meg" },
+    label: "Om meg",
+  },
+]);
+
 export function Hero({ heroText }: HeroProps) {
   if (!heroText?.length) return null;
   const { heroTitle, preamble, facts } = heroText[0];
 
   return (
-    <section className="my-10 p-4 md:my-16">
+    <section className="mt-8 p-4 lg:mt-8">
       <div
-        className="@container pb-4 text-center font-heading text-xs leading-loose md:text-sm"
+        className="@container pt-0 pb-16 text-center font-heading text-xs leading-loose md:text-sm"
         aria-hidden="true" // decorative banner only
       >
         <div className="text-[min(calc(100cqi/30),1.2rem)]">
@@ -27,7 +44,7 @@ export function Hero({ heroText }: HeroProps) {
         </div>
       </div>
 
-      <div className="w-full pt-8 md:pt-16">
+      <div className="w-full">
         <PetsciiTitle
           from={heroTitle || ""}
           to="Skribent med utviklerkløe"
@@ -36,7 +53,7 @@ export function Hero({ heroText }: HeroProps) {
         />
       </div>
       <div className="flex flex-col pt-8 lg:flex-row">
-        <div className="flex flex-1 flex-col justify-between gap-8">
+        <div className="flex flex-1 flex-col justify-between lg:mr-8">
           <div className="prose">
             <CustomPortableText
               value={preamble}
@@ -45,38 +62,39 @@ export function Hero({ heroText }: HeroProps) {
             />
           </div>
 
-          <div className="prose mb-12 flex flex-col gap-2 uppercase lg:mb-8">
-            <Button
-              asChild
-              className="font-mono font-semibold text-sm no-underline md:text-base lg:text-lg"
-            >
-              <Link
-                to="/showcase"
-                search={{
-                  page: 1,
-                }}
-              >
-                {" "}
-                Store og små prosjekter
-              </Link>
-            </Button>
-            <Button
-              asChild
-              className="font-mono font-semibold text-sm no-underline md:text-base lg:text-lg"
-            >
-              <Link to="/blog-page" search={{ page: 1 }}>
-                Blogg om litt av hvert
-              </Link>
-            </Button>
-            <Button
-              asChild
-              className="font-mono font-semibold text-sm no-underline md:text-base lg:text-lg"
-            >
-              <Link to="/page/$slug" params={{ slug: "om-meg" }}>
-                Om meg
-              </Link>
-            </Button>
-          </div>
+          <nav
+            aria-label="Snarveier"
+            className="mb-12 max-w-[90%] pt-8 pt-8 lg:mb-8"
+          >
+            <ul className="border-foreground/50 border-t">
+              {HERO_LINKS.map(({ label, ...linkProps }, idx) => (
+                <li key={label} className="border-foreground/50 border-b">
+                  <Link
+                    {...linkProps}
+                    className="group flex gap-4 px-2 py-3 font-semibold hover:bg-foreground"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="text-yellow group-hover:text-background"
+                    >
+                      {idx + 1}
+                    </span>
+                    <span className="flex grow flex-row justify-between font-mono">
+                      <span className="text-white group-hover:text-background">
+                        {label}
+                      </span>
+                      <span
+                        className="self-center pr-2 font-heading text-foreground group-hover:text-background"
+                        aria-hidden="true"
+                      >
+                        {">"}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
         <div className="prose mt-0 flex-1 font-heading text-sm">
           <Facts
