@@ -29,7 +29,7 @@ function FactLines({ items }: { items: TypewriterItem<Fact>[] }) {
       {items.map(
         ({ fact, visible, labelText, showValue, statusLines, showCursor }) =>
           visible ? (
-            <div key={fact._key}>
+            <div key={fact._key} className="mb-[1lh]">
               <div className="flex min-h-8 py-2 text-white uppercase">
                 <span className="mr-1">{labelText}</span>
                 {showCursor && !showValue && <Cursor />}

@@ -49,11 +49,11 @@ export function Hero({ heroText }: HeroProps) {
           from={heroTitle || ""}
           to="Skribent med utviklerkløe"
           delay={3000}
-          className="text-3xl text-white uppercase"
+          className="text-2xl text-white uppercase lg:text-4xl"
         />
       </div>
-      <div className="flex flex-col pt-8 lg:flex-row">
-        <div className="flex flex-1 flex-col justify-between lg:mr-8">
+      <div className="flex flex-col pt-8 lg:flex-row lg:pt-12">
+        <div className="flex flex-1 flex-col justify-between">
           <div className="prose">
             <CustomPortableText
               value={preamble}
@@ -64,7 +64,7 @@ export function Hero({ heroText }: HeroProps) {
 
           <nav
             aria-label="Snarveier"
-            className="mb-12 max-w-[90%] pt-8 pt-8 lg:mb-8"
+            className="mb-12 pt-8 lg:mb-8 lg:max-w-[90%]"
           >
             <ul className="border-foreground/50 border-t">
               {HERO_LINKS.map(({ label, ...linkProps }, idx) => (
@@ -96,7 +96,7 @@ export function Hero({ heroText }: HeroProps) {
             </ul>
           </nav>
         </div>
-        <div className="prose mt-0 flex-1 font-heading text-sm">
+        <div className="mt-0 mb-8 flex-1 rounded-[8px] border-4 border-foreground p-4 font-heading text-sm leading-relaxed">
           <Facts
             content={facts}
             pause={1200}
