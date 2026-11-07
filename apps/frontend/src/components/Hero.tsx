@@ -49,7 +49,7 @@ export function Hero({ heroText }: HeroProps) {
           from={heroTitle || ""}
           to="Skribent med utviklerkløe"
           delay={3000}
-          className="text-3xl uppercase"
+          className="text-3xl text-white uppercase"
         />
       </div>
       <div className="flex flex-col pt-8 lg:flex-row">
@@ -79,12 +79,12 @@ export function Hero({ heroText }: HeroProps) {
                     >
                       {idx + 1}
                     </span>
-                    <span className="flex grow flex-row justify-between font-mono">
+                    <span className="flex grow flex-row justify-between">
                       <span className="text-white group-hover:text-background">
                         {label}
                       </span>
                       <span
-                        className="self-center pr-2 font-heading text-foreground group-hover:text-background"
+                        className="self-center pr-2 font-heading font-normal text-foreground group-hover:text-background motion-safe:group-hover:translate-x-2"
                         aria-hidden="true"
                       >
                         {">"}
