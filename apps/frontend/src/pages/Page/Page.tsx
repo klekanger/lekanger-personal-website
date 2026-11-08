@@ -1,6 +1,5 @@
 import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
-import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import PublishedTime from "#/components/ui/PublishedTime";
 import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/page/$slug";
@@ -31,7 +30,6 @@ export function Page() {
         <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
         <BackButton buttonText="Tilbake" className="my-8" />
       </footer>
-      <BlinkingCursor />
     </article>
   );
 }
