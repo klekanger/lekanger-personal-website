@@ -26,7 +26,7 @@ export function ProjectPage() {
       <CustomPortableText value={body} className="pt-2 lg:pt-8" />
 
       <footer>
-        <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
+        <PublishedTime publishedAt={_createdAt} updatedAt={_updatedAt} />
         <BackButton buttonText="Tilbake" className="my-8" />
       </footer>
     </article>

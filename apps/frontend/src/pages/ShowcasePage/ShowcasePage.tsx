@@ -16,7 +16,7 @@ export function ShowcasePage() {
     bodyText,
     overview,
     topImage,
-    _createdAt,
+    publishedAt,
     _updatedAt,
     slug,
     github,
@@ -57,7 +57,7 @@ export function ShowcasePage() {
           projectText="Lenke til prosjektet"
         />
 
-        <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
+        <PublishedTime publishedAt={publishedAt} updatedAt={_updatedAt} />
         <BackButton buttonText="Tilbake" className="my-8" />
       </footer>
     </article>

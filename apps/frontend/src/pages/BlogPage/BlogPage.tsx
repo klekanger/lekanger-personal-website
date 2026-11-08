@@ -16,7 +16,7 @@ export function BlogPage() {
     bodyText,
     topImage,
     mainImage,
-    _createdAt,
+    publishedAt,
     _updatedAt,
     slug,
   } = data;
@@ -55,7 +55,7 @@ export function BlogPage() {
       <CustomPortableText value={bodyTextToRender} className="pt-2 lg:pt-8" />
 
       <footer>
-        <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
+        <PublishedTime publishedAt={publishedAt} updatedAt={_updatedAt} />
         <BackButton buttonText="Tilbake" className="my-8" />
       </footer>
     </article>

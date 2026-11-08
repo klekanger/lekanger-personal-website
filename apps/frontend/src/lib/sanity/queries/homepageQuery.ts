@@ -1,10 +1,10 @@
 import { defineQuery } from "groq";
 
 export const HOMEPAGE_QUERY = defineQuery(`
-    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{
+    { "blogPosts": *[_type=="blog"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[0..3]{
         _type,
         _id,
-        _createdAt,
+        "publishedAt": coalesce(publishedAt, _createdAt),
         _updatedAt,
         title,
         overview,
@@ -12,8 +12,9 @@ export const HOMEPAGE_QUERY = defineQuery(`
         externalBlogUrl,
         slug
       },
-    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{
-      ...
+    "showcases": *[_type=="showcase"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[0..5]{
+      ...,
+      "publishedAt": coalesce(publishedAt, _createdAt)
     },
       "heroText": *[_type=="heroText"] {
           heroTitle,

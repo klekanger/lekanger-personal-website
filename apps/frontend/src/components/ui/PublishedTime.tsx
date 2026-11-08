@@ -1,22 +1,21 @@
 import { longDate, shortDate } from "@/utils/dateFormatters";
 
 interface PublishedTimeProps {
-  _createdAt: string;
-  _updatedAt: string;
+  publishedAt: string;
+  updatedAt: string;
 }
 
 export default function PublishedTime(props: PublishedTimeProps) {
-  const { _createdAt, _updatedAt } = props;
-  const isSameDates = _createdAt === _updatedAt;
-  if (!_createdAt) return null;
+  const { publishedAt, updatedAt } = props;
+  const isSameDates = publishedAt === updatedAt;
+  if (!publishedAt) return null;
 
   return (
     <p className="block py-4 font-heading text-xs text-yellow uppercase">
-      PUBLISERT: <time dateTime={_createdAt}>{longDate(_createdAt)}</time>{" "}
-      {_updatedAt && !isSameDates && (
+      PUBLISERT: <time dateTime={publishedAt}>{longDate(publishedAt)}</time>{" "}
+      {updatedAt && !isSameDates && (
         <>
-          (OPPDATERT: <time dateTime={_updatedAt}>{shortDate(_updatedAt)}</time>{" "}
-          )
+          (OPPDATERT: <time dateTime={updatedAt}>{shortDate(updatedAt)}</time> )
         </>
       )}
     </p>
