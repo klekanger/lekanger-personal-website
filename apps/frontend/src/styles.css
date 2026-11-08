@@ -259,6 +259,23 @@
     filter: none;
   }
 
+
+
+  .topline {
+    height: 14px;
+    width: 100%;
+    position: absolute;
+    inset: 0 0 auto;
+
+    background: linear-gradient(
+      var(--c64-red) 0 4px,
+      var(--c64-lightred) 0 6px,
+      var(--c64-yellow) 0 8px,
+      var(--c64-lightred) 0 10px,
+      var(--c64-red) 0 12px
+    );
+  }
+
   .rasterbar {
     height: 22px;
     width: 100%;
