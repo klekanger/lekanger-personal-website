@@ -11,7 +11,7 @@ export function ProjectPage() {
   const { title, excerpt, body, mainImage, _createdAt, _updatedAt } = data;
 
   return (
-    <article className="prose py-10 md:py-16">
+    <article className="prose default-padding">
       <header>
         <h1>{title}</h1>
         <SanityImage

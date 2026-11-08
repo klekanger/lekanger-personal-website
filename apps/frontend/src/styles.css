@@ -204,6 +204,11 @@
 }
 
 @layer components {
+
+  .default-padding {
+    @apply pt-10 lg:pt-16 pb-4 lg:pb-8;
+  }
+
   .fill-pattern {
     background-image:
       repeating-linear-gradient(

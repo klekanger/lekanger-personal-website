@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import ProjectSummary from "#/components/ProjectSummary";
 import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
@@ -24,9 +25,21 @@ export function ShowcasePage() {
   } = data;
 
   return (
-    <article className="prose py-10 md:py-16">
+    <article className="prose default-padding">
       <header>
-        <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
+        <Link
+          to="/showcase"
+          search={{ page: 1 }}
+          className="px-1 py-1 font-heading text-white uppercase no-underline hover:bg-foreground hover:text-background"
+        >
+          &lt; Prosjekter
+        </Link>
+        <h1
+          style={{ viewTransitionName: `post-${slug}` }}
+          className="pt-8 text-white"
+        >
+          {title}
+        </h1>
         <SanityImage
           image={topImage?.image}
           alt={topImage?.alt}
