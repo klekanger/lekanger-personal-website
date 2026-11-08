@@ -39,7 +39,7 @@ export function BlogCard(props: BlogCardProps) {
         <div className="w-full md:w-2/3">
           <HeadingTag
             className="text-white"
-            style={{ viewTransitionName: `post-${post.slug?.current}` }}
+            /*   style={{ viewTransitionName: `post-${post.slug?.current}` }} */
           >
             <Link to={href} className="after:absolute after:inset-0">
               {isExternalBlog && (
