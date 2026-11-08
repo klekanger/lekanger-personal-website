@@ -47,9 +47,11 @@ export function About({ aboutText, contactInfo }: AboutProps) {
               className="c64-blue-overlay"
             />
             <div className="pt-4">
-              <h3 className="py-4">Du finner meg her:</h3>
+              <h3 className="pt-4 pb-8 text-2xl text-white">
+                Du finner meg her:
+              </h3>
 
-              <ul className="w-fit">
+              <ul className="grid w-full grid-cols-2 gap-x-4 gap-y-4 font-heading text-sm lg:text-base">
                 {contactInfo?.linkedIn && (
                   <li>
                     <a
