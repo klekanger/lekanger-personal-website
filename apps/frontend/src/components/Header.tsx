@@ -32,6 +32,7 @@ const NAV_ITEMS: NavItems = [
   },
   {
     title: "Om meg",
+    highlightActive: true,
     linkProps: {
       to: "/page/$slug",
       params: { slug: "om-meg" },
