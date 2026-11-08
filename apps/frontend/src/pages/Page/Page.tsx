@@ -19,6 +19,7 @@ export function Page() {
         <SanityImage
           image={topImage?.image}
           alt={topImage?.alt}
+          lqip={topImage?.lqip}
           caption={topImage?.caption}
         />
         <CustomPortableText value={overview} isPreamble />

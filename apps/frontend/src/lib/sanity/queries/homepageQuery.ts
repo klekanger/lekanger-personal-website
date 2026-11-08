@@ -22,7 +22,12 @@ export const HOMEPAGE_QUERY = defineQuery(`
           tags},
       "aboutText": *[_type=="about"] {
         title,
-        body,
+        body[]{
+      ...,
+      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },
+      _type == "image" => { "lqip": asset->metadata.lqip },
+      _type == "figure" => { "lqip": asset->metadata.lqip }
+    },
         topImage {
           _type,
           alt,

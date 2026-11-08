@@ -16,6 +16,7 @@ export function ProjectPage() {
         <SanityImage
           image={mainImage}
           alt={mainImage?.alt}
+          lqip={mainImage?.lqip}
           caption={mainImage?.caption}
         />
 

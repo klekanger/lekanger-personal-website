@@ -45,6 +45,7 @@ export function BlogPage() {
         <SanityImage
           image={topImage?.image ? topImage.image : mainImage}
           alt={topImage?.alt || mainImage?.alt}
+          lqip={topImage?.image ? topImage.lqip : mainImage?.lqip}
           caption={topImage?.caption || ""}
         />
 
