@@ -52,7 +52,7 @@ export function BlogPage() {
         <CustomPortableText value={overview} isPreamble />
       </header>
 
-      <CustomPortableText value={bodyTextToRender} />
+      <CustomPortableText value={bodyTextToRender} className="pt-2 lg:pt-8" />
 
       <footer>
         <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />

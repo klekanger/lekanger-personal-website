@@ -23,7 +23,7 @@ export function ProjectPage() {
         <CustomPortableText value={excerpt} isPreamble />
       </header>
 
-      <CustomPortableText value={body} />
+      <CustomPortableText value={body} className="pt-2 lg:pt-8" />
 
       <footer>
         <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />

@@ -48,7 +48,7 @@ export function ShowcasePage() {
         <CustomPortableText value={overview} isPreamble />
       </header>
 
-      <CustomPortableText value={bodyText} />
+      <CustomPortableText value={bodyText} className="pt-2 lg:pt-8" />
 
       <footer>
         <ProjectSummary
