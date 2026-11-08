@@ -25,7 +25,7 @@ export function About({ aboutText, contactInfo }: AboutProps) {
   const { body, title, topImage } = aboutText[0];
 
   return (
-    <section className="my-10 md:my-16">
+    <section className="my-4 md:my-8">
       <p className="font-heading uppercase" aria-hidden="true">
         Print whoami$
       </p>
@@ -47,9 +47,11 @@ export function About({ aboutText, contactInfo }: AboutProps) {
               className="c64-blue-overlay"
             />
             <div className="pt-4">
-              <h3 className="py-4">Du finner meg her:</h3>
+              <h3 className="pt-4 pb-8 text-2xl text-white">
+                Du finner meg her:
+              </h3>
 
-              <ul className="w-fit">
+              <ul className="grid w-full grid-cols-2 gap-x-4 gap-y-4 font-heading text-sm lg:text-base">
                 {contactInfo?.linkedIn && (
                   <li>
                     <a
