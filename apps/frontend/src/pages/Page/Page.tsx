@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
 import PublishedTime from "#/components/ui/PublishedTime";
@@ -15,7 +16,18 @@ export function Page() {
   return (
     <article className="prose default-padding">
       <header>
-        <h1 style={{ viewTransitionName: `page-${slug}` }}>{title}</h1>
+        <Link
+          to="/"
+          className="px-1 py-1 font-heading text-white uppercase no-underline hover:bg-foreground hover:text-background"
+        >
+          &lt; Forsiden
+        </Link>
+        <h1
+          style={{ viewTransitionName: `page-${slug}` }}
+          className="pt-8 text-white"
+        >
+          {title}
+        </h1>
         <SanityImage
           image={topImage?.image}
           alt={topImage?.alt}
