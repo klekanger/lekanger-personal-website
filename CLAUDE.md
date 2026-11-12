@@ -63,7 +63,7 @@ Sanity Studio (schema) → `sanity typegen` → `packages/shared/src/types/sanit
 
 Typegen is configured **only** in the `typegen` block of `apps/studio/sanity.cli.ts` (the separate `sanity-typegen.json` is deprecated; when both exist the CLI config silently wins). It reads GROQ queries from `../frontend/src/**/*.{ts,tsx}` and the schema from `apps/studio/schema.json`, and writes to `packages/shared/src/types/sanity.types.ts`. All paths there are relative to `apps/studio`.
 
-Because `enabled: true`, types regenerate automatically during `sanity dev` (watching both the query glob and `schema.json`) and at the end of `sanity build`. Run `pnpm generate-types` in `apps/studio` for a one-off; it re-extracts `schema.json` first, so run it after editing `apps/studio/schemaTypes/`. Changing the `typegen` block requires restarting `sanity dev` — the running server keeps the config it booted with.
+Because `enabled: true`, types regenerate automatically during `sanity dev` (watching both the query glob and `schema.json`) and at the end of `sanity build`. There is no `generate-types` script. For a one-off, run `pnpm exec sanity typegen generate` in `apps/studio`. It reads the committed `schema.json` without re-extracting it, so after editing `apps/studio/schemaTypes/` run `pnpm exec sanity schema extract` first. Changing the `typegen` block requires restarting `sanity dev` — the running server keeps the config it booted with.
 
 `schema.json` and `sanity.types.ts` are both generated — never hand-edit them, and note both are excluded from Biome in the root `biome.json` (typegen formats its output with Prettier, which conflicts with Biome's tabs). Both are committed, so a fresh clone has types without running typegen.
 
@@ -96,8 +96,7 @@ Shared query defaults (`staleTime` 5 min, `gcTime` 10 min) live in the `QueryCli
 
 Stega / `resultSourceMap` are currently **off**: draft mode is not wired up, and enabling stega unconditionally injects invisible characters into every production string (breaking `===`, object keys, and anything rendered into `<head>`). When adding preview, gate them on the draft path inside `sanityQueryOptions` — that helper is also where a server-only token fetch belongs.
 
-`src/lib/sanity/projectDetails.ts` resolves project/dataset/apiVersion for both environments — `process.env.*` on the server, `import.meta.env.VITE_*` in the browser, with hardcoded fallbacks (`ajget05d` / `production`). Import config from there, not from `import.meta.env` directly. Note that `apps/frontend/.env.local` sets `VITE_SANITY_DATASET="development"`, so local dev reads the **development** dataset — its content differs from `production`, which looks like missing data if you test with a `production` slug.
-
+`src/lib/sanity/projectDetails.ts` resolves project/dataset/apiVersion for both environments — `process.env.*` on the server, `import.meta.env.VITE_*` in the browser, with hardcoded fallbacks (`ajget05d` / `production`). Import config from there, not from `import.meta.env` directly. The dataset local dev reads is set by `VITE_SANITY_DATASET` in `apps/frontend/.env.local`, which has a line for both `production` and `development` and gets switched by commenting one out. Check it before testing: the two datasets have different content, so a slug from the other dataset returns 404, which looks like missing data.
 `SANITY_READ_TOKEN` / `SANITY_PREVIEW_SECRET` are server-only (draft/preview). Published content needs no token; never send a token from the client.
 
 ### Routing & SSR

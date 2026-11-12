@@ -1,10 +1,10 @@
 import { defineQuery } from "groq";
 
 export const ALL_BLOGS_QUERY = defineQuery(`
-  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{
+  { "items": *[_type=="blog"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[$start...$end]{
     _type,
     _id,
-    _createdAt,
+    "publishedAt": coalesce(publishedAt, _createdAt),
     _updatedAt,
     title,
     overview,

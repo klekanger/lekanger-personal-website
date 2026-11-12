@@ -19,9 +19,11 @@ export function ShowcaseCard(props: ShowcaseCardProps) {
   const showcaseUrl = `/showcase/${showcase?.slug?.current}` || "#";
 
   return (
-    <article className="relative flex w-full flex-col gap-1 border border-foreground p-4 hover:cursor-pointer hover:border-white hover:bg-accent md:min-h-72">
+    <article className="relative flex h-full w-full flex-col gap-1 border border-foreground p-4 hover:cursor-pointer hover:border-white hover:bg-accent md:min-h-72">
+      <div className="topline"></div>
+
       <HeadingTag
-        className="text-base text-white md:text-xl"
+        className="pt-3 text-base text-white md:text-xl"
         style={{ viewTransitionName: `post-${showcase.slug?.current}` }}
       >
         <Link to={showcaseUrl} className="after:absolute after:inset-0">
@@ -30,10 +32,10 @@ export function ShowcaseCard(props: ShowcaseCardProps) {
       </HeadingTag>
       <p className="grow pt-2 font-mono">{preamble}</p>
       <p
-        className="pt-2 font-mono font-normal! text-sm text-white uppercase"
+        className="pt-2 font-mono font-semibold text-sm text-white uppercase"
         aria-hidden="true"
       >
-        {`> Åpne prosjekt`}
+        {`RUN >`}
       </p>
     </article>
   );

@@ -17,6 +17,7 @@ export type SeoSource = {
   excerpt?: Project["excerpt"];
   topImage?: BlogPost["topImage"];
   mainImage?: BlogPost["mainImage"] | Project["mainImage"];
+  publishedAt?: string;
   _createdAt?: string;
   _updatedAt?: string;
 };
@@ -43,8 +44,10 @@ export function createSeoMetadataFromPost(
   }
 
   const url = absoluteUrl(pathname);
+  const authorUrl = absoluteUrl("/page/om-meg");
   const title = data.title;
   const isArticle = type === "article";
+  const publishedAt = data.publishedAt ?? data._createdAt;
 
   // The name of the main image field has changed, need to keep
   // supporting both names to support old (legacy) articles (SEO)
@@ -79,8 +82,8 @@ export function createSeoMetadataFromPost(
         : []),
       { property: "og:url", content: url },
       { property: "og:type", content: type },
-      ...(isArticle && data._createdAt
-        ? [{ property: "article:published_time", content: data._createdAt }]
+      ...(isArticle && publishedAt
+        ? [{ property: "article:published_time", content: publishedAt }]
         : []),
       ...(isArticle && data._updatedAt
         ? [{ property: "article:modified_time", content: data._updatedAt }]
@@ -98,6 +101,28 @@ export function createSeoMetadataFromPost(
                   { name: "twitter:image:alt", content: ogAlt },
                 ]
               : []),
+          ]
+        : []),
+
+      ...(isArticle
+        ? [
+            {
+              "script:ld+json": {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                headline: title,
+                description: description,
+                image: ogImage,
+                datePublished: publishedAt,
+                dateModified: data._updatedAt,
+                url: url,
+                author: {
+                  "@type": "Person",
+                  name: "Kurt Lekanger",
+                  url: authorUrl,
+                },
+              },
+            },
           ]
         : []),
     ],

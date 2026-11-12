@@ -115,8 +115,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-border py-4 sm:py-8">
-        <div className="wrap-anywhere m-auto flex min-h-dvh max-w-6xl flex-col bg-background px-4 selection:bg-foreground selection:text-background sm:px-8">
+        <div className="sticky top-0 z-50 m-auto max-w-6xl">
           <Header />
+        </div>
+        <div className="wrap-anywhere m-auto flex min-h-dvh max-w-6xl flex-col bg-background px-4 selection:bg-foreground selection:text-background sm:px-8">
           <main className="grow">{children}</main>
           <Footer />
         </div>

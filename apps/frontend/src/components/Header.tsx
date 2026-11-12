@@ -32,6 +32,7 @@ const NAV_ITEMS: NavItems = [
   },
   {
     title: "Om meg",
+    highlightActive: true,
     linkProps: {
       to: "/page/$slug",
       params: { slug: "om-meg" },
@@ -54,7 +55,7 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-background">
+    <header className="border-foreground border-b bg-background px-4">
       {isOpen && (
         <div
           aria-hidden="true"
@@ -65,24 +66,30 @@ export function Header() {
 
       <div className="relative flex h-16 w-full select-none flex-wrap justify-between py-4 font-heading text-white">
         <div className="px-1 py-0.5 font-semibold text-sm sm:text-lg">
-          <Link to="/">{`<KURT LEKANGER />`}</Link>
+          <Link to="/">{`KURT LEKANGER.`}</Link>
         </div>
 
         {/* Large screen navbar */}
         <nav aria-label="Hovedmeny" className="hidden h-fit lg:block">
           <ul className="flex gap-8">
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEMS.map((item, idx) => (
               <li key={item.title}>
                 <Link
                   {...item.linkProps}
-                  className="block uppercase hover:bg-foreground hover:text-background"
+                  className="block p-1 uppercase hover:bg-foreground hover:text-background"
                   activeProps={
                     item.highlightActive
                       ? { className: `text-background bg-foreground` }
                       : undefined
                   }
                 >
-                  {item.title}
+                  <span>
+                    <span
+                      className="mr-2 bg-foreground p-1 text-background"
+                      aria-hidden="true"
+                    >{`${idx + 1}`}</span>
+                    {item.title}
+                  </span>
                 </Link>
               </li>
             ))}

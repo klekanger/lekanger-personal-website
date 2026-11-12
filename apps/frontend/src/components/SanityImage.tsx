@@ -3,6 +3,7 @@ import type {
   SanityImageCrop,
   SanityImageHotspot,
 } from "@repo/shared";
+import type { CSSProperties } from "react";
 import { dimensionsFromRef, urlForImage } from "@/lib/sanity/imageUtils";
 
 const WIDTHS = [400, 600, 800, 1024, 1400, 2000]; // All widths we will generate srcset images for
@@ -14,6 +15,46 @@ const SIZES = {
 
 const cropAxis = (size: number | undefined, start = 0, end = 0) =>
   size ? size * (1 - start - end) : undefined;
+
+interface Rect {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+const rectFromUrl = (url: string): Rect | undefined => {
+  const rect = new URL(url).searchParams.get("rect");
+  if (!rect) return undefined;
+
+  const [left, top, width, height] = rect.split(",").map(Number);
+  return { left, top, width, height };
+};
+
+const backgroundOffset = (offset: number, size: number, total: number) =>
+  size < total ? (offset / (total - size)) * 100 : 0;
+
+const placeholderStyle = (
+  lqip: string,
+  rect: Rect | undefined,
+  assetWidth: number | undefined,
+  assetHeight: number | undefined,
+): CSSProperties => {
+  const base = {
+    backgroundImage: `url(${lqip})`,
+    backgroundRepeat: "no-repeat",
+  };
+
+  if (!rect || !assetWidth || !assetHeight) {
+    return { ...base, backgroundSize: "cover", backgroundPosition: "center" };
+  }
+
+  return {
+    ...base,
+    backgroundSize: `${(assetWidth / rect.width) * 100}% ${(assetHeight / rect.height) * 100}%`,
+    backgroundPosition: `${backgroundOffset(rect.left, rect.width, assetWidth)}% ${backgroundOffset(rect.top, rect.height, assetHeight)}%`,
+  };
+};
 
 export interface SanityImageValue {
   asset?: Pick<SanityImageAssetReference, "_ref"> | null;
@@ -83,11 +124,12 @@ export function SanityImage({
   };
 
   const srcHeight = heightFor(srcWidth);
+  const src = toUrl(srcWidth);
 
   return (
     <figure className={className}>
       <img
-        src={toUrl(srcWidth)}
+        src={src}
         srcSet={candidates.map((w) => `${toUrl(w)} ${w}w`).join(", ")}
         sizes={SIZES[variant]}
         alt={alt ?? ""}
@@ -98,11 +140,7 @@ export function SanityImage({
         className="w-full"
         style={
           lqip
-            ? {
-                backgroundImage: `url(${lqip})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }
+            ? placeholderStyle(lqip, rectFromUrl(src), assetWidth, assetHeight)
             : undefined
         }
       />

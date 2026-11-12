@@ -22,6 +22,14 @@ export default defineType({
       },
       validation: (rule) => rule.required(),
     }),
+    {
+      name: "publishedAt",
+      title: "Publiseringstidspunkt",
+      description:
+        "Tidspunkt for publisering – standard er når dokumentet ble opprettet.",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+    },
     defineField({
       name: "overview",
       description:

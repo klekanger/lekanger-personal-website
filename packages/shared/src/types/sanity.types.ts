@@ -374,6 +374,7 @@ export type Showcase = {
   _rev: string;
   title?: string;
   slug?: Slug;
+  publishedAt?: string;
   overview?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -402,6 +403,7 @@ export type Blog = {
   _rev: string;
   title?: string;
   slug?: Slug;
+  publishedAt?: string;
   overview?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -614,12 +616,25 @@ export type AllSanitySchemaTypes =
 
 // Source: ../frontend/src/lib/sanity/queries/blogPageQuery.ts
 // Variable: BLOGS_BY_SLUG_QUERY
-// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    topImage,    mainImage,    title,    overview,    body,    bodyText,    isExternalBlog,    externalBlogUrl,    "slug": slug.current  }
+// Query: *[_type=="blog" && slug.current == $slug][0]{    _id,    "publishedAt": coalesce(publishedAt, _createdAt),    _updatedAt,    topImage {      ...,      "lqip": image.asset->metadata.lqip    },    mainImage {      ...,      "lqip": asset->metadata.lqip    },    title,    overview,    body[]{      ...,      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },      _type == "image" => { "lqip": asset->metadata.lqip },      _type == "figure" => { "lqip": asset->metadata.lqip }    },    bodyText[]{      ...,      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },      _type == "image" => { "lqip": asset->metadata.lqip },      _type == "figure" => { "lqip": asset->metadata.lqip }    },    isExternalBlog,    externalBlogUrl,    "slug": slug.current  }
 export type BLOGS_BY_SLUG_QUERY_RESULT = {
   _id: string;
-  _createdAt: string;
+  publishedAt: string;
   _updatedAt: string;
-  topImage: ArticleImage | null;
+  topImage: {
+    _type: "articleImage";
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    caption?: string;
+    alt?: string;
+    credits?: string;
+    lqip: string | null;
+  } | null;
   mainImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -627,6 +642,7 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
+    lqip: string | null;
   } | null;
   title: string | null;
   overview: Array<{
@@ -644,15 +660,6 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
     _key: string;
   }> | null;
   body: Array<
-    | ({
-        _key: string;
-      } & Code)
-    | ({
-        _key: string;
-      } & Twitter)
-    | ({
-        _key: string;
-      } & Youtube)
     | {
         children?: Array<{
           marks?: Array<string>;
@@ -672,6 +679,14 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
         _key: string;
       }
     | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+      }
+    | {
         asset?: SanityImageAssetReference;
         media?: unknown;
         hotspot?: SanityImageHotspot;
@@ -680,9 +695,74 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
         alt?: string;
         _type: "image";
         _key: string;
+        lqip: string | null;
+      }
+    | {
+        _key: string;
+        _type: "twitter";
+        tweetId?: string;
+        twitterTitle?: string;
+      }
+    | {
+        _key: string;
+        _type: "youtube";
+        url?: string;
       }
   > | null;
-  bodyText: PortableText | null;
+  bodyText: Array<
+    | {
+        _key: string;
+        _type: "articleImage";
+        image?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        caption?: string;
+        alt?: string;
+        credits?: string;
+        lqip: string | null;
+      }
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+      }
+    | {
+        _key: string;
+        _type: "twitter";
+        tweetId?: string;
+        twitterTitle?: string;
+      }
+    | {
+        _key: string;
+        _type: "youtube";
+        url?: string;
+      }
+  > | null;
   isExternalBlog: boolean | null;
   externalBlogUrl: string | null;
   slug: string | null;
@@ -690,12 +770,12 @@ export type BLOGS_BY_SLUG_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/blogPagesQuery.ts
 // Variable: ALL_BLOGS_QUERY
-// Query: { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{    _type,    _id,    _createdAt,    _updatedAt,    title,    overview,    isExternalBlog,    externalBlogUrl,    slug  },"total": count(*[_type=="blog"])}
+// Query: { "items": *[_type=="blog"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[$start...$end]{    _type,    _id,    "publishedAt": coalesce(publishedAt, _createdAt),    _updatedAt,    title,    overview,    isExternalBlog,    externalBlogUrl,    slug  },"total": count(*[_type=="blog"])}
 export type ALL_BLOGS_QUERY_RESULT = {
   items: Array<{
     _type: "blog";
     _id: string;
-    _createdAt: string;
+    publishedAt: string;
     _updatedAt: string;
     title: string | null;
     overview: Array<{
@@ -721,12 +801,12 @@ export type ALL_BLOGS_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/homepageQuery.ts
 // Variable: HOMEPAGE_QUERY
-// Query: { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{        _type,        _id,        _createdAt,        _updatedAt,        title,        overview,        isExternalBlog,        externalBlogUrl,        slug      },    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{      ...    },      "heroText": *[_type=="heroText"] {          heroTitle,          preamble,          facts,          tags},      "aboutText": *[_type=="about"] {        title,        body,        topImage {          _type,          alt,          caption,          image,          "lqip": image.asset->metadata.lqip,          },        facts      },      "settings": *[_type=="settings"] {        companyName,        metaDescription,        metaKeywords,        metaOgImage,        metaTitle,        gitHubAccount,        linkedInAccount,        twitterAccount,        otherSocialAccount,        phone,        email      }    }
+// Query: { "blogPosts": *[_type=="blog"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[0..3]{        _type,        _id,        "publishedAt": coalesce(publishedAt, _createdAt),        _updatedAt,        title,        overview,        isExternalBlog,        externalBlogUrl,        slug      },    "showcases": *[_type=="showcase"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[0..5]{      ...,      "publishedAt": coalesce(publishedAt, _createdAt)    },      "heroText": *[_type=="heroText"] {          heroTitle,          preamble,          facts,          tags},      "aboutText": *[_type=="about"] {        title,        body[]{      ...,      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },      _type == "image" => { "lqip": asset->metadata.lqip },      _type == "figure" => { "lqip": asset->metadata.lqip }    },        topImage {          _type,          alt,          caption,          image,          "lqip": image.asset->metadata.lqip,          },        facts      },      "settings": *[_type=="settings"] {        companyName,        metaDescription,        metaKeywords,        metaOgImage,        metaTitle,        gitHubAccount,        linkedInAccount,        twitterAccount,        otherSocialAccount,        phone,        email      }    }
 export type HOMEPAGE_QUERY_RESULT = {
   blogPosts: Array<{
     _type: "blog";
     _id: string;
-    _createdAt: string;
+    publishedAt: string;
     _updatedAt: string;
     title: string | null;
     overview: Array<{
@@ -755,6 +835,7 @@ export type HOMEPAGE_QUERY_RESULT = {
     _rev: string;
     title?: string;
     slug?: Slug;
+    publishedAt: string;
     overview?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -799,7 +880,60 @@ export type HOMEPAGE_QUERY_RESULT = {
   }>;
   aboutText: Array<{
     title: string | null;
-    body: PortableText | null;
+    body: Array<
+      | {
+          _key: string;
+          _type: "articleImage";
+          image?: {
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          };
+          caption?: string;
+          alt?: string;
+          credits?: string;
+          lqip: string | null;
+        }
+      | {
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }
+      | {
+          _key: string;
+          _type: "code";
+          language?: string;
+          filename?: string;
+          code?: string;
+          highlightedLines?: Array<number>;
+        }
+      | {
+          _key: string;
+          _type: "twitter";
+          tweetId?: string;
+          twitterTitle?: string;
+        }
+      | {
+          _key: string;
+          _type: "youtube";
+          url?: string;
+        }
+    > | null;
     topImage: {
       _type: "articleImage";
       alt: string | null;
@@ -842,12 +976,25 @@ export type HOMEPAGE_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/pageQuery.ts
 // Variable: PAGE_BY_SLUG_QUERY
-// Query: *[_type=="page" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    topImage,    title,    overview,    bodyText,    "slug": slug.current,    }
+// Query: *[_type=="page" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    topImage {      ...,      "lqip": image.asset->metadata.lqip    },    title,    overview,    bodyText[]{      ...,      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },      _type == "image" => { "lqip": asset->metadata.lqip },      _type == "figure" => { "lqip": asset->metadata.lqip }    },    "slug": slug.current,    }
 export type PAGE_BY_SLUG_QUERY_RESULT = {
   _id: string;
   _createdAt: string;
   _updatedAt: string;
-  topImage: ArticleImage | null;
+  topImage: {
+    _type: "articleImage";
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    caption?: string;
+    alt?: string;
+    credits?: string;
+    lqip: string | null;
+  } | null;
   title: string | null;
   overview: Array<{
     children?: Array<{
@@ -863,22 +1010,133 @@ export type PAGE_BY_SLUG_QUERY_RESULT = {
     _type: "block";
     _key: string;
   }> | null;
-  bodyText: PortableText | null;
+  bodyText: Array<
+    | {
+        _key: string;
+        _type: "articleImage";
+        image?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        caption?: string;
+        alt?: string;
+        credits?: string;
+        lqip: string | null;
+      }
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+      }
+    | {
+        _key: string;
+        _type: "twitter";
+        tweetId?: string;
+        twitterTitle?: string;
+      }
+    | {
+        _key: string;
+        _type: "youtube";
+        url?: string;
+      }
+  > | null;
   slug: string | null;
 } | null;
 
 // Source: ../frontend/src/lib/sanity/queries/projectPageQuery.ts
 // Variable: PROJECTS_BY_SLUG_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {    mainImage,      excerpt,    slug,    title,    _createdAt,    _updatedAt,    _id,    body,  }
+// Query: *[_type == "project" && slug.current == $slug][0] {    mainImage {      ...,      "lqip": asset->metadata.lqip    },    excerpt,    slug,    title,    _createdAt,    _updatedAt,    _id,    body[]{      ...,      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },      _type == "image" => { "lqip": asset->metadata.lqip },      _type == "figure" => { "lqip": asset->metadata.lqip }    },  }
 export type PROJECTS_BY_SLUG_QUERY_RESULT = {
-  mainImage: Figure | null;
+  mainImage: {
+    _type: "figure";
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    caption?: string;
+    alt?: string;
+    lqip: string | null;
+  } | null;
   excerpt: SimplePortableText | null;
   slug: Slug | null;
   title: string | null;
   _createdAt: string;
   _updatedAt: string;
   _id: string;
-  body: ProjectPortableText | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+      }
+    | {
+        _key: string;
+        _type: "figure";
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        caption?: string;
+        alt?: string;
+        lqip: string | null;
+      }
+    | {
+        _key: string;
+        _type: "twitter";
+        tweetId?: string;
+        twitterTitle?: string;
+      }
+    | {
+        _key: string;
+        _type: "youtube";
+        url?: string;
+      }
+  > | null;
 } | null;
 
 // Source: ../frontend/src/lib/sanity/queries/settingsQuery.ts
@@ -915,12 +1173,25 @@ export type SETTINGS_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/showcaseQuery.ts
 // Variable: SHOWCASE_BY_SLUG_QUERY
-// Query: *[_type=="showcase" && slug.current == $slug][0]{    _id,    _createdAt,    _updatedAt,    topImage,    title,    overview,    bodyText,    github,    projectUrl,    "slug": slug.current    }
+// Query: *[_type=="showcase" && slug.current == $slug][0]{    _id,    "publishedAt": coalesce(publishedAt, _createdAt),    _updatedAt,    topImage {      ...,      "lqip": image.asset->metadata.lqip    },    title,    overview,    bodyText[]{      ...,      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },      _type == "image" => { "lqip": asset->metadata.lqip },      _type == "figure" => { "lqip": asset->metadata.lqip }    },    github,    projectUrl,    "slug": slug.current    }
 export type SHOWCASE_BY_SLUG_QUERY_RESULT = {
   _id: string;
-  _createdAt: string;
+  publishedAt: string;
   _updatedAt: string;
-  topImage: ArticleImage | null;
+  topImage: {
+    _type: "articleImage";
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    caption?: string;
+    alt?: string;
+    credits?: string;
+    lqip: string | null;
+  } | null;
   title: string | null;
   overview: Array<{
     children?: Array<{
@@ -936,7 +1207,60 @@ export type SHOWCASE_BY_SLUG_QUERY_RESULT = {
     _type: "block";
     _key: string;
   }> | null;
-  bodyText: PortableText | null;
+  bodyText: Array<
+    | {
+        _key: string;
+        _type: "articleImage";
+        image?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        caption?: string;
+        alt?: string;
+        credits?: string;
+        lqip: string | null;
+      }
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+      }
+    | {
+        _key: string;
+        _type: "twitter";
+        tweetId?: string;
+        twitterTitle?: string;
+      }
+    | {
+        _key: string;
+        _type: "youtube";
+        url?: string;
+      }
+  > | null;
   github: string | null;
   projectUrl: string | null;
   slug: string | null;
@@ -944,12 +1268,12 @@ export type SHOWCASE_BY_SLUG_QUERY_RESULT = {
 
 // Source: ../frontend/src/lib/sanity/queries/showcasesQuery.ts
 // Variable: ALL_SHOWCASES_QUERY
-// Query: { "items": *[_type=="showcase"] | order(_createdAt desc, _id desc)[$start...$end]{    _type,    _id,    _createdAt,    _updatedAt,    title,    overview,    slug  },"total": count(*[_type=="showcase"])}
+// Query: { "items": *[_type=="showcase"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[$start...$end]{    _type,    _id,    "publishedAt": coalesce(publishedAt, _createdAt),    _updatedAt,    title,    overview,    slug  },"total": count(*[_type=="showcase"])}
 export type ALL_SHOWCASES_QUERY_RESULT = {
   items: Array<{
     _type: "showcase";
     _id: string;
-    _createdAt: string;
+    publishedAt: string;
     _updatedAt: string;
     title: string | null;
     overview: Array<{
@@ -974,14 +1298,14 @@ export type ALL_SHOWCASES_QUERY_RESULT = {
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    mainImage,\n    title,\n    overview,\n    body,\n    bodyText,\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
-    '\n  { "items": *[_type=="blog"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
-    '\n    { "blogPosts": *[_type=="blog"] | order(_createdAt desc, _id desc)[0..3]{\n        _type,\n        _id,\n        _createdAt,\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(_createdAt desc, _id desc)[0..5]{\n      ...\n    },\n      "heroText": *[_type=="heroText"] {\n          heroTitle,\n          preamble,\n          facts,\n          tags},\n      "aboutText": *[_type=="about"] {\n        title,\n        body,\n        topImage {\n          _type,\n          alt,\n          caption,\n          image,\n          "lqip": image.asset->metadata.lqip,\n          },\n        facts\n      },\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
-    '\n    *[_type=="page" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    title,\n    overview,\n    bodyText,\n    "slug": slug.current,\n    }\n  ': PAGE_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage,  \n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body,\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type=="blog" && slug.current == $slug][0]{\n    _id,\n    "publishedAt": coalesce(publishedAt, _createdAt),\n    _updatedAt,\n    topImage {\n      ...,\n      "lqip": image.asset->metadata.lqip\n    },\n    mainImage {\n      ...,\n      "lqip": asset->metadata.lqip\n    },\n    title,\n    overview,\n    body[]{\n      ...,\n      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },\n      _type == "image" => { "lqip": asset->metadata.lqip },\n      _type == "figure" => { "lqip": asset->metadata.lqip }\n    },\n    bodyText[]{\n      ...,\n      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },\n      _type == "image" => { "lqip": asset->metadata.lqip },\n      _type == "figure" => { "lqip": asset->metadata.lqip }\n    },\n    isExternalBlog,\n    externalBlogUrl,\n    "slug": slug.current\n  }\n': BLOGS_BY_SLUG_QUERY_RESULT;
+    '\n  { "items": *[_type=="blog"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    "publishedAt": coalesce(publishedAt, _createdAt),\n    _updatedAt,\n    title,\n    overview,\n    isExternalBlog,\n    externalBlogUrl,\n    slug\n  },\n"total": count(*[_type=="blog"])\n}\n': ALL_BLOGS_QUERY_RESULT;
+    '\n    { "blogPosts": *[_type=="blog"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[0..3]{\n        _type,\n        _id,\n        "publishedAt": coalesce(publishedAt, _createdAt),\n        _updatedAt,\n        title,\n        overview,\n        isExternalBlog,\n        externalBlogUrl,\n        slug\n      },\n    "showcases": *[_type=="showcase"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[0..5]{\n      ...,\n      "publishedAt": coalesce(publishedAt, _createdAt)\n    },\n      "heroText": *[_type=="heroText"] {\n          heroTitle,\n          preamble,\n          facts,\n          tags},\n      "aboutText": *[_type=="about"] {\n        title,\n        body[]{\n      ...,\n      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },\n      _type == "image" => { "lqip": asset->metadata.lqip },\n      _type == "figure" => { "lqip": asset->metadata.lqip }\n    },\n        topImage {\n          _type,\n          alt,\n          caption,\n          image,\n          "lqip": image.asset->metadata.lqip,\n          },\n        facts\n      },\n      "settings": *[_type=="settings"] {\n        companyName,\n        metaDescription,\n        metaKeywords,\n        metaOgImage,\n        metaTitle,\n        gitHubAccount,\n        linkedInAccount,\n        twitterAccount,\n        otherSocialAccount,\n        phone,\n        email\n      }\n    }\n  ': HOMEPAGE_QUERY_RESULT;
+    '\n    *[_type=="page" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage {\n      ...,\n      "lqip": image.asset->metadata.lqip\n    },\n    title,\n    overview,\n    bodyText[]{\n      ...,\n      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },\n      _type == "image" => { "lqip": asset->metadata.lqip },\n      _type == "figure" => { "lqip": asset->metadata.lqip }\n    },\n    "slug": slug.current,\n    }\n  ': PAGE_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    mainImage {\n      ...,\n      "lqip": asset->metadata.lqip\n    },\n    excerpt,\n    slug,\n    title,\n    _createdAt,\n    _updatedAt,\n    _id,\n    body[]{\n      ...,\n      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },\n      _type == "image" => { "lqip": asset->metadata.lqip },\n      _type == "figure" => { "lqip": asset->metadata.lqip }\n    },\n  }\n': PROJECTS_BY_SLUG_QUERY_RESULT;
     '\n   *[_type=="settings"][0]{...}\n': SETTINGS_QUERY_RESULT;
-    '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    _createdAt,\n    _updatedAt,\n    topImage,\n    title,\n    overview,\n    bodyText,\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
-    '\n  { "items": *[_type=="showcase"] | order(_createdAt desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    _createdAt,\n    _updatedAt,\n    title,\n    overview,\n    slug\n  },\n"total": count(*[_type=="showcase"])\n}\n': ALL_SHOWCASES_QUERY_RESULT;
+    '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    "publishedAt": coalesce(publishedAt, _createdAt),\n    _updatedAt,\n    topImage {\n      ...,\n      "lqip": image.asset->metadata.lqip\n    },\n    title,\n    overview,\n    bodyText[]{\n      ...,\n      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },\n      _type == "image" => { "lqip": asset->metadata.lqip },\n      _type == "figure" => { "lqip": asset->metadata.lqip }\n    },\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
+    '\n  { "items": *[_type=="showcase"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    "publishedAt": coalesce(publishedAt, _createdAt),\n    _updatedAt,\n    title,\n    overview,\n    slug\n  },\n"total": count(*[_type=="showcase"])\n}\n': ALL_SHOWCASES_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

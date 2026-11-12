@@ -33,13 +33,13 @@ export function BlogCard(props: BlogCardProps) {
   return (
     <article className="relative border-t pb-4 hover:cursor-pointer hover:bg-accent">
       <div className="flex flex-col pt-4 md:flex-row">
-        <time dateTime={post._createdAt} className="min-w-32">
-          {shortDate(post._createdAt)}
+        <time dateTime={post.publishedAt} className="min-w-32">
+          {shortDate(post.publishedAt)}
         </time>
         <div className="w-full md:w-2/3">
           <HeadingTag
             className="text-white"
-            style={{ viewTransitionName: `post-${post.slug?.current}` }}
+            /*   style={{ viewTransitionName: `post-${post.slug?.current}` }} */
           >
             <Link to={href} className="after:absolute after:inset-0">
               {isExternalBlog && (

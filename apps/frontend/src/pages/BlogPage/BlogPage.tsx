@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { SanityImage } from "#/components/SanityImage";
 import { BackButton } from "#/components/ui/BackButton";
-import { BlinkingCursor } from "#/components/ui/BlinkingCursor";
 import PublishedTime from "#/components/ui/PublishedTime";
 import { CustomPortableText } from "@/components/PortableText/CustomPortableText";
 import { Route } from "@/routes/blog-page/$slug";
@@ -16,7 +16,7 @@ export function BlogPage() {
     bodyText,
     topImage,
     mainImage,
-    _createdAt,
+    publishedAt,
     _updatedAt,
     slug,
   } = data;
@@ -26,26 +26,38 @@ export function BlogPage() {
   const bodyTextToRender = body ? body : bodyText;
 
   return (
-    <article className="prose py-10 md:py-16">
+    <article className="prose default-padding">
       <header>
-        <h1 style={{ viewTransitionName: `post-${slug}` }}>{title}</h1>
+        <Link
+          to="/blog-page"
+          search={{ page: 1 }}
+          className="px-1 py-1 font-heading text-white uppercase no-underline hover:bg-foreground hover:text-background"
+        >
+          &lt; Blogg
+        </Link>
+        <h1
+          style={{ viewTransitionName: `post-${slug}` }}
+          className="pt-8 text-white"
+        >
+          {title}
+        </h1>
 
         <SanityImage
           image={topImage?.image ? topImage.image : mainImage}
           alt={topImage?.alt || mainImage?.alt}
+          lqip={topImage?.image ? topImage.lqip : mainImage?.lqip}
           caption={topImage?.caption || ""}
         />
 
         <CustomPortableText value={overview} isPreamble />
       </header>
 
-      <CustomPortableText value={bodyTextToRender} />
+      <CustomPortableText value={bodyTextToRender} className="pt-2 lg:pt-8" />
 
       <footer>
-        <PublishedTime _createdAt={_createdAt} _updatedAt={_updatedAt} />
+        <PublishedTime publishedAt={publishedAt} updatedAt={_updatedAt} />
         <BackButton buttonText="Tilbake" className="my-8" />
       </footer>
-      <BlinkingCursor />
     </article>
   );
 }
