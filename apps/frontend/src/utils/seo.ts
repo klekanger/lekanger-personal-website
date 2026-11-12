@@ -44,6 +44,7 @@ export function createSeoMetadataFromPost(
   }
 
   const url = absoluteUrl(pathname);
+  const authorUrl = absoluteUrl("/page/om-meg");
   const title = data.title;
   const isArticle = type === "article";
   const publishedAt = data.publishedAt ?? data._createdAt;
@@ -100,6 +101,28 @@ export function createSeoMetadataFromPost(
                   { name: "twitter:image:alt", content: ogAlt },
                 ]
               : []),
+          ]
+        : []),
+
+      ...(isArticle
+        ? [
+            {
+              "script:ld+json": {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                headline: title,
+                description: description,
+                image: ogImage,
+                datePublished: publishedAt,
+                dateModified: data._updatedAt,
+                url: url,
+                author: {
+                  "@type": "Person",
+                  name: "Kurt Lekanger",
+                  url: authorUrl,
+                },
+              },
+            },
           ]
         : []),
     ],
