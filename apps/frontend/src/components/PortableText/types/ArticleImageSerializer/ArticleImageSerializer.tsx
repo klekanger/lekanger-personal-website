@@ -16,6 +16,7 @@ export const ArticleImageSerializer = ({
       caption={value.caption}
       lqip={"lqip" in value ? value.lqip : undefined}
       variant="full"
+      clickToEnlarge
     />
   );
 };

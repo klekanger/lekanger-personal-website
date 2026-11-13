@@ -3,11 +3,20 @@ import type {
   SanityImageCrop,
   SanityImageHotspot,
 } from "@repo/shared";
-import type { CSSProperties } from "react";
+import {
+  type CSSProperties,
+  type KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 import { dimensionsFromRef, urlForImage } from "@/lib/sanity/imageUtils";
 
 const WIDTHS = [400, 600, 800, 1024, 1400, 2000]; // All widths we will generate srcset images for
+const MAX_WIDTH = WIDTHS.at(-1) || 0;
 const FALLBACK_WIDTH = 800;
+
 const SIZES = {
   full: "(min-width: 1152px) 979px, calc(90vw - 57.6px)",
   half: "(min-width: 1152px) 512px, (min-width: 768px) calc(50vw - 64px), calc(100vw - 64px)",
@@ -71,6 +80,7 @@ export interface SanityImageProps {
   aspectRatio?: number;
   className?: string;
   loading?: "lazy" | "eager";
+  clickToEnlarge?: boolean;
 }
 
 export function SanityImage({
@@ -82,13 +92,15 @@ export function SanityImage({
   aspectRatio,
   className,
   loading = "lazy",
+  clickToEnlarge = false,
 }: SanityImageProps) {
+  const [showEnlargedImage, setShowEnlargedImage] = useState(false);
+
   const ref = image?.asset?._ref;
   if (!ref) return null;
 
   const { assetWidth, assetHeight } = dimensionsFromRef(ref);
   const crop = image?.crop;
-
   const cropWidth = cropAxis(assetWidth, crop?.left, crop?.right);
   const cropHeight = cropAxis(assetHeight, crop?.top, crop?.bottom);
 
@@ -98,7 +110,7 @@ export function SanityImage({
 
   const maxWidth =
     cropWidth && cropHeight && ratio
-      ? Math.floor(Math.min(cropWidth, cropHeight * ratio))
+      ? Math.floor(Math.min(cropWidth, cropHeight * ratio, MAX_WIDTH))
       : undefined;
 
   const candidates = maxWidth
@@ -125,30 +137,130 @@ export function SanityImage({
 
   const srcHeight = heightFor(srcWidth);
   const src = toUrl(srcWidth);
+  const srcSet = candidates.map((w) => `${toUrl(w)} ${w}w`).join(", ");
+
+  const thumbnail = (
+    <img
+      src={src}
+      srcSet={srcSet}
+      sizes={SIZES[variant]}
+      alt={alt ?? ""}
+      width={srcHeight ? srcWidth : undefined}
+      height={srcHeight}
+      loading={loading}
+      decoding="async"
+      className="relative"
+      style={
+        lqip
+          ? placeholderStyle(lqip, rectFromUrl(src), assetWidth, assetHeight)
+          : undefined
+      }
+    />
+  );
 
   return (
-    <figure className={className}>
+    <>
+      <figure className={className}>
+        {clickToEnlarge ? (
+          <button
+            type="button"
+            className="group relative block cursor-zoom-in"
+            aria-label={alt ? `Vis større bilde: ${alt}` : "Vis større bilde"}
+            onClick={() => setShowEnlargedImage(true)}
+          >
+            {thumbnail}
+            <span
+              className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-focus-visible:opacity-100"
+              aria-hidden="true"
+            ></span>
+          </button>
+        ) : (
+          <div className="relative">{thumbnail}</div>
+        )}
+        {caption && (
+          <figcaption className="pt-2 font-mono text-yellow">
+            {caption}
+          </figcaption>
+        )}
+      </figure>
+
+      {showEnlargedImage &&
+        createPortal(
+          <Lightbox
+            src={src}
+            srcSet={srcSet}
+            alt={alt ?? ""}
+            width={srcHeight ? srcWidth : undefined}
+            height={srcHeight}
+            onClose={() => setShowEnlargedImage(false)}
+          />,
+          document.body,
+        )}
+    </>
+  );
+}
+
+interface LightboxProps {
+  src: string;
+  srcSet: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  onClose: () => void;
+}
+
+function Lightbox({ src, srcSet, alt, width, height, onClose }: LightboxProps) {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+
+    closeButtonRef.current?.focus();
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus();
+    };
+  }, []);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      onClose();
+    } else if (event.key === "Tab") {
+      event.preventDefault();
+      closeButtonRef.current?.focus();
+    }
+  };
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={alt || "Forstørret bilde"}
+      className="fixed inset-0 z-100 flex cursor-zoom-out items-center justify-center bg-black/70 p-4 backdrop-blur-xl"
+      onClick={onClose}
+      onKeyDown={handleKeyDown}
+    >
+      <button
+        ref={closeButtonRef}
+        type="button"
+        aria-label="Lukk"
+        className="absolute top-4 right-4 size-10 text-3xl text-white"
+        onClick={onClose}
+      >
+        <span aria-hidden="true">×</span>
+      </button>
       <img
         src={src}
-        srcSet={candidates.map((w) => `${toUrl(w)} ${w}w`).join(", ")}
-        sizes={SIZES[variant]}
-        alt={alt ?? ""}
-        width={srcHeight ? srcWidth : undefined}
-        height={srcHeight}
-        loading={loading}
+        srcSet={srcSet}
+        sizes="90vw"
+        alt={alt}
+        width={width}
+        height={height}
         decoding="async"
-        className="w-full"
-        style={
-          lqip
-            ? placeholderStyle(lqip, rectFromUrl(src), assetWidth, assetHeight)
-            : undefined
-        }
+        className="h-auto max-h-[90dvh] w-auto max-w-[2000px] object-contain"
       />
-      {caption && (
-        <figcaption className="pt-2 font-mono text-yellow">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
+    </div>
   );
 }
