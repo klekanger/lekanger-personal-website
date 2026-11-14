@@ -35,7 +35,7 @@ export function ShowcasePage() {
         </Link>
         <h1
           style={{ viewTransitionName: `post-${slug}` }}
-          className="hyphens-auto pt-8 text-2xl text-white md:text-4xl"
+          className="pt-8 text-2xl text-white md:text-4xl"
         >
           {title}
         </h1>
