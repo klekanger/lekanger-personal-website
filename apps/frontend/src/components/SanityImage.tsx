@@ -239,7 +239,7 @@ function Lightbox({ src, srcSet, alt, width, height, onClose }: LightboxProps) {
       role="dialog"
       aria-modal="true"
       aria-label={alt || "Forstørret bilde"}
-      className="fixed inset-0 z-100 flex cursor-zoom-out items-center justify-center bg-black/70 p-4 backdrop-blur-xl"
+      className="fixed inset-0 z-1000 flex cursor-zoom-out items-center justify-center bg-black/70 p-4 backdrop-blur-xl"
       onClick={onClose}
       onKeyDown={handleKeyDown}
     >
