@@ -65,6 +65,7 @@
   --c64-lightblue-soft: #a2a0f2;
   --c64-lightblue-pale: #b8b7f5;
   --c64-red-pale: #d6989c;
+  --c64-cyan-pale: #87c9d0;
   --c64-purple-pale: #ce94d4;
   --c64-orange-pale: #d79b75;
   --c64-green-pale: #6cba64;
@@ -77,6 +78,7 @@
   --color-black: var(--c64-black);
   --color-yellow: var(--c64-yellow);
   --color-red: var(--c64-red);
+  --color-cyan-pale: var(--c64-cyan-pale);
   --color-green: var(--c64-green);
   --color-blue: var(--c64-blue);
   --color-purple: var(--c64-purple);
@@ -361,7 +363,7 @@
     --tw-prose-body: var(--color-foreground);
     --tw-prose-headings: var(--color-foreground);
     --tw-prose-lead: var(--color-muted-foreground);
-    --tw-prose-links: var(--color-cyan);
+    --tw-prose-links: var(--color-cyan-pale);
     --tw-prose-bold: var(--color-foreground-strong);
     --tw-prose-counters: var(--color-muted-foreground);
     --tw-prose-bullets: var(--color-border);

@@ -29,11 +29,8 @@ export function BlogPromo(props: BlogPromoProps) {
       {blogPosts.map((post) => {
         return <BlogCard key={post._id} post={post} headingAs="h3" />;
       })}
-      <div
-        className="flex w-full justify-between pt-4 font-heading uppercase lg:pr-16"
-        aria-hidden="true"
-      >
-        664 blocks free{" "}
+      <div className="flex w-full justify-between pt-4 font-heading uppercase lg:pr-16">
+        <span aria-hidden="true"> 664 blocks free </span>
         <Link
           to="/blog-page"
           search={{ page: 1 }}
