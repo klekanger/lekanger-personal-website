@@ -1,4 +1,8 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  notFound,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import { BlogListing } from "#/components/BlogListing";
 import { PaginationComponent } from "#/components/PaginationComponent";
 import { loadSanityQuery } from "#/lib/sanity/loader";
@@ -8,9 +12,10 @@ import { absoluteUrl } from "@/lib/siteConfig";
 const POSTS_PER_PAGE = 10;
 
 export const Route = createFileRoute("/showcase/")({
-  validateSearch: (search) => ({
+  validateSearch: (search: Record<string, unknown>): { page: number } => ({
     page: Math.max(1, Number(search.page) || 1),
   }),
+  search: { middlewares: [stripSearchParams({ page: 1 })] },
   loaderDeps: ({ search: { page } }) => ({ page }),
   loader: async ({ context, deps: { page } }) => {
     const start = (page - 1) * POSTS_PER_PAGE;
@@ -28,7 +33,7 @@ export const Route = createFileRoute("/showcase/")({
     const { page } = match.search;
     const seoTitle = page > 1 ? `Prosjekter - Side ${page}` : "Prosjekter";
     const seoDescription = "Mine prosjekter - hobby og kanskje litt jobb";
-    const url = absoluteUrl(`/showcase?page=${page}`);
+    const url = absoluteUrl(page > 1 ? `/showcase?page=${page}` : "/showcase");
 
     return {
       meta: [

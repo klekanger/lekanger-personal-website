@@ -1,4 +1,8 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  notFound,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import { BlogListing } from "#/components/BlogListing";
 import { PaginationComponent } from "#/components/PaginationComponent";
 import { loadSanityQuery } from "#/lib/sanity/loader";
@@ -8,9 +12,10 @@ import { ALL_BLOGS_QUERY } from "@/lib/sanity/queries/blogPagesQuery";
 const POSTS_PER_PAGE = 10;
 
 export const Route = createFileRoute("/blog-page/")({
-  validateSearch: (search) => ({
+  validateSearch: (search: Record<string, unknown>): { page: number } => ({
     page: Math.max(1, Number(search.page) || 1),
   }),
+  search: { middlewares: [stripSearchParams({ page: 1 })] },
   loaderDeps: ({ search: { page } }) => ({ page }),
   loader: async ({ context, deps: { page } }) => {
     const start = (page - 1) * POSTS_PER_PAGE;
@@ -29,7 +34,9 @@ export const Route = createFileRoute("/blog-page/")({
     const seoTitle = page > 1 ? `Blogg - Side ${page}` : "Blogg";
     const seoDescription =
       "Blogg om litt av hvert – mest koding og generell nerding";
-    const url = absoluteUrl(`/blog-page?page=${page}`);
+    const url = absoluteUrl(
+      page > 1 ? `/blog-page?page=${page}` : "/blog-page",
+    );
 
     return {
       meta: [
