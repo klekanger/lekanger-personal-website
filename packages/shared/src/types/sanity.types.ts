@@ -1295,6 +1295,32 @@ export type ALL_SHOWCASES_QUERY_RESULT = {
   total: number;
 };
 
+// Source: ../frontend/src/lib/sanity/queries/sitemapQuery.ts
+// Variable: SITEMAP_QUERY
+// Query: *[_type in ["page", "blog", "project", "showcase"]        && defined(slug.current)        && !(_type == "blog" && isExternalBlog == true)      ]{      _type,      "slug": slug.current,      _updatedAt  }
+export type SITEMAP_QUERY_RESULT = Array<
+  | {
+      _type: "blog";
+      slug: string | null;
+      _updatedAt: string;
+    }
+  | {
+      _type: "page";
+      slug: string | null;
+      _updatedAt: string;
+    }
+  | {
+      _type: "project";
+      slug: string | null;
+      _updatedAt: string;
+    }
+  | {
+      _type: "showcase";
+      slug: string | null;
+      _updatedAt: string;
+    }
+>;
+
 // Query TypeMap
 declare global {
   interface SanityQueries {
@@ -1306,6 +1332,7 @@ declare global {
     '\n   *[_type=="settings"][0]{...}\n': SETTINGS_QUERY_RESULT;
     '\n    *[_type=="showcase" && slug.current == $slug][0]{\n    _id,\n    "publishedAt": coalesce(publishedAt, _createdAt),\n    _updatedAt,\n    topImage {\n      ...,\n      "lqip": image.asset->metadata.lqip\n    },\n    title,\n    overview,\n    bodyText[]{\n      ...,\n      _type == "articleImage" => { "lqip": image.asset->metadata.lqip },\n      _type == "image" => { "lqip": asset->metadata.lqip },\n      _type == "figure" => { "lqip": asset->metadata.lqip }\n    },\n    github,\n    projectUrl,\n    "slug": slug.current\n    }\n  ': SHOWCASE_BY_SLUG_QUERY_RESULT;
     '\n  { "items": *[_type=="showcase"] | order(coalesce(publishedAt, _createdAt) desc, _id desc)[$start...$end]{\n    _type,\n    _id,\n    "publishedAt": coalesce(publishedAt, _createdAt),\n    _updatedAt,\n    title,\n    overview,\n    slug\n  },\n"total": count(*[_type=="showcase"])\n}\n': ALL_SHOWCASES_QUERY_RESULT;
+    '\n  *[_type in ["page", "blog", "project", "showcase"]\n        && defined(slug.current)\n        && !(_type == "blog" && isExternalBlog == true)\n      ]{\n      _type,\n      "slug": slug.current,\n      _updatedAt\n  }\n': SITEMAP_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

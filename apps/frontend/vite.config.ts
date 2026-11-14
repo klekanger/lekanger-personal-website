@@ -31,6 +31,9 @@ const config = defineConfig({
         "/showcase/**": {
           isr: { expiration: 3600, allowQuery: ["page"], passQuery: true },
         },
+        "/sitemap.xml": {
+          isr: { expiration: 3600, allowQuery: [] },
+        },
       },
       vercel: {
         config: { bypassToken: process.env.VERCEL_BYPASS_TOKEN, version: 3 },
