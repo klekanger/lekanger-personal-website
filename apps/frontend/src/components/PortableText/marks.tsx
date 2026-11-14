@@ -23,5 +23,9 @@ export const marks = {
       </a>
     );
   },
-  code: ({ children }) => <code style={codeStyle}>{children}</code>,
+  code: ({ children }) => (
+    <code style={codeStyle} className="not-prose text-yellow">
+      {children}
+    </code>
+  ),
 } satisfies StrictComponents["marks"] & DecoratorComponents;
