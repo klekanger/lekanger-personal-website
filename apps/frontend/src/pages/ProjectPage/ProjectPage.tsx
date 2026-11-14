@@ -18,6 +18,7 @@ export function ProjectPage() {
           alt={mainImage?.alt}
           lqip={mainImage?.lqip}
           caption={mainImage?.caption}
+          className="pb-8"
         />
 
         <CustomPortableText value={excerpt} isPreamble />

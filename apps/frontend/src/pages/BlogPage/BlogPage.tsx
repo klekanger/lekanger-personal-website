@@ -47,6 +47,7 @@ export function BlogPage() {
           alt={topImage?.alt || mainImage?.alt}
           lqip={topImage?.image ? topImage.lqip : mainImage?.lqip}
           caption={topImage?.caption || ""}
+          className="pb-8"
         />
 
         <CustomPortableText value={overview} isPreamble />

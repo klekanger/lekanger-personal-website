@@ -44,6 +44,7 @@ export function ShowcasePage() {
           alt={topImage?.alt}
           lqip={topImage?.lqip}
           caption={topImage?.caption}
+          className="pb-8"
         />
         <CustomPortableText value={overview} isPreamble />
       </header>
