@@ -24,7 +24,7 @@ export function Page() {
         </Link>
         <h1
           style={{ viewTransitionName: `page-${slug}` }}
-          className="pt-8 text-white"
+          className="hyphens-auto pt-8 text-2xl text-white md:text-4xl"
         >
           {title}
         </h1>
