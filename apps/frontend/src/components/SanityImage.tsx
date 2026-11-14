@@ -11,6 +11,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { cn } from "#/lib/utils";
 import { dimensionsFromRef, urlForImage } from "@/lib/sanity/imageUtils";
 
 const WIDTHS = [400, 600, 800, 1024, 1400, 2000]; // All widths we will generate srcset images for
@@ -160,7 +161,7 @@ export function SanityImage({
 
   return (
     <>
-      <figure className={className}>
+      <figure className={cn([className, "not-prose"])}>
         {clickToEnlarge ? (
           <button
             type="button"
