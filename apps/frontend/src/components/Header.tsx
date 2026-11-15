@@ -130,7 +130,7 @@ export function Header() {
         {isOpen && (
           <>
             <nav aria-label="Hovedmeny" className="w-full lg:hidden">
-              <ul className="top-32 z-99 mt-2 flex flex-col items-center gap-2 bg-foreground pt-16 pb-32">
+              <ul className="top-32 z-99 mt-2 flex flex-col items-center gap-4 bg-foreground pt-16 pb-32">
                 {NAV_ITEMS.map((item) => (
                   <li key={item.title}>
                     <Link
