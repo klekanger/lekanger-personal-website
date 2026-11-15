@@ -1,4 +1,4 @@
-import { Link, type LinkProps } from "@tanstack/react-router";
+import { Link, type LinkProps, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Bars } from "./icons/Bars";
 import { XMark } from "./icons/XMark";
@@ -41,6 +41,7 @@ const NAV_ITEMS: NavItems = [
 ];
 
 export function Header() {
+  const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const year = new Date().getFullYear();
 
@@ -66,7 +67,22 @@ export function Header() {
 
       <div className="relative flex h-16 w-full select-none flex-wrap justify-between py-4 font-heading text-white">
         <div className="px-1 py-0.5 font-semibold text-sm sm:text-lg">
-          <Link to="/">{`KURT LEKANGER.`}</Link>
+          <Link
+            to="/"
+            onClick={(e) => {
+              setIsOpen(false);
+              const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+              ).matches;
+
+              if (pathname === "/") {
+                e.preventDefault();
+                prefersReducedMotion
+                  ? window.scrollTo({ top: 0, behavior: "instant" })
+                  : window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+          >{`KURT LEKANGER.`}</Link>
         </div>
 
         {/* Large screen navbar */}
