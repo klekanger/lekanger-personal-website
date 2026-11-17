@@ -9,6 +9,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { Analytics } from "@vercel/analytics/react";
 import { loadSanityQuery } from "#/lib/sanity/loader";
 import { SETTINGS_QUERY } from "@/lib/sanity/queries/settingsQuery";
 import {
@@ -130,6 +131,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-border py-4 sm:py-8">
+        <Analytics />
         <div className="sticky top-0 z-50 m-auto max-w-6xl">
           <Header />
         </div>
