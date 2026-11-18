@@ -31,7 +31,7 @@ export function Hero({ heroText }: HeroProps) {
   const { heroTitle, preamble, facts } = heroText[0];
 
   return (
-    <section className="mt-8 p-4 lg:mt-8">
+    <section className="mt-8 py-4 lg:mt-8">
       <div
         className="@container pt-0 pb-16 text-center font-heading text-xs leading-loose md:text-sm"
         aria-hidden="true" // decorative banner only
