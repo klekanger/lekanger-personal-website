@@ -150,7 +150,7 @@ export function SanityImage({
       height={srcHeight}
       loading={loading}
       decoding="async"
-      className="relative"
+      className="relative h-auto w-full"
       style={
         lqip
           ? placeholderStyle(lqip, rectFromUrl(src), assetWidth, assetHeight)
